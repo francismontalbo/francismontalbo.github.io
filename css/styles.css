@@ -9812,6 +9812,10 @@ a.text-info:hover, a.text-info:focus {
   color: #ffc107 !important;
 }
 
+.icon-green {
+  color: #18c474 !important;
+}
+
 a.text-warning:hover, a.text-warning:focus {
   color: #ba8b00 !important;
 }
