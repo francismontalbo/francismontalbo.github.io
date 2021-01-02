@@ -10145,7 +10145,7 @@ section.resume-section .resume-section-content {
   background-size: cover;
   width: 100%;
   opacity: 0.075;
-  background-blend-mode: saturation;
+  background-blend-mode: lighten;
   filter:grayscale(100%);
   top: 0;
   bottom: 0;
@@ -10159,7 +10159,7 @@ section.resume-section .resume-section-content {
   content: "";
   background: url("../assets/img/experience.jpg") center no-repeat;
   background-size: cover;
-  background-blend-mode: 
+  background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
   filter:grayscale(100%);
@@ -10175,7 +10175,7 @@ section.resume-section .resume-section-content {
   content: "";
   background: url("../assets/img/education.jpg") center no-repeat;
   background-size: cover;
-  background-blend-mode: 
+  background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
   filter:grayscale(100%);
@@ -10191,7 +10191,7 @@ section.resume-section .resume-section-content {
   content: "";
   background: url("../assets/img/skills.jpg") center no-repeat;
   background-size: cover;
-  background-blend-mode: 
+  background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
   filter:grayscale(100%);
@@ -10207,7 +10207,7 @@ section.resume-section .resume-section-content {
   content: "";
   background: url("../assets/img/publications.jpg") center no-repeat;
   background-size: cover;
-  background-blend-mode: 
+  background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
   filter:grayscale(100%);
@@ -10223,7 +10223,7 @@ section.resume-section .resume-section-content {
   content: "";
   background: url("../assets/img/achievements.jpg") center no-repeat;
   background-size: cover;
-  background-blend-mode: 
+  background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
   filter:grayscale(100%);
