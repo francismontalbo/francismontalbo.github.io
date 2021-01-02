@@ -10103,6 +10103,139 @@ section.resume-section .resume-section-content {
   width: 100%;
 }
 
+#about-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#experience-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#education-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#skills-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#publications-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#achievements-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+#about-section-bg::after {
+  content: "";
+  background: url("../assets/img/about.jpg") center no-repeat;
+  background-size: cover;
+  width: 100%;
+  opacity: 0.075;
+  background-blend-mode: saturation;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#experience-section-bg::after {
+  content: "";
+  background: url("../assets/img/experience.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: 
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#education-section-bg::after {
+  content: "";
+  background: url("../assets/img/education.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: 
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#skills-section-bg::after {
+  content: "";
+  background: url("../assets/img/skills.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: 
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#publications-section-bg::after {
+  content: "";
+  background: url("../assets/img/publications.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: 
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#achievements-section-bg::after {
+  content: "";
+  background: url("../assets/img/achievements.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: 
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+
 @media (min-width: 768px) {
   section.resume-section {
     min-height: 100vh;
@@ -10116,3 +10249,4 @@ section.resume-section .resume-section-content {
     padding-bottom: 5rem;
   }
 }
+
