@@ -10174,7 +10174,7 @@ section.resume-section .resume-section-content {
 #education-section-bg::after {
   content: "";
   background: url("../assets/img/education.JPG") center no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
@@ -10190,7 +10190,7 @@ section.resume-section .resume-section-content {
 #skills-section-bg::after {
   content: "";
   background: url("../assets/img/skills.JPG") center no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
@@ -10206,7 +10206,7 @@ section.resume-section .resume-section-content {
 #publications-section-bg::after {
   content: "";
   background: url("../assets/img/publications.JPG") center no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
   opacity: 0.075;
