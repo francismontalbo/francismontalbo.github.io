@@ -10205,7 +10205,7 @@ section.resume-section .resume-section-content {
 
 #publications-section-bg::after {
   content: "";
-  background: url("../assets/img/publications.jpg") center no-repeat;
+  background: url("../assets/img/x/publications.jpg") center no-repeat;
   background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
