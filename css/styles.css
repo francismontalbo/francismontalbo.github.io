@@ -10141,7 +10141,7 @@ section.resume-section .resume-section-content {
 
 #about-section-bg::after {
   content: "";
-  background: url("../assets/img/about.jpg") center no-repeat;
+  background: url("../assets/img/about.JPG") center no-repeat;
   background-size: cover;
   width: 100%;
   opacity: 0.075;
@@ -10173,7 +10173,7 @@ section.resume-section .resume-section-content {
 
 #education-section-bg::after {
   content: "";
-  background: url("../assets/img/education.jpg") center no-repeat;
+  background: url("../assets/img/education.JPG") center no-repeat;
   background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
@@ -10205,7 +10205,7 @@ section.resume-section .resume-section-content {
 
 #publications-section-bg::after {
   content: "";
-  background: url("../assets/img/x/publications.jpg") center no-repeat;
+  background: url("../assets/img/publications.JPG") center no-repeat;
   background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
