@@ -10139,6 +10139,12 @@ section.resume-section .resume-section-content {
   position: relative;
 }
 
+#contact-section-bg {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
 #about-section-bg::after {
   content: "";
   background: url("../assets/img/about.JPG") center no-repeat;
@@ -10220,6 +10226,22 @@ section.resume-section .resume-section-content {
 }
 
 #achievements-section-bg::after {
+  content: "";
+  background: url("../assets/img/achievements.jpg") center no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+  width: 100%;
+  opacity: 0.075;
+  filter:grayscale(100%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#contact-section-bg::after {
   content: "";
   background: url("../assets/img/achievements.jpg") center no-repeat;
   background-size: cover;
