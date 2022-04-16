@@ -10243,7 +10243,7 @@ section.resume-section .resume-section-content {
 
 #contact-section-bg::after {
   content: "";
-  background: url("../assets/img/achievements.jpg") center no-repeat;
+  background: url("../assets/img/x.jpg") center no-repeat;
   background-size: cover;
   background-blend-mode: lighten;
   width: 100%;
