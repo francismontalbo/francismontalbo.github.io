@@ -558,10 +558,10 @@
                             </a>
                         </div>
                         <div class="card-footer bg-white d-flex justify-content-start gap-3">
-                            <span class="badge bg-dark d-flex align-items-center">
+                            <span class="badge bg-dark d-flex align-items-center" style="color: white;">
                                 <i class="ai ai-closed-access" style="font-size:24px;color:grey"></i> Closed Access
                             </span>
-                            <span class="badge bg-primary d-flex align-items-center">
+                            <span class="badge bg-primary d-flex align-items-center" style="color: #ffffff; padding-left: 15px;">
                                 <i class="ai ai-elsevier" style="font-size:24px;color:orange"></i> Elsevier
                             </span>
                         </div>
@@ -587,10 +587,10 @@
                             </p>
                         </div>
                         <div class="card-footer bg-white d-flex justify-content-start gap-3">
-                            <span class="badge bg-dark d-flex align-items-center">
+                            <span class="badge bg-dark d-flex align-items-center" style="color: white;">
                                 <i class="ai ai-closed-access" style="font-size:24px;color:grey"></i> Closed Access
                             </span>
-                            <span class="badge bg-primary d-flex align-items-center">
+                            <span class="badge bg-primary d-flex align-items-center" style="color: #ffffff; padding-left: 15px;">
                                 <i class="ai ai-springer" style="font-size:24px;color:#000080"></i> Springer
                             </span>
                         </div>
@@ -615,10 +615,10 @@
                             </p>
                         </div>
                         <div class="card-footer bg-white d-flex justify-content-start gap-3">
-                            <span class="badge bg-dark d-flex align-items-center">
+                            <span class="badge bg-dark d-flex align-items-center" style="color: white;">
                                 <i class="ai ai-closed-access" style="font-size:24px;color:grey"></i> Closed Access
                             </span>
-                            <span class="badge bg-primary d-flex align-items-center">
+                            <span class="badge bg-primary d-flex align-items-center" style="color: #ffffff; padding-left: 15px;">
                                 <i class="ai ai-obp" style="font-size:24px;color:orange"></i> IOP Publishing
                             </span>
                         </div>
@@ -628,6 +628,58 @@
         </div>
     </section>
 </div>
+
+<!-- CSS for Styling -->
+<style>
+    .publication-card {
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #f9f9f9;
+    }
+
+    .publication-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-title {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.4rem;
+        border-radius: 5px;
+    }
+
+    .badge i {
+        margin-right: 5px;
+    }
+
+    .bg-dark {
+        background-color: #333 !important;
+        color: #fff !important;
+    }
+
+    .bg-primary {
+        background-color: #007bff !important;
+        color: #fff !important;
+    }
+
+    .bg-secondary {
+        background-color: #6c757d !important;
+        color: #fff !important;
+    }
+</style>
 
 
 
