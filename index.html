@@ -268,26 +268,26 @@
         <div class="resume-section-content">
             
             <!-- Name and Title -->
-            <h4 class="mb-0" style="font-size:48px;">
-                <span style="color:orange;">Dr.</span> Francis Jesmar P.
+            <h4 class="mb-2 about-title">
+                <span class="highlight">Dr.</span> Francis Jesmar P.
                 <span class="text-primary">Montalbo</span>
             </h4>
-            <div class="subheading mb-5">
-                <ul style="font-size:18px; list-style-type:none; margin:0; padding:0;">
+            <div class="subheading mb-4">
+                <ul class="about-subheading">
                     <li>Batangas State University (BatStateU), The National Engineering University, Philippines</li>
                     <li><i>College of Informatics and Computing Sciences (CICS)</i></li>
                 </ul>
             </div>
 
-            <!-- Main About -->
+            <!-- Main About Section -->
             <article itemscope itemtype="http://schema.org/Person">
-                <p style="text-align: justify;" class="lead mb-5">
+                <p class="lead about-text">
                     <strong>About:</strong>
                     Dr. <span itemprop="name">Francis Jesmar P. Montalbo</span> (F. J. P. Montalbo)
                     is a <span itemprop="nationality">Filipino</span>
                     <span itemprop="jobTitle">researcher</span>, 
                     <span itemprop="jobTitle">author</span>, and
-                    <span itemprop="jobTitle">Associate Professor</span> who specializes in 
+                    <span itemprop="jobTitle">Associate Professor</span> specializing in 
                     <span itemprop="knowsAbout">computer vision</span>,
                     <span itemprop="knowsAbout">biomedical signal processing</span>,
                     <span itemprop="knowsAbout">deep learning</span>,
@@ -296,48 +296,115 @@
                     He completed his Doctorate in Information Technology with the highest honors at the 
                     <span itemprop="alumniOf">Technological Institute of the Philippines-Manila</span>, 
                     and has been actively contributing to <span itemprop="knowsAbout">Artificial Intelligence (AI)</span>
-                    research, especially deep learning, through publications in reputable international journals
-                    and presentations at recognized conferences.
-                    
-                    Currently, Dr. Montalbo serves as an Associate Professor and Research Scientist at 
-                    <span itemprop="affiliation">Batangas State University, The National Engineering University</span>
-                    <span itemprop="addressCountry">Philippines</span>, where he mentors fellow researchers and
-                    fosters collaborative learning. He also serves as a 
+                    research, particularly deep learning, through publications in **reputable international journals**
+                    and **recognized conferences**.
+
+                    Currently, Dr. Montalbo serves as an **Associate Professor and Research Scientist** at 
+                    <span itemprop="affiliation">Batangas State University, The National Engineering University</span>,
+                    <span itemprop="addressCountry">Philippines</span>, where he **mentors researchers** and fosters **collaborative learning**. He is also a 
                     <span itemprop="jobTitle">peer reviewer</span> for respected journals and conferences including
-                    Elsevier, Springer, ACM, Taylor &amp; Francis, PLOS ONE, Wiley, IEEE, Frontiers Media, and Hindawi.
-                    Additionally, he contributes as an 
-                    <span itemprop="jobTitle">associate editor</span> for a prominent local university-based journal
+                    Elsevier, Springer, ACM, Taylor & Francis, PLOS ONE, Wiley, IEEE, Frontiers Media, and Hindawi.
+                    Additionally, he serves as an 
+                    <span itemprop="jobTitle">associate editor</span> for a prominent university-based journal
                     in the Philippines.
                 </p>
             </article>
 
             <!-- Recognition Section -->
             <article itemscope itemtype="http://schema.org/Person">
-                <h1 itemprop="name" class="lead mb-3" style="text-align: justify;">
-                    Dr. Francis Jesmar P. Montalbo Recognized Among the Top 2% Most-Cited Scientists
-                </h1>
-                <p itemprop="description" style="text-align: justify; margin-top:0;" class="lead">
-                    Since 2019 through 2024, Dr. Francis Jesmar P. Montalbo has been listed in Elsevier and Stanford's 
-                    Top 2% most-cited scientists, underscoring his global impact and dedication to research excellence.
-                    His work has significantly advanced the field and garnered international recognition. 
+                <h2 itemprop="name" class="lead about-highlight">
+                    🎖 Dr. Francis Jesmar P. Montalbo Recognized Among the Top 2% Most-Cited Scientists
+                </h2>
+                <p itemprop="description" class="lead about-text">
+                    Since **2019 through 2024**, Dr. Francis Jesmar P. Montalbo has been **listed in Elsevier and Stanford's 
+                    Top 2% most-cited scientists**, underscoring his global impact and dedication to research excellence.
+                    His work has significantly advanced the field and garnered **international recognition**. 
                     <a href="https://topresearcherslist.com/Home/Profile/922022" 
                        target="_blank" 
-                       rel="noopener noreferrer">
+                       rel="noopener noreferrer"
+                       class="about-link">
                        View Dr. Montalbo's profile
                     </a>
-                    on the Top Researchers List.
+                    on the **Top Researchers List**.
                 </p>
             </article>
 
-            <!-- Additional Content / Research Standing -->
-            <p class="lead mb-5" style="text-align: justify;">
+            <!-- Research Standing -->
+            <p class="lead about-text">
                 <strong>My research standing in Batangas State University (LIVE via Google Scholar):</strong>
-                <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank">View Ranking</a>
-            </p>
-            <br>         
+                <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" 
+                   target="_blank" 
+                   class="about-link">
+                   View Ranking
+                </a>
+            </p>        
         </div><!-- End .resume-section-content -->
     </section>
 </div><!-- End #about-section-bg -->
+
+<style>
+    /* Scoped CSS for the About Section (does not affect other sections) */
+    #about-section-bg {
+        background-color: #f9f9f9;
+        padding: 40px 20px;
+    }
+
+    .resume-section-content {
+        max-width: 900px;
+        margin: 0;
+        text-align: left;
+    }
+
+    /* Name and Title */
+    .about-title {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .highlight {
+        color: orange;
+    }
+
+    /* University Details */
+    .about-subheading {
+        font-size: 18px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+    }
+
+    /* About Text */
+    .about-text {
+        text-align: justify;
+        font-size: 18px;
+        line-height: 1.7;
+        color: #333;
+    }
+
+    /* Recognition Section */
+    .about-highlight {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-top: 20px;
+    }
+
+    /* Links Styling */
+    .about-link {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .about-link:hover {
+        color: #ff4500;
+        text-decoration: underline;
+    }
+</style>
+
 
 <!-- Enhanced Structured Data for Google Knowledge Graph -->
 <script type="application/ld+json">
