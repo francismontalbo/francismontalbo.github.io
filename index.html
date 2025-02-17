@@ -267,114 +267,115 @@
     <section class="resume-section">
         <div class="resume-container">
             
-            <!-- Profile Header -->
-            <div class="about-header">
-                <h1 class="about-title">
-                    <span class="highlight">Dr.</span> Francis Jesmar P.
-                    <span class="text-primary">Montalbo</span>
-                </h1>
-                <p class="subheading">
-                    Associate Professor | Research Scientist | AI & Deep Learning Specialist
-                </p>
-                <p class="institution">
-                    <strong>Batangas State University</strong>, The National Engineering University, Philippines <br>
-                    <em>College of Informatics and Computing Sciences (CICS)</em>
-                </p>
+            <!-- Profile Header (Left) & Summary (Right) -->
+            <div class="about-grid">
+                <div class="about-header">
+                    <h1 class="about-title">
+                        <span class="highlight">Dr.</span> Francis Jesmar P.
+                        <span class="text-primary">Montalbo</span>
+                    </h1>
+                    <p class="subheading">
+                        Associate Professor | Research Scientist | AI & Deep Learning Specialist
+                    </p>
+                    <p class="institution">
+                        <strong>Batangas State University</strong><br>
+                        <em>College of Informatics and Computing Sciences (CICS)</em>
+                    </p>
+                </div>
+                
+                <div class="about-summary">
+                    <p>
+                        <strong>AI & Deep Learning Expert</strong> specializing in **computer vision**, 
+                        **biomedical signal processing**, and **data science**.
+                        An **internationally recognized researcher**, Dr. Montalbo has published in **top-tier AI journals** 
+                        and presented at **prestigious conferences** worldwide.
+                    </p>
+                    <p>
+                        He holds a **Doctorate in Information Technology** (highest honors) from the 
+                        <strong>Technological Institute of the Philippines-Manila</strong>. 
+                        Currently, he serves as an **Associate Professor & Research Scientist** at 
+                        <strong>Batangas State University</strong>.
+                    </p>
+                </div>
             </div>
 
-            <!-- About Me Section -->
-            <article class="about-content" itemscope itemtype="http://schema.org/Person">
-                <h2 class="section-title">About Me</h2>
-                <p class="lead">
-                    <strong>Dr. <span itemprop="name">Francis Jesmar P. Montalbo</span></strong> (F. J. P. Montalbo) is a 
-                    <span itemprop="nationality">Filipino</span> <span itemprop="jobTitle">researcher</span>, 
-                    <span itemprop="jobTitle">author</span>, and <span itemprop="jobTitle">Associate Professor</span> 
-                    specializing in <span itemprop="knowsAbout">computer vision</span>, 
-                    <span itemprop="knowsAbout">biomedical signal processing</span>, and 
-                    <span itemprop="knowsAbout">deep learning</span>.
-                </p>
-                <p class="lead">
-                    He earned his **Doctorate in Information Technology** with the highest honors from the 
-                    <span itemprop="alumniOf">Technological Institute of the Philippines-Manila</span>. 
-                    He actively contributes to **Artificial Intelligence (AI)** research, particularly **deep learning**, 
-                    with **publications in top-tier journals** and **conference presentations**.
-                </p>
-                <p class="lead">
-                    Currently, Dr. Montalbo is an **Associate Professor and Research Scientist** at 
-                    <span itemprop="affiliation">Batangas State University</span>, mentoring researchers and fostering 
-                    **collaborative innovation**. He is also a **peer reviewer** for leading journals like **Elsevier, Springer, ACM, IEEE, and Frontiers Media**.
-                </p>
-            </article>
-
-            <!-- Recognitions -->
-            <article class="about-content">
-                <h2 class="section-title">Recognitions & Achievements</h2>
-                <p class="lead">
-                    Dr. Montalbo is recognized in **Elsevier & Stanford’s Top 2% Most-Cited Scientists** (2019-2024),
-                    reflecting his **global impact in AI and data science**. His research contributions continue to shape the future of AI.
-                </p>
-                <p class="lead">
-                    <a href="https://topresearcherslist.com/Home/Profile/922022" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="about-link">
-                       View Profile
+            <!-- Achievements & Research -->
+            <div class="achievements-research">
+                <div class="achievements">
+                    <h2 class="section-title">🏆 Recognitions</h2>
+                    <p>Recognized in **Elsevier & Stanford’s Top 2% Most-Cited Scientists** (2019-2024), 
+                        showcasing his **global impact in AI research**.</p>
+                    <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="about-link">
+                        View Profile
                     </a>
-                </p>
-            </article>
+                </div>
 
-            <!-- Research Standing -->
-            <article class="about-content">
-                <h2 class="section-title">Research Impact</h2>
-                <p class="lead">
-                    <strong>My research standing in Batangas State University:</strong>
+                <div class="research">
+                    <h2 class="section-title">📊 Research Impact</h2>
+                    <p>Explore **Dr. Montalbo's latest research ranking** at Batangas State University.</p>
                     <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" 
-                       target="_blank" 
-                       class="about-link">
+                       target="_blank" class="about-link">
                        View Google Scholar Ranking
                     </a>
-                </p>
-            </article>
+                </div>
+            </div>
 
         </div> <!-- End .resume-container -->
     </section>
 </div> <!-- End #about-section -->
 
 <style>
-    /* General Styling for the About Section */
+    /* General Styling */
     #about-section {
         background-color: #f8f9fa;
-        padding: 50px 20px;
+        padding: 40px 20px;
         font-family: 'Arial', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full viewport height */
+        overflow: hidden; /* Prevent scrolling */
     }
 
     .resume-container {
-        max-width: 800px;
-        margin: 0 auto;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
         text-align: left;
     }
 
-    /* Profile Header */
+    /* Grid Layout */
+    .about-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
     .about-header {
+        flex: 1;
         border-left: 5px solid orange;
         padding-left: 20px;
-        margin-bottom: 30px;
+    }
+
+    .about-summary {
+        flex: 1;
     }
 
     .about-title {
-        font-size: 42px;
+        font-size: 36px;
         font-weight: bold;
         margin-bottom: 5px;
     }
 
     .subheading {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
         color: #555;
     }
 
     .institution {
-        font-size: 16px;
+        font-size: 14px;
         color: #666;
         margin-top: 5px;
     }
@@ -383,28 +384,31 @@
         color: orange;
     }
 
-    /* Content Sections */
-    .about-content {
-        margin-bottom: 30px;
+    /* Achievements & Research (Side-by-Side) */
+    .achievements-research {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .achievements, .research {
+        flex: 1;
+        padding: 15px;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
     }
 
     .section-title {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bold;
         color: #2c3e50;
         border-bottom: 2px solid #007bff;
         padding-bottom: 5px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
-    .lead {
-        font-size: 18px;
-        line-height: 1.7;
-        color: #333;
-        text-align: justify;
-    }
-
-    /* Links */
     .about-link {
         text-decoration: none;
         color: #007bff;
@@ -417,18 +421,35 @@
         text-decoration: underline;
     }
 
-    /* Responsive Design */
+    /* Responsive Fixes */
     @media screen and (max-width: 768px) {
+        #about-section {
+            height: auto; /* Allow scrolling on small screens */
+            padding: 30px;
+        }
+
+        .about-grid {
+            flex-direction: column;
+        }
+
+        .achievements-research {
+            flex-direction: column;
+        }
+
+        .about-header, .about-summary {
+            text-align: center;
+        }
+
         .about-title {
-            font-size: 36px;
+            font-size: 28px;
         }
 
-        .subheading, .institution {
-            font-size: 16px;
+        .subheading {
+            font-size: 14px;
         }
 
-        .lead {
-            font-size: 16px;
+        .section-title {
+            font-size: 18px;
         }
     }
 </style>
