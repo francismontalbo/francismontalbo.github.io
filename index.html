@@ -829,25 +829,72 @@
             </p>
 
             <!-- Journal Publications -->
-            <div class="container">
+<!-- Scoped hover effect for publication cards -->
+<style>
+  .publication-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .publication-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  }
+</style>
+
+<div class="container">
   <section id="publications">
 
     <!-- Journal Publications -->
-    <h3 class="mb-4">
+    <h3 class="mb-3">
       <i class="fas fa-book"></i> Journal Publications <strong>(20)</strong>
     </h3>
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-6">
+        <input id="journal-search" type="text"
+               class="form-control"
+               placeholder="Search journal publications…">
+      </div>
+      <div class="col-md-3">
+        <select id="journal-year-filter" class="form-select">
+          <option value="all">All Years</option>
+        </select>
+      </div>
+    </div>
     <div class="row" id="journal-publications"></div>
 
     <!-- Conference Publications -->
-    <h3 class="mb-4 mt-5">
+    <h3 class="mb-3 mt-5">
       <i class="fas fa-microphone-alt"></i> Conference Publications <strong>(8)</strong>
     </h3>
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-6">
+        <input id="conf-search" type="text"
+               class="form-control"
+               placeholder="Search conference publications…">
+      </div>
+      <div class="col-md-3">
+        <select id="conf-year-filter" class="form-select">
+          <option value="all">All Years</option>
+        </select>
+      </div>
+    </div>
     <div class="row" id="conference-publications"></div>
 
     <!-- Book Chapters -->
-    <h3 class="mb-4 mt-5">
+    <h3 class="mb-3 mt-5">
       <i class="fas fa-book-open"></i> Book Chapters <strong>(2)</strong>
     </h3>
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-6">
+        <input id="chapters-search" type="text"
+               class="form-control"
+               placeholder="Search book chapters…">
+      </div>
+      <div class="col-md-3">
+        <select id="chapters-year-filter" class="form-select">
+          <option value="all">All Years</option>
+        </select>
+      </div>
+    </div>
     <div class="row" id="book-chapters"></div>
 
   </section>
@@ -918,7 +965,7 @@ const journalData = [
     doiUrl: "https://doi.org/10.1016/j.mex.2023.102072",
     publisher: "Elsevier"
   },
-  // --- 2022 (9 items, including the duplicate) ---
+  // 2022 entries (9 items)...
   {
     year: 2022,
     authors: "FJP Montalbo",
@@ -1001,17 +1048,7 @@ const journalData = [
     doiUrl: "https://doi.org/10.1007/s00138-022-01277-y",
     publisher: "Springer"
   },
-  {
-    year: 2022,
-    authors: "FJP Montalbo",
-    title: "Truncating Fined-Tuned Vision-Based Models to Lightweight Deployable Diagnostic Tools for SARS-CoV-2 Infected Chest X-Rays and CT-Scans",
-    journal: "Multimedia Tools and Applications",
-    date: "2022",
-    doi: "10.1007/s11042-022-12484-0",
-    doiUrl: "https://doi.org/10.1007/s11042-022-12484-0",
-    publisher: "Springer"
-  },
-  // 2021
+  // 2021 entries
   {
     year: 2021,
     authors: "FJP Montalbo",
@@ -1045,7 +1082,7 @@ const journalData = [
     doiUrl: "https://doi.org/10.3837/tiis.2021.01.009",
     publisher: "KSII"
   },
-  // 2020
+  // 2020 entries
   {
     year: 2020,
     authors: "FJP Montalbo",
@@ -1174,68 +1211,101 @@ const chapterData = [
 ];
 
 // ---- Helper to build a card ----
-function makeCard(entry, type) {
-  const col = document.createElement('div');
-  col.className = 'col-md-6 mb-4';
-  let thumb = type === 'journal-publications'
-    ? 'https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png'
-    : 'https://via.placeholder.com/50';
-  let thumbStyle = type === 'journal-publications'
-    ? 'padding:10px;width:75px;height:75px;object-fit:cover;border:2px solid #ddd;'
-    : 'width:50px;height:50px;object-fit:cover;border:2px solid #ddd;';
+function initSection(data, sectionId, searchInputId, filterSelectId) {
+  const container = document.getElementById(sectionId);
+  const searchInput = document.getElementById(searchInputId);
+  const yearSelect = document.getElementById(filterSelectId);
 
-  // build inner HTML
-  let html = `
-    <div class="card publication-card shadow-sm">
-      <div class="card-body">
-        <div class="d-flex align-items-center mb-3">
-          <img src="${thumb}" alt="Thumbnail" class="me-3 rounded border" style="${thumbStyle}">
-          <h5 class="card-title mb-0">${entry.title}</h5>
-        </div>
-        <p class="card-text mt-2">
-          ${entry.authors}, “${entry.title},” 
-          ${ type==='journal-publications'
-              ? `<i>${entry.journal}</i>${ entry.volume ? `, vol. ${entry.volume}` : ''}`
-              : entry.venue 
-            }${ entry.location ? `, ${entry.location}` : '' }${ entry.pages ? `, ${ entry.pages }` : '' }
-          ${entry.date ? `, ${entry.date}` : ''}.
-          ${ entry.doi ? `doi: <a href="${entry.doiUrl}" target="_blank">${entry.doi}</a>.` : '' }
-        </p>
-        <div class="d-flex align-items-center justify-content-between">
-          ${ entry.codeUrl
-            ? `<a href="${entry.codeUrl}" target="_blank" class="btn btn-outline-secondary">
-                 <i class="fab fa-github"></i> Source Code
-               </a>`
-            : `<span></span>` }
-          ${ entry.publisher || entry.doi 
-            ? `<a href="${ entry.doiUrl || '#' }" target="_blank" title="${ entry.publisher || '' }">
-                 <img border="0" src="https://www.scimagojr.com/journal_img.php?id=24807" alt="${ entry.publisher || '' }" class="scimago-badge">
-               </a>`
-            : '' }
-        </div>
-      </div>
-      <div class="card-footer bg-white d-flex justify-content-start">
-        <span class="badge bg-dark d-flex align-items-center" style="color:white">
-          <i class="ai ai-closed-access" style="font-size:24px;color:grey"></i> Closed Access
-        </span>
-        <div class="me-3"></div>
-        ${ entry.publisher 
-          ? `<span class="badge bg-primary d-flex align-items-center" style="color:white">
-               <i class="ai ai-elsevier" style="font-size:24px;color:orange"></i> ${entry.publisher}
-             </span>`
-          : '' }
-      </div>
-    </div>`;
+  // populate year dropdown
+  const years = Array.from(new Set(data.map(d => d.year))).sort((a,b)=>b-a);
+  years.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yearSelect.appendChild(opt);
+  });
 
-  col.innerHTML = html;
-  document.getElementById(type).appendChild(col);
+  // render cards
+  function render(items) {
+    container.innerHTML = '';
+    items.forEach(entry => {
+      const col = document.createElement('div');
+      col.className = 'col-md-6 mb-4';
+      col.setAttribute('data-year', entry.year);
+      col.setAttribute('data-text', (entry.title + ' ' + entry.authors).toLowerCase());
+      col.innerHTML = `
+        <div class="card publication-card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img src="${ sectionId==='journal-publications'
+                            ? 'https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png'
+                            : 'https://via.placeholder.com/50'}"
+                   alt="Thumbnail" class="me-3 rounded border"
+                   style="${ sectionId==='journal-publications'
+                            ? 'padding:10px;width:75px;height:75px;object-fit:cover;border:2px solid #ddd;'
+                            : 'width:50px;height:50px;object-fit:cover;border:2px solid #ddd;'}">
+              <h5 class="card-title mb-0">${entry.title}</h5>
+            </div>
+            <p class="card-text mt-2">
+              ${entry.authors}, “${entry.title},”
+              ${ sectionId==='journal-publications'
+                  ? `<i>${entry.journal}</i>${entry.volume?`, vol. ${entry.volume}`:''}`
+                  : entry.venue }
+              ${entry.location?`, ${entry.location}`:''}
+              ${entry.pages?`, ${entry.pages}`:''}
+              ${entry.date?`, ${entry.date}`:''}
+              ${entry.doi?`doi: <a href="${entry.doiUrl}" target="_blank">${entry.doi}</a>.`:''}
+            </p>
+            <div class="d-flex align-items-center justify-content-between">
+              ${entry.codeUrl?`
+                <a href="${entry.codeUrl}" target="_blank" class="btn btn-outline-secondary">
+                  <i class="fab fa-github"></i> Source Code
+                </a>`:''}
+              ${entry.publisher||entry.doi?`
+                <a href="${entry.doiUrl||'#'}" target="_blank" title="${entry.publisher||''}">
+                  <img border="0"
+                       src="https://www.scimagojr.com/journal_img.php?id=24807"
+                       alt="${entry.publisher||''}" class="scimago-badge">
+                </a>`:''}
+            </div>
+          </div>
+          <div class="card-footer bg-white d-flex justify-content-start">
+            <span class="badge bg-dark d-flex align-items-center" style="color:white">
+              <i class="ai ai-closed-access" style="font-size:24px;color:grey"></i> Closed Access
+            </span>
+            <div class="me-3"></div>
+            ${entry.publisher?`
+              <span class="badge bg-primary d-flex align-items-center" style="color:white">
+                <i class="ai ai-elsevier" style="font-size:24px;color:orange"></i> ${entry.publisher}
+              </span>`:''}
+          </div>
+        </div>`;
+      container.appendChild(col);
+    });
+  }
+
+  render(data);
+
+  // filter logic
+  function applyFilter() {
+    const term = searchInput.value.trim().toLowerCase();
+    const year = yearSelect.value;
+    Array.from(container.children).forEach(col => {
+      const matchesText = col.dataset.text.includes(term);
+      const matchesYear = (year === 'all' || col.dataset.year === year);
+      col.style.display = (matchesText && matchesYear) ? 'block' : 'none';
+    });
+  }
+
+  searchInput.addEventListener('input', applyFilter);
+  yearSelect.addEventListener('change', applyFilter);
 }
 
-// ---- Render them ----
-journalData.forEach(pub => makeCard(pub, 'journal-publications'));
-conferenceData.forEach(pub => makeCard(pub, 'conference-publications'));
-chapterData.forEach(ch => makeCard(ch, 'book-chapters'));
+// initialize all three sections
+initSection(journalData,    'journal-publications',    'journal-search',    'journal-year-filter');
+initSection(conferenceData, 'conference-publications','conf-search',       'conf-year-filter');
+initSection(chapterData,    'book-chapters',           'chapters-search',   'chapters-year-filter');
 </script>
+
 
 
 <!-- CSS for Styling -->
