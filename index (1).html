@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      This document is a complete rebuild of the original francismontalbo.github.io
+      homepage. It cleans up duplicated meta tags, restructures the layout for
+      clarity, and separates concerns by moving custom styles and scripts into
+      external files. The Bootstrap 5 framework is used to modernize the UI,
+      while still including Font Awesome and Academicons for iconography.  
+    -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Unified description and keywords for improved SEO -->
+    <meta
+      name="description"
+      content="Dr. Francis Jesmar P. Montalbo is an associate professor and AI researcher specializing in deep learning, computer vision, and data science. Explore his profile, achievements, scholarly works, and contact information."
+    />
+    <meta
+      name="keywords"
+      content="Francis Jesmar Montalbo, AI researcher, Deep Learning, Computer Vision, Publications, Conference Papers, Book Chapters, Education, Experience"
+    />
+
+    <!-- SEO meta tags for social sharing and search engines -->
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://francismontalbo.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Dr. Francis Jesmar P. Montalbo | AI Researcher &amp; Educator"
+    />
+    <meta
+      property="og:description"
+      content="Explore the official page of Dr. Francis Jesmar P. Montalbo – associate professor and AI researcher specializing in deep learning, computer vision, and data science."
+    />
+    <meta property="og:url" content="https://francismontalbo.github.io/" />
+    <meta
+      property="og:image"
+      content="assets/img/profile.png"
+    />
+    <meta property="og:site_name" content="FJP Montalbo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Dr. Francis Jesmar P. Montalbo | AI Researcher &amp; Educator"
+    />
+    <meta
+      name="twitter:description"
+      content="Official page of Dr. Francis Jesmar P. Montalbo – associate professor and AI researcher."
+    />
+    <meta
+      name="twitter:image"
+      content="assets/img/profile.png"
+    />
+
+    <title>Dr. Francis Jesmar P. Montalbo | AI Researcher &amp; Educator</title>
+
+    <!-- External CSS and fonts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/academicons@1/css/academicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v6.5.0/css/all.css"
+      integrity="sha384-MI7RGtKxLfqBXBtt2bV4/QpdXxgc7QtCpmz8n1PFLiFWrRl1s6WqjNiugrHbvPei"
+      crossorigin="anonymous"
+    />
+    <!-- AOS (Animate on Scroll) CSS for scroll animations -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@next/dist/aos.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://code.iconify.design/iconify.min.js"></script>
+
+
+    <!-- Structured data for Google Knowledge Graph -->
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Person",
+        "name": "Francis Jesmar P. Montalbo",
+        "jobTitle": "Associate Professor",
+        "description": "Scientist and educator specializing in artificial intelligence and deep learning.",
+        "url": "https://francismontalbo.github.io/",
+        "sameAs": [
+          "https://www.linkedin.com/in/sirjmmontalbo/",
+          "https://scholar.google.com/citations?user=PV8dJDkAAAAJ",
+          "https://orcid.org/0000-0002-1493-5080"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Batangas State University - The National Engineering University",
+          "url": "https://batstate-u.edu.ph/"
+        },
+        "knowsAbout": [
+          "Computer Vision",
+          "Deep Learning",
+          "Data Science",
+          "Artificial Intelligence"
+        ]
+      }
+    </script>
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="70">
+    <!-- Navigation Bar -->
+    <nav
+      id="mainNav"
+      class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#about">FJP Montalbo</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#about"
+                ><i class="fa-solid fa-user me-1"></i>About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#socials"
+                ><i class="fa-solid fa-users me-1"></i>Socials</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#experience"
+                ><i class="fa-solid fa-briefcase me-1"></i>Experience</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#education"
+                ><i class="fa-solid fa-graduation-cap me-1"></i>Education</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#skills"
+                ><i class="fa-solid fa-laptop-code me-1"></i>Skills</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#publications"
+                ><i class="fa-solid fa-book-open me-1"></i>Works</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#achievements"
+                ><i class="fa-solid fa-award me-1"></i>Achievements</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact"
+                ><i class="fa-solid fa-envelope me-1"></i>Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero / About Section -->
+    <section id="about" class="section-padding">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-5 text-center text-md-start mb-4 mb-md-0">
+            <img
+              src="assets/img/profile.png"
+              class="img-fluid rounded-circle shadow"
+              alt="Profile photo"
+              width="200"
+              height="200"
+            />
+          </div>
+          <div class="col-md-7">
+            <h1 class="mb-2">
+              <span class="text-highlight">Dr.</span> Francis Jesmar P.
+              <span class="text-primary">Montalbo</span>
+            </h1>
+            <!-- Professional roles tagline with icons for a visual touch -->
+            <p class="lead fw-semibold mb-2 d-flex flex-wrap gap-2">
+              <span>
+                <i class="fa-solid fa-chalkboard-teacher text-highlight me-1"></i>
+                Associate Professor
+              </span>
+              <span class="text-muted">|</span>
+              <span>
+                <i class="fa-solid fa-flask text-highlight me-1"></i>
+                Research Scientist
+              </span>
+              <span class="text-muted">|</span>
+              <span>
+                <i class="fa-solid fa-brain text-highlight me-1"></i>
+                AI &amp; Deep Learning Specialist
+              </span>
+            </p>
+            <p class="mb-3">
+              Based at Batangas State University, Dr. Montalbo conducts
+              cutting-edge research in artificial intelligence, machine
+              learning, and biomedical signal processing. He mentors the next
+              generation of researchers and regularly publishes in
+              top-tier journals and conferences.
+            </p>
+            <div class="row">
+              <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold">
+                      <i class="fas fa-award text-highlight me-2"></i>
+                      Recognitions
+                    </h5>
+                    <p class="card-text">
+                      Included in Elsevier &amp; Stanford’s Top 2% Most-Cited
+                      Scientists (2019‑2024).
+                    </p>
+                    <a
+                      href="https://topresearcherslist.com/Home/Profile/922022"
+                      target="_blank"
+                      class="btn btn-sm btn-primary"
+                      >Learn more</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold">
+                      <i class="fas fa-chart-line text-highlight me-2"></i>
+                      Research Impact
+                    </h5>
+                    <p class="card-text">
+                      View Dr. Montalbo’s ranking and citation metrics on
+                      Google Scholar.
+                    </p>
+                    <a
+                      href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ"
+                      target="_blank"
+                      class="btn btn-sm btn-primary"
+                      >See ranking</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Socials Section -->
+    <section id="socials" class="section-padding bg-light" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-users text-highlight me-2"></i>Socials
+        </h2>
+        <p>
+          For research collaborations and professional networking, connect via
+          the platforms below.
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="mb-3 fw-semibold">Research Profiles</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <i class="ai ai-scopus-square text-highlight me-2"></i>
+                <a
+                  href="https://www.scopus.com/authid/detail.uri?authorId=57212309186"
+                  target="_blank"
+                  >SCOPUS Profile</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="ai ai-google-scholar-square text-primary me-2"></i>
+                <a
+                  href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ"
+                  target="_blank"
+                  >Google Scholar</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="ai ai-orcid-square text-success me-2"></i>
+                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank"
+                  >ORCID</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="ai ai-clarivate-square text-purple me-2"></i>
+                <a
+                  href="https://www.webofscience.com/wos/author/record/2163797"
+                  target="_blank"
+                  >Web of Science</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="iconify me-2" data-icon="vs:butterfly"></i>
+                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank"
+                  >Kudos</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="iconify me-2" data-icon="mdi:checkbox-blank"></i>
+                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank"
+                  >Loop Frontier</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="iconify me-2" data-icon="mdi:checkbox-blank-circle-outline"></i>
+                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank"
+                  >Science Open</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h4 class="mb-3 fw-semibold">Social Media</h4>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/francismontalbo" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://twitter.com/inpeacewithai" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="social-icon"><i class="fab fa-researchgate"></i></a>
+              <a href="https://www.kaggle.com/francismon" target="_blank" class="social-icon"><i class="fab fa-kaggle"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section-padding" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-briefcase text-highlight me-2"></i>Experience
+        </h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <h5 class="mb-1">Associate Professor</h5>
+              <div class="text-muted mb-1">
+                Batangas State University – CICS
+              </div>
+              <small class="text-secondary">March&nbsp;2024 – Present</small>
+              <p class="mb-0">
+                <a href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136" target="_blank">Institutional Profile</a>
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <h5 class="mb-1">Researcher</h5>
+              <div class="text-muted mb-1">
+                Batangas State University – CICS
+              </div>
+              <small class="text-secondary">Jan&nbsp;2017 – Present</small>
+              <p class="mb-0">
+                <a href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136" target="_blank">Institutional Profile</a>
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <h5 class="mb-1">Faculty</h5>
+              <div class="text-muted mb-1">
+                Batangas State University – CICS
+              </div>
+              <small class="text-secondary">Jun&nbsp;2013 – Present</small>
+              <p class="mb-0">
+                <a href="https://batstate-u.edu.ph/campuses/alangilan/cics/faculty/" target="_blank">Institutional Profile</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section-padding bg-light" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-graduation-cap text-highlight me-2"></i>Education
+        </h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title mb-1">
+                  Doctor in Information Technology
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Technological Institute of the Philippines–Manila
+                </h6>
+                <p class="card-text"><em>with Highest Honors</em></p>
+                <span class="badge bg-primary">Class of 2021</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title mb-1">
+                  Master of Science in Information Technology
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">Batangas State University</h6>
+                <span class="badge bg-primary">Class of 2018</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title mb-1">
+                  Bachelor of Science in Information Technology
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">Batangas State University</h6>
+                <span class="badge bg-primary">Class of 2012</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section-padding" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-tools text-highlight me-2"></i>Skills
+        </h2>
+        <h5 class="fw-semibold mt-4">Programming Languages &amp; Tools</h5>
+        <div class="d-flex flex-wrap gap-4 mb-4">
+          <i class="iconify" data-icon="logos:python" title="Python" style="font-size:48px"></i>
+          <i class="iconify" data-icon="logos:c" title="C" style="font-size:48px"></i>
+          <i class="iconify" data-icon="bxl:c-plus-plus" title="C++" style="font-size:48px"></i>
+          <i class="iconify" data-icon="vscode-icons:file-type-html" title="HTML" style="font-size:48px"></i>
+          <i class="iconify" data-icon="vscode-icons:file-type-css" title="CSS" style="font-size:48px"></i>
+          <i class="iconify" data-icon="vscode-icons:file-type-js-official" title="JavaScript" style="font-size:48px"></i>
+          <i class="iconify" data-icon="vscode-icons:file-type-django" title="Django" style="font-size:48px"></i>
+          <i class="iconify" data-icon="logos-flask" title="Flask" style="font-size:48px"></i>
+          <i class="iconify" data-icon="vscode-icons:file-type-pgsql" title="PostgreSQL" style="font-size:48px"></i>
+          <i class="iconify" data-icon="logos-tensorflow" title="TensorFlow" style="font-size:48px"></i>
+          <i class="iconify" data-icon="simple-icons:keras" title="Keras" style="font-size:48px; color:red;"></i>
+          <i class="iconify" data-icon="logos:opencv" title="OpenCV" style="font-size:48px"></i>
+          <i class="iconify" data-icon="simple-icons:scikit-learn" title="Scikit-Learn" style="font-size:48px; color:orange;"></i>
+        </div>
+        <h5 class="fw-semibold mt-4">Capabilities</h5>
+        <ul class="fa-ul">
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-database text-highlight"></i></span>
+            Data wrangling (structured &amp; unstructured)
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-x-ray text-highlight"></i></span>
+            Medical image analysis &amp; processing
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-brain text-highlight"></i></span>
+            Deep learning for vision &amp; language
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-chart-area text-highlight"></i></span>
+            Data science, analytics &amp; evaluation
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-book-open text-highlight"></i></span>
+            Research development, writing &amp; publication
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-laptop-code text-highlight"></i></span>
+            Web development &amp; deployment
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-network-wired text-highlight"></i></span>
+            Networking, security &amp; administration
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fas fa-chalkboard-teacher text-highlight"></i></span>
+            Public speaking &amp; teaching
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Publications/Scholarly Works Section -->
+    <section id="publications" class="section-padding bg-light" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-scroll text-highlight me-2"></i>Scholarly Works
+        </h2>
+        <p class="mb-4">
+          Browse peer‑reviewed journal articles, conference papers and book
+          chapters authored by Dr. Montalbo. Use the search boxes and year
+          filters to narrow down the list.
+        </p>
+        <div class="mb-5">
+          <h4 class="mb-3"><i class="fas fa-book me-2"></i>Journal Publications (<span id="journal-count"></span>)</h4>
+          <div class="row g-3 mb-3 align-items-center">
+            <div class="col-md-6">
+              <input
+                type="text"
+                id="journal-search"
+                class="form-control"
+                placeholder="Search journal publications..."
+              />
+            </div>
+            <div class="col-md-3">
+              <select id="journal-year-filter" class="form-select">
+                <option value="all">All Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" id="journal-publications"></div>
+        </div>
+        <div class="mb-5">
+          <h4 class="mb-3"><i class="fas fa-microphone-alt me-2"></i>Conference Publications (<span id="conf-count"></span>)</h4>
+          <div class="row g-3 mb-3 align-items-center">
+            <div class="col-md-6">
+              <input
+                type="text"
+                id="conf-search"
+                class="form-control"
+                placeholder="Search conference publications..."
+              />
+            </div>
+            <div class="col-md-3">
+              <select id="conf-year-filter" class="form-select">
+                <option value="all">All Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" id="conference-publications"></div>
+        </div>
+        <div>
+          <h4 class="mb-3"><i class="fas fa-book-open me-2"></i>Book Chapters (<span id="chapters-count"></span>)</h4>
+          <div class="row g-3 mb-3 align-items-center">
+            <div class="col-md-6">
+              <input
+                type="text"
+                id="chapters-search"
+                class="form-control"
+                placeholder="Search book chapters..."
+              />
+            </div>
+            <div class="col-md-3">
+              <select id="chapters-year-filter" class="form-select">
+                <option value="all">All Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" id="book-chapters"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section-padding" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-award text-highlight me-2"></i>Achievements
+        </h2>
+        <h4 class="mb-3 fw-semibold">Certifications &amp; Qualifications</h4>
+        <ul class="fa-ul">
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            IEEE Senior Member
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            Huawei Certified Network Associate (HCNA) – Routing &amp; Switching
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            Huawei Certified Academy Instructor (HCAI) – Routing &amp; Switching
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            National Research Council of the Philippines Member
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            Certified Cisco Networking Academy Instructor
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            IT Passport (Japan Information Technology Standards Examination)
+          </li>
+          <li class="mb-2">
+            <span class="fa-li"><i class="fa fa-certificate text-warning"></i></span>
+            Computer Systems Servicing National Certificate II
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding bg-light" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading">
+          <i class="fas fa-envelope text-highlight me-2"></i>Contact
+        </h2>
+        <ul class="fa-ul">
+          <li class="mb-3">
+            <span class="fa-li"><i class="ai ai-ieee ai-3x text-highlight"></i></span>
+            <a href="mailto:francismontalbo@ieee.org">francismontalbo@ieee.org</a>
+          </li>
+          <li class="mb-3">
+            <span class="fa-li"><i class="fas fa-envelope text-highlight"></i></span>
+            <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph">francisjesmar.montalbo@g.batstate-u.edu.ph</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-primary text-white text-center">
+      <div class="container">
+        <small>&copy; <span id="year"></span> Francis Jesmar P. Montalbo. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button
+      id="backToTop"
+      class="back-to-top btn btn-primary rounded-circle"
+      aria-label="Back to top"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS library for scroll animations -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!-- Custom scripts -->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
