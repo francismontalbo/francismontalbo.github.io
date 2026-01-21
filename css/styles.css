@@ -13,7 +13,6 @@
 }
 
 body {
-  /* Inter provides clean readability, while Poppins is used for headings */
   font-family: 'Inter', sans-serif;
   color: var(--text-color);
   scroll-behavior: smooth;
@@ -191,39 +190,7 @@ footer {
   transform: translateY(0);
 }
 
-/* ----------------------------------- */
-/* Modern enhancements and micro-effects */
-
-/* Hero section subtle gradient to add depth without overwhelming */
+/* Hero section subtle gradient */
 #about {
   background: linear-gradient(135deg, #fdfdfd 0%, #f0f4f8 100%);
-}
-
-/* Nav link icons sizing removed to revert to text-only navigation */
-.navbar-nav .nav-link i {
-  /* intentionally left blank; icons removed */
-}
-
-/* Global card hover effect removed to maintain original feel */
-.card {
-  /* no additional transition beyond default */
-}
-.card:hover {
-  /* no scale or shadow; let publication cards handle their own hover */
-}
-
-/* Timeline dot hover interaction removed to keep clean timeline */
-.timeline-item:hover::before {
-  /* intentionally blank */
-}
-
-/* Capabilities list hover color removed to retain default coloring */
-.fa-ul > li:hover i {
-  /* intentionally blank */
-}
-
-/* Restore original publication card hover effect */
-.publication-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
