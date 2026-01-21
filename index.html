@@ -2,16 +2,14 @@
 <html lang="en">
   <head>
     <!--
-      This document is a complete rebuild of the original francismontalbo.github.io
+      This document is a rebuild of the original francismontalbo.github.io
       homepage. It cleans up duplicated meta tags, restructures the layout for
       clarity, and separates concerns by moving custom styles and scripts into
-      external files. The Bootstrap 5 framework is used to modernize the UI,
-      while still including Font Awesome and Academicons for iconography.  
+      external files. Bootstrap 5 is used to modernize the UI while still
+      including Font Awesome and Academicons for iconography.
     -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Unified description and keywords for improved SEO -->
     <meta
       name="description"
       content="Dr. Francis Jesmar P. Montalbo is an associate professor and AI researcher specializing in deep learning, computer vision, and data science. Explore his profile, achievements, scholarly works, and contact information."
@@ -20,8 +18,6 @@
       name="keywords"
       content="Francis Jesmar Montalbo, AI researcher, Deep Learning, Computer Vision, Publications, Conference Papers, Book Chapters, Education, Experience"
     />
-
-    <!-- SEO meta tags for social sharing and search engines -->
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://francismontalbo.github.io/" />
     <meta property="og:type" content="website" />
@@ -34,10 +30,7 @@
       content="Explore the official page of Dr. Francis Jesmar P. Montalbo – associate professor and AI researcher specializing in deep learning, computer vision, and data science."
     />
     <meta property="og:url" content="https://francismontalbo.github.io/" />
-    <meta
-      property="og:image"
-      content="assets/img/profile.png"
-    />
+    <meta property="og:image" content="assets/img/profile.png" />
     <meta property="og:site_name" content="FJP Montalbo" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -48,11 +41,7 @@
       name="twitter:description"
       content="Official page of Dr. Francis Jesmar P. Montalbo – associate professor and AI researcher."
     />
-    <meta
-      name="twitter:image"
-      content="assets/img/profile.png"
-    />
-
+    <meta name="twitter:image" content="assets/img/profile.png" />
     <title>Dr. Francis Jesmar P. Montalbo | AI Researcher &amp; Educator</title>
 
     <!-- External CSS and fonts -->
@@ -70,20 +59,13 @@
       integrity="sha384-MI7RGtKxLfqBXBtt2bV4/QpdXxgc7QtCpmz8n1PFLiFWrRl1s6WqjNiugrHbvPei"
       crossorigin="anonymous"
     />
-
-    <!-- Modern Google fonts for improved readability and contemporary feel -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- AOS (Animate on Scroll) CSS for scroll animations -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/aos@next/dist/aos.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="css/styles.css" />
     <script src="https://code.iconify.design/iconify.min.js"></script>
-
 
     <!-- Structured data for Google Knowledge Graph -->
     <script type="application/ld+json">
@@ -104,12 +86,7 @@
           "name": "Batangas State University - The National Engineering University",
           "url": "https://batstate-u.edu.ph/"
         },
-        "knowsAbout": [
-          "Computer Vision",
-          "Deep Learning",
-          "Data Science",
-          "Artificial Intelligence"
-        ]
+        "knowsAbout": ["Computer Vision", "Deep Learning", "Data Science", "Artificial Intelligence"]
       }
     </script>
   </head>
@@ -135,28 +112,45 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
+              <!-- Added icons for better visual cues -->
+              <a class="nav-link" href="#about"
+                ><i class="fas fa-user me-1"></i> About</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#socials">Socials</a>
+              <a class="nav-link" href="#socials"
+                ><i class="fas fa-users me-1"></i> Socials</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#experience">Experience</a>
+              <a class="nav-link" href="#experience"
+                ><i class="fas fa-briefcase me-1"></i> Experience</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#education">Education</a>
+              <a class="nav-link" href="#education"
+                ><i class="fas fa-graduation-cap me-1"></i> Education</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#skills">Skills</a>
+              <a class="nav-link" href="#skills"
+                ><i class="fas fa-tools me-1"></i> Skills</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#publications">Works</a>
+              <a class="nav-link" href="#publications"
+                ><i class="fas fa-scroll me-1"></i> Works</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#achievements">Achievements</a>
+              <a class="nav-link" href="#achievements"
+                ><i class="fas fa-award me-1"></i> Achievements</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
+              <a class="nav-link" href="#contact"
+                ><i class="fas fa-envelope me-1"></i> Contact</a
+              >
             </li>
           </ul>
         </div>
@@ -181,29 +175,38 @@
               <span class="text-highlight">Dr.</span> Francis Jesmar P.
               <span class="text-primary">Montalbo</span>
             </h1>
-            <!-- Roles tagline (static) -->
             <p class="lead fw-semibold mb-2">
-              Associate Professor | Research Scientist | AI &amp; Deep Learning
-              Specialist
+              Associate Professor | Research Scientist | AI &amp; Deep Learning Specialist
+            </p>
+            <!-- Updated summary to retain full biographical details -->
+            <p class="mb-2">
+              Dr. Montalbo completed his Doctorate in Information Technology with
+              highest honors at the Technological Institute of the
+              Philippines–Manila and now serves as an Associate Professor &amp;
+              Research Scientist at Batangas State University.
+            </p>
+            <p class="mb-2">
+              He actively contributes to artificial intelligence research,
+              particularly in deep learning and biomedical signal
+              processing. His work appears in top‑tier journals and
+              conferences, and he mentors the next generation of researchers.
             </p>
             <p class="mb-3">
-              Based at Batangas State University, Dr. Montalbo conducts
-              cutting-edge research in artificial intelligence, machine
-              learning, and biomedical signal processing. He mentors the next
-              generation of researchers and regularly publishes in
-              top-tier journals and conferences.
+              Dr. Montalbo is also a reviewer for Elsevier, Springer, ACM,
+              Wiley, IEEE and other major publishers, and currently serves as
+              an associate editor for a university‑based research journal in
+              the Philippines.
             </p>
             <div class="row">
               <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card border-0 shadow-sm h-100">
                   <div class="card-body">
                     <h5 class="card-title fw-bold">
-                      <i class="fas fa-award text-highlight me-2"></i>
-                      Recognitions
+                      <i class="fas fa-award text-highlight me-2"></i> Recognitions
                     </h5>
                     <p class="card-text">
-                      Included in Elsevier &amp; Stanford’s Top 2% Most-Cited
-                      Scientists (2019‑2024).
+                      Included in Elsevier &amp; Stanford’s Top 2% Most‑Cited
+                      Scientists (2019–2024).
                     </p>
                     <a
                       href="https://topresearcherslist.com/Home/Profile/922022"
@@ -277,7 +280,7 @@
                 >
               </li>
               <li class="mb-2">
-                <i class="ai ai-clarivate-square text-purple me-2"></i>
+                <i class="ai ai-clarivate-square" style="color: purple; margin-right:0.5rem"></i>
                 <a
                   href="https://www.webofscience.com/wos/author/record/2163797"
                   target="_blank"
@@ -286,19 +289,25 @@
               </li>
               <li class="mb-2">
                 <i class="iconify me-2" data-icon="vs:butterfly"></i>
-                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank"
+                <a
+                  href="https://www.growkudos.com/profile/francis_montalbo"
+                  target="_blank"
                   >Kudos</a
                 >
               </li>
               <li class="mb-2">
                 <i class="iconify me-2" data-icon="mdi:checkbox-blank"></i>
-                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank"
+                <a
+                  href="https://loop.frontiersin.org/people/1267355/overview"
+                  target="_blank"
                   >Loop Frontier</a
                 >
               </li>
               <li class="mb-2">
                 <i class="iconify me-2" data-icon="mdi:checkbox-blank-circle-outline"></i>
-                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank"
+                <a
+                  href="https://www.scienceopen.com/user/francismontalbo"
+                  target="_blank"
                   >Science Open</a
                 >
               </li>
@@ -307,11 +316,36 @@
           <div class="col-md-6">
             <h4 class="mb-3 fw-semibold">Social Media</h4>
             <div class="d-flex flex-wrap gap-3">
-              <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-              <a href="https://github.com/francismontalbo" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-              <a href="https://twitter.com/inpeacewithai" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
-              <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="social-icon"><i class="fab fa-researchgate"></i></a>
-              <a href="https://www.kaggle.com/francismon" target="_blank" class="social-icon"><i class="fab fa-kaggle"></i></a>
+              <a
+                href="https://www.linkedin.com/in/sirjmmontalbo/"
+                target="_blank"
+                class="social-icon"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="https://github.com/francismontalbo"
+                target="_blank"
+                class="social-icon"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a
+                href="https://twitter.com/inpeacewithai"
+                target="_blank"
+                class="social-icon"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo"
+                target="_blank"
+                class="social-icon"
+                ><i class="fab fa-researchgate"></i
+              ></a>
+              <a
+                href="https://www.kaggle.com/francismon"
+                target="_blank"
+                class="social-icon"
+                ><i class="fab fa-kaggle"></i
+              ></a>
             </div>
           </div>
         </div>
@@ -333,7 +367,11 @@
               </div>
               <small class="text-secondary">March&nbsp;2024 – Present</small>
               <p class="mb-0">
-                <a href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136" target="_blank">Institutional Profile</a>
+                <a
+                  href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136"
+                  target="_blank"
+                  >Institutional Profile</a
+                >
               </p>
             </div>
           </div>
@@ -345,7 +383,11 @@
               </div>
               <small class="text-secondary">Jan&nbsp;2017 – Present</small>
               <p class="mb-0">
-                <a href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136" target="_blank">Institutional Profile</a>
+                <a
+                  href="https://batstate-u.edu.ph/research-and-extension/research-culture/faculty-experts/faculty-experts-profile-page/?do=profile&id=136"
+                  target="_blank"
+                  >Institutional Profile</a
+                >
               </p>
             </div>
           </div>
@@ -357,7 +399,11 @@
               </div>
               <small class="text-secondary">Jun&nbsp;2013 – Present</small>
               <p class="mb-0">
-                <a href="https://batstate-u.edu.ph/campuses/alangilan/cics/faculty/" target="_blank">Institutional Profile</a>
+                <a
+                  href="https://batstate-u.edu.ph/campuses/alangilan/cics/faculty/"
+                  target="_blank"
+                  >Institutional Profile</a
+                >
               </p>
             </div>
           </div>
@@ -392,7 +438,9 @@
                 <h5 class="card-title mb-1">
                   Master of Science in Information Technology
                 </h5>
-                <h6 class="card-subtitle mb-2 text-muted">Batangas State University</h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Batangas State University
+                </h6>
                 <span class="badge bg-primary">Class of 2018</span>
               </div>
             </div>
@@ -403,7 +451,9 @@
                 <h5 class="card-title mb-1">
                   Bachelor of Science in Information Technology
                 </h5>
-                <h6 class="card-subtitle mb-2 text-muted">Batangas State University</h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Batangas State University
+                </h6>
                 <span class="badge bg-primary">Class of 2012</span>
               </div>
             </div>
@@ -432,7 +482,12 @@
           <i class="iconify" data-icon="logos-tensorflow" title="TensorFlow" style="font-size:48px"></i>
           <i class="iconify" data-icon="simple-icons:keras" title="Keras" style="font-size:48px; color:red;"></i>
           <i class="iconify" data-icon="logos:opencv" title="OpenCV" style="font-size:48px"></i>
-          <i class="iconify" data-icon="simple-icons:scikit-learn" title="Scikit-Learn" style="font-size:48px; color:orange;"></i>
+          <i
+            class="iconify"
+            data-icon="simple-icons:scikit-learn"
+            title="Scikit-Learn"
+            style="font-size:48px; color:orange;"
+          ></i>
         </div>
         <h5 class="fw-semibold mt-4">Capabilities</h5>
         <ul class="fa-ul">
@@ -484,7 +539,10 @@
           filters to narrow down the list.
         </p>
         <div class="mb-5">
-          <h4 class="mb-3"><i class="fas fa-book me-2"></i>Journal Publications (<span id="journal-count"></span>)</h4>
+          <h4 class="mb-3">
+            <i class="fas fa-book me-2"></i>Journal Publications (
+            <span id="journal-count"></span>)
+          </h4>
           <div class="row g-3 mb-3 align-items-center">
             <div class="col-md-6">
               <input
@@ -503,7 +561,10 @@
           <div class="row" id="journal-publications"></div>
         </div>
         <div class="mb-5">
-          <h4 class="mb-3"><i class="fas fa-microphone-alt me-2"></i>Conference Publications (<span id="conf-count"></span>)</h4>
+          <h4 class="mb-3">
+            <i class="fas fa-microphone-alt me-2"></i>Conference Publications (
+            <span id="conf-count"></span>)
+          </h4>
           <div class="row g-3 mb-3 align-items-center">
             <div class="col-md-6">
               <input
@@ -522,7 +583,10 @@
           <div class="row" id="conference-publications"></div>
         </div>
         <div>
-          <h4 class="mb-3"><i class="fas fa-book-open me-2"></i>Book Chapters (<span id="chapters-count"></span>)</h4>
+          <h4 class="mb-3">
+            <i class="fas fa-book-open me-2"></i>Book Chapters (
+            <span id="chapters-count"></span>)
+          </h4>
           <div class="row g-3 mb-3 align-items-center">
             <div class="col-md-6">
               <input
@@ -596,7 +660,9 @@
           </li>
           <li class="mb-3">
             <span class="fa-li"><i class="fas fa-envelope text-highlight"></i></span>
-            <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph">francisjesmar.montalbo@g.batstate-u.edu.ph</a>
+            <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph"
+              >francisjesmar.montalbo@g.batstate-u.edu.ph</a
+            >
           </li>
         </ul>
       </div>
@@ -605,7 +671,10 @@
     <!-- Footer -->
     <footer class="py-4 bg-primary text-white text-center">
       <div class="container">
-        <small>&copy; <span id="year"></span> Francis Jesmar P. Montalbo. All rights reserved.</small>
+        <small
+          >&copy; <span id="year"></span> Francis Jesmar P. Montalbo. All rights
+          reserved.</small
+        >
       </div>
     </footer>
 
