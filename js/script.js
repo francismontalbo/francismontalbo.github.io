@@ -1,11 +1,12 @@
 /*
  * Custom JavaScript for francismontalbo.github.io remake.
  * This script populates the publications section dynamically using
- * arrays defined below and provides search and year-filter functionality.
+ * arrays defined below and provides search and year‑filter functionality.
  */
 
 // Data arrays for scholarly works. Each object can contain optional
-// properties such as volume, pages, location, doi, doiUrl, codeUrl, and publisher.
+// properties such as volume, pages, location, doi, doiUrl, codeUrl,
+// publisher, access ("open" or "closed"), and pubmedUrl (link to PubMed if available).
 const journalData = [
   {
     year: 2025,
@@ -348,7 +349,7 @@ const chapterData = [
   }
 ];
 
-// Mapping of publishers to custom badge classes for color coding
+// Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
   'Elsevier': 'badge-elsevier',
   'Springer': 'badge-springer',
@@ -361,13 +362,25 @@ const publisherBadgeMap = {
   'IEEE': 'badge-ieee'
 };
 
-/*
+// Mapping of publishers to Academicon icon classes
+const publisherIconMap = {
+  'Elsevier': 'ai ai-elsevier',
+  'Springer': 'ai ai-springer',
+  'IEEE': 'ai ai-ieee'
+};
+
+// Academicons icons for PubMed and access type
+const pubmedIconClass = 'ai ai-pubmed';
+const openAccessIconClass = 'ai ai-open-access';
+const closedAccessIconClass = 'ai ai-closed-access';
+
+/**
  * Populate a publications section with data, search box and year filter.
- * data: array of objects representing publications
- * containerId: DOM element id for the card container
- * searchId: DOM id for text input used to search within titles and authors
- * filterId: DOM id for select element used to filter by year
- * countId: DOM id of span where total count should be displayed
+ * @param {Array} data - array of publication objects
+ * @param {string} containerId - id of container for cards
+ * @param {string} searchId - id of search input
+ * @param {string} filterId - id of year filter select
+ * @param {string} countId - id of span to show total count (optional)
  */
 function initSection(data, containerId, searchId, filterId, countId) {
   const container = document.getElementById(containerId);
@@ -375,7 +388,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
   const yearSelect = document.getElementById(filterId);
   const countSpan = document.getElementById(countId);
 
-  // populate year filter with unique years sorted descending
+  // Populate year dropdown with unique years
   const years = Array.from(new Set(data.map((d) => d.year))).sort((a, b) => b - a);
   years.forEach((y) => {
     const opt = document.createElement('option');
@@ -384,27 +397,23 @@ function initSection(data, containerId, searchId, filterId, countId) {
     yearSelect.appendChild(opt);
   });
 
-  // display total count
+  // Show total count if applicable
   if (countSpan) {
     countSpan.textContent = data.length;
   }
 
-  // helper to render a single publication entry
+  // Render publication cards
   function renderCards(items) {
     container.innerHTML = '';
     items.forEach((entry) => {
       const col = document.createElement('div');
       col.className = 'col-md-6';
       col.setAttribute('data-year', entry.year);
-      col.setAttribute(
-        'data-text',
-        (entry.title + ' ' + entry.authors).toLowerCase()
-      );
-      // Build card HTML
+      col.setAttribute('data-text', (entry.title + ' ' + entry.authors).toLowerCase());
       let html = '<div class="publication-card card h-100">';
       html += '<div class="card-body">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
-      // Compose citation string
+      // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
         citation += `<em>${entry.journal}</em>`;
@@ -420,29 +429,42 @@ function initSection(data, containerId, searchId, filterId, countId) {
       }
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
-      // action badges: publisher, code link
+      // Build badges
       html += '<div class="d-flex flex-wrap gap-2">';
-      // code button: apply custom class for styling
+      // Code badge (GitHub icon from Font Awesome)
       if (entry.codeUrl) {
-      html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github me-1"></i>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github me-1"></i>Code</a>`;
       }
-      // publisher badge with color coding
+      // Publisher badge with Academicon icon if available
       if (entry.publisher) {
         const pubClass = publisherBadgeMap[entry.publisher] || 'badge-default';
-        html += `<span class="badge ${pubClass}">${entry.publisher}</span>`;
+        const pubIcon = publisherIconMap[entry.publisher];
+        if (pubIcon) {
+          html += `<span class="badge ${pubClass}"><i class="${pubIcon} me-1"></i>${entry.publisher}</span>`;
+        } else {
+          html += `<span class="badge ${pubClass}">${entry.publisher}</span>`;
+        }
       }
-      html += '</div>';
-      html += '</div>'; // card-body
-      html += '</div>'; // card
+      // PubMed badge if provided
+      if (entry.pubmedUrl) {
+        html += `<a href="${entry.pubmedUrl}" target="_blank" class="badge badge-default"><i class="${pubmedIconClass} me-1"></i>PubMed</a>`;
+      }
+      // Access badge (open or closed; default closed)
+      if (entry.access === 'open') {
+        html += `<span class="badge badge-default"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
+      } else {
+        html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Closed Access</span>`;
+      }
+      html += '</div></div></div>';
       col.innerHTML = html;
       container.appendChild(col);
     });
   }
 
-  // initial render
+  // Initial render
   renderCards(data);
 
-  // apply filter on input or select change
+  // Search and filter logic
   function applyFilter() {
     const term = searchInput.value.trim().toLowerCase();
     const year = yearSelect.value;
@@ -457,37 +479,18 @@ function initSection(data, containerId, searchId, filterId, countId) {
   yearSelect.addEventListener('change', applyFilter);
 }
 
-// Initialize all publication sections once DOM is ready. This helper ensures
-// initialization runs whether or not the DOMContentLoaded event has already fired.
+// Initialise publications once DOM is ready
 function initializePublications() {
-  initSection(
-    journalData,
-    'journal-publications',
-    'journal-search',
-    'journal-year-filter',
-    'journal-count'
-  );
-  initSection(
-    conferenceData,
-    'conference-publications',
-    'conf-search',
-    'conf-year-filter',
-    'conf-count'
-  );
-  initSection(
-    chapterData,
-    'book-chapters',
-    'chapters-search',
-    'chapters-year-filter',
-    'chapters-count'
-  );
+  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count');
+  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count');
+  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count');
 
-  // Initialize AOS animations if available
+  // AOS animations
   if (typeof AOS !== 'undefined') {
     AOS.init({ once: true });
   }
 
-  // Back-to-top button functionality
+  // Back‑to‑top button
   const backToTopBtn = document.getElementById('backToTop');
   if (backToTopBtn) {
     window.addEventListener('scroll', () => {
@@ -502,14 +505,14 @@ function initializePublications() {
     });
   }
 
-  // Set current year in footer
+  // Footer year
   const yearElement = document.getElementById('year');
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
 }
 
-// If the DOM is still loading, defer initialization to DOMContentLoaded; otherwise, run immediately
+// Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializePublications);
 } else {
