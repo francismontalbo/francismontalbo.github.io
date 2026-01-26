@@ -720,5 +720,16 @@
     <!-- Custom Script for publications -->
     <!-- Load custom publications script with defer to ensure DOM is parsed before execution -->
     <script src="js/scripts.js" defer></script>
+    <!-- Inline publications script -->
+    <script>
+      /* arrays and helper functions from scripts.js here */
+      …
+      // If the DOM is still loading, defer initialisation to DOMContentLoaded; otherwise run immediately.
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializePublications);
+      } else {
+        initializePublications();
+      }
+    </script>
   </body>
 </html>
