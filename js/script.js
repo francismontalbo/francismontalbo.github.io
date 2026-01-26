@@ -7,6 +7,7 @@
 // Data arrays for scholarly works. Each object can contain optional
 // properties such as volume, pages, location, doi, doiUrl, codeUrl,
 // publisher, access ("open" or "closed"), and pubmedUrl (link to PubMed if available).
+
 const journalData = [
   {
     year: 2025,
@@ -369,6 +370,13 @@ const publisherIconMap = {
   'IEEE': 'ai ai-ieee'
 };
 
+// Conference venue icon map for conference badges
+const conferenceIconMap = {
+  'IEEE': 'ai ai-ieee',
+  'ACM': 'ai ai-acm',
+  'Springer': 'ai ai-springer'
+};
+
 // Academicons icons for PubMed and access type
 const pubmedIconClass = 'ai ai-pubmed';
 const openAccessIconClass = 'ai ai-open-access';
@@ -431,11 +439,11 @@ function initSection(data, containerId, searchId, filterId, countId) {
       html += `<p class="card-text">${citation}</p>`;
       // Build badges
       html += '<div class="d-flex flex-wrap gap-2">';
-      // Code badge (GitHub icon from Font Awesome)
+      // Code badge with Iconify GitHub icon
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github me-1"></i>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><span class="iconify me-1" data-icon="mdi:github"></span>Code</a>`;
       }
-      // Publisher badge with Academicon icon if available
+      // Publisher badge with Academicons icon if available
       if (entry.publisher) {
         const pubClass = publisherBadgeMap[entry.publisher] || 'badge-default';
         const pubIcon = publisherIconMap[entry.publisher];
@@ -455,7 +463,17 @@ function initSection(data, containerId, searchId, filterId, countId) {
       } else {
         html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Closed Access</span>`;
       }
-      html += '</div></div></div>';
+      // Conference venue icons (if venue contains keywords)
+      if (entry.venue) {
+        const venueLower = entry.venue.toLowerCase();
+        Object.keys(conferenceIconMap).forEach((key) => {
+          if (venueLower.includes(key.toLowerCase())) {
+            html += `<span class="badge badge-default"><i class="${conferenceIconMap[key]} me-1"></i>${key}</span>`;
+          }
+        });
+      }
+      html += '</div>';
+      html += '</div></div>';
       col.innerHTML = html;
       container.appendChild(col);
     });
