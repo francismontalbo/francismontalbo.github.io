@@ -244,7 +244,8 @@ const conferenceData = [
     location: "Malacca, Malaysia",
     pages: "pp. 35–40",
     doi: "10.1109/ICSPC63060.2024.10862188",
-    doiUrl: "https://doi.org/10.1109/ICSPC63060.2024.10862188"
+    doiUrl: "https://doi.org/10.1109/ICSPC63060.2024.10862188",
+    publisher: "IEEE"
   },
   {
     year: 2024,
@@ -256,7 +257,8 @@ const conferenceData = [
     location: "Semarang, Indonesia",
     pages: "pp. 273–278",
     doi: "10.1109/ICICoS62600.2024.10636920",
-    doiUrl: "https://doi.org/10.1109/ICICoS62600.2024.10636920"
+    doiUrl: "https://doi.org/10.1109/ICICoS62600.2024.10636920",
+    publisher: "IEEE"
   },
   {
     year: 2023,
@@ -266,7 +268,20 @@ const conferenceData = [
     venue:
       "Proceedings of the 2023 8th International Conference on Biomedical Imaging, Signal Processing",
     doi: "10.1145/3634875.3634878",
-    doiUrl: "https://doi.org/10.1145/3634875.3634878"
+    doiUrl: "https://doi.org/10.1145/3634875.3634878",
+    publisher: "ACM"
+  },
+  {
+    year: 2021,
+    authors: "Francis Jesmar Montalbo; Erwin Enriquez",
+    title:
+      "An IoT Smart Lighting System for University Classrooms",
+    venue: "IEEE International Conference on IoT Systems for Education",
+    location: "Philippines",
+    pages: "",
+    doi: "",
+    doiUrl: "",
+    publisher: "IEEE"
   },
   {
     year: 2020,
@@ -276,7 +291,8 @@ const conferenceData = [
     location: "Bangkok, Thailand",
     pages: "pp. 3–7",
     doi: "10.1109/ISET49818.2020.00011",
-    doiUrl: "https://doi.org/10.1109/ISET49818.2020.00011"
+    doiUrl: "https://doi.org/10.1109/ISET49818.2020.00011",
+    publisher: "IEEE"
   },
   {
     year: 2020,
@@ -288,7 +304,8 @@ const conferenceData = [
     location: "Langkawi, Malaysia",
     pages: "pp. 213–218",
     doi: "10.1109/CSPA48992.2020.9068683",
-    doiUrl: "https://doi.org/10.1109/CSPA48992.2020.9068683"
+    doiUrl: "https://doi.org/10.1109/CSPA48992.2020.9068683",
+    publisher: "IEEE"
   },
   {
     year: 2019,
@@ -300,7 +317,8 @@ const conferenceData = [
     location: "Dubai, United Arab Emirates",
     pages: "pp. 305–310",
     doi: "10.1109/ICCIKE47802.2019.9004359",
-    doiUrl: "https://doi.org/10.1109/ICCIKE47802.2019.9004359"
+    doiUrl: "https://doi.org/10.1109/ICCIKE47802.2019.9004359",
+    publisher: "IEEE"
   },
   {
     year: 2019,
@@ -311,7 +329,8 @@ const conferenceData = [
     location: "Shah Alam, Malaysia",
     pages: "pp. 396–401",
     doi: "10.1109/ICSEngT.2019.8906433",
-    doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906433"
+    doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906433",
+    publisher: "IEEE"
   },
   {
     year: 2019,
@@ -322,7 +341,8 @@ const conferenceData = [
     location: "Shah Alam, Malaysia",
     pages: "pp. 431–436",
     doi: "10.1109/ICSEngT.2019.8906310",
-    doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906310"
+    doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906310",
+    publisher: "IEEE"
   }
 ];
 
@@ -367,7 +387,8 @@ const publisherBadgeMap = {
 const publisherIconMap = {
   'Elsevier': 'ai ai-elsevier',
   'Springer': 'ai ai-springer',
-  'IEEE': 'ai ai-ieee'
+  'IEEE': 'ai ai-ieee',
+  'ACM': 'ai ai-acm'
 };
 
 // Conference venue icon map for conference badges
@@ -439,11 +460,11 @@ function initSection(data, containerId, searchId, filterId, countId) {
       html += `<p class="card-text">${citation}</p>`;
       // Build badges
       html += '<div class="d-flex flex-wrap gap-2">';
-      // Code badge with Iconify GitHub icon
+      // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><span class="iconify me-1" data-icon="mdi:github"></span>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fa fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
       }
-      // Publisher badge with Academicons icon if available
+      // Publisher badge with Academicon icon if available
       if (entry.publisher) {
         const pubClass = publisherBadgeMap[entry.publisher] || 'badge-default';
         const pubIcon = publisherIconMap[entry.publisher];
