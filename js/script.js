@@ -305,8 +305,7 @@ const conferenceData = [
     authors: "FJP Montalbo, A. A. Hernandez",
     title:
       "Classification of Fish Species with Augmented Data using Deep Convolutional Neural Network",
-    venue:
-      "2019 IEEE 9th International Conference on System Engineering and Technology (ICSET)",
+    venue: "2019 IEEE 9th International Conference on System Engineering and Technology (ICSET)",
     location: "Shah Alam, Malaysia",
     pages: "pp. 396–401",
     doi: "10.1109/ICSEngT.2019.8906433",
@@ -317,8 +316,7 @@ const conferenceData = [
     authors: "FJP Montalbo, E. D. Festijo",
     title:
       "Comparative Analysis of Ensemble Learning Methods in Classifying Network Intrusions",
-    venue:
-      "2019 IEEE 9th International Conference on System Engineering and Technology (ICSET)",
+    venue: "2019 IEEE 9th International Conference on System Engineering and Technology (ICSET)",
     location: "Shah Alam, Malaysia",
     pages: "pp. 431–436",
     doi: "10.1109/ICSEngT.2019.8906310",
@@ -426,7 +424,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
       html += '<div class="d-flex flex-wrap gap-2">';
       // code button: apply custom class for styling
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github me-1"></i>Code</a>`;
+      html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github me-1"></i>Code</a>`;
       }
       // publisher badge with color coding
       if (entry.publisher) {
@@ -459,9 +457,9 @@ function initSection(data, containerId, searchId, filterId, countId) {
   yearSelect.addEventListener('change', applyFilter);
 }
 
-// Initialize all publication sections once DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize publication sections
+// Initialize all publication sections once DOM is ready. This helper ensures
+// initialization runs whether or not the DOMContentLoaded event has already fired.
+function initializePublications() {
   initSection(
     journalData,
     'journal-publications',
@@ -493,10 +491,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const backToTopBtn = document.getElementById('backToTop');
   if (backToTopBtn) {
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 200) {
-        backToTopBtn.classList.add('show');
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('hidden');
       } else {
-        backToTopBtn.classList.remove('show');
+        backToTopBtn.classList.add('hidden');
       }
     });
     backToTopBtn.addEventListener('click', () => {
@@ -509,6 +507,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
+}
 
-  // Additional interactive features could be initialized here in the future.
-});
+// If the DOM is still loading, defer initialization to DOMContentLoaded; otherwise, run immediately
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializePublications);
+} else {
+  initializePublications();
+}
