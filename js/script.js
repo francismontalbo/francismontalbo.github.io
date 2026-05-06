@@ -10,6 +10,19 @@
 
 const journalData = [
   {
+    year: 2026,
+    authors: "FJP Montalbo",
+    title:
+      "MHADFormer: A Cost-Efficient Multiscale Hybrid Transformer Mixer Model for Automating Alzheimer’s Disease Diagnosis from MRI Scans",
+    journal: "Applied Soft Computing",
+    volume: "114624",
+    date: "2026",
+    doi: "10.1016/j.asoc.2026.114624",
+    doiUrl: "https://doi.org/10.1016/j.asoc.2026.114624",
+    codeUrl: "https://github.com/francismontalbo/mhadformer",
+    publisher: "Elsevier"
+  },
+  {
     year: 2025,
     authors: "FJP Montalbo",
     title:
@@ -370,6 +383,37 @@ const chapterData = [
   }
 ];
 
+// News posts (easy content management: add newest items here).
+const newsData = [
+  {
+    date: "2026-05-05",
+    title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
+    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    tags: ["media-feature", "stanford-top-2%", "research-impact"],
+    link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
+    linkLabel: "Read feature",
+    pinned: true
+  },
+  {
+    date: "2023-10-22",
+    title: "ICBSP 2023: Selected as One of the Best Presenters",
+    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    tags: ["best-presenter", "international-conference", "ai-research"],
+    link: "https://www.icbsp.org/icbsp2023.html",
+    linkLabel: "Conference page",
+    pinned: true
+  }
+];
+
+const profileContext = `
+Name: Dr. Francis Jesmar P. Montalbo
+Roles: Associate Professor, Research Scientist, AI & Deep Learning Specialist, Software Engineer
+Affiliation: Batangas State University
+Research: medical imaging AI, deep learning, biomedical signal processing, computer vision
+Selected Achievements: OneNews Stanford scientists feature; ICBSP 2023 best presenter
+Use only this profile context plus on-page publications/news data. If asked outside scope, politely refuse.
+`;
+
 // Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
   'Elsevier': 'badge-elsevier',
@@ -411,24 +455,54 @@ const closedAccessIconClass = 'ai ai-closed-access';
  * @param {string} filterId - id of year filter select
  * @param {string} countId - id of span to show total count (optional)
  */
-function initSection(data, containerId, searchId, filterId, countId) {
+function initSection(data, containerId, searchId, filterId, countId, publisherFilterId, sortId, clearId, resultsCountId) {
+  const parseDate = (entry) => {
+    const parsed = entry.date ? Date.parse(entry.date) : Number.NaN;
+    return Number.isFinite(parsed) ? parsed : Number(entry.year || 0);
+  };
+  const sortData = (items, sortMode = 'latest') => {
+    const sorted = [...items];
+    sorted.sort((a, b) => {
+      if (sortMode === 'title') {
+        return (a.title || '').localeCompare(b.title || '');
+      }
+      const yearDiff = Number(a.year || 0) - Number(b.year || 0);
+      if (yearDiff !== 0) return sortMode === 'oldest' ? yearDiff : -yearDiff;
+      const dateDiff = parseDate(a) - parseDate(b);
+      if (dateDiff !== 0) return sortMode === 'oldest' ? dateDiff : -dateDiff;
+      return (a.title || '').localeCompare(b.title || '');
+    });
+    return sorted;
+  };
+  const normalizedData = sortData(data, 'latest');
   const container = document.getElementById(containerId);
   const searchInput = document.getElementById(searchId);
   const yearSelect = document.getElementById(filterId);
+  const publisherSelect = document.getElementById(publisherFilterId);
+  const sortSelect = document.getElementById(sortId);
+  const clearButton = document.getElementById(clearId);
+  const resultsCount = document.getElementById(resultsCountId);
   const countSpan = document.getElementById(countId);
 
   // Populate year dropdown with unique years
-  const years = Array.from(new Set(data.map((d) => d.year))).sort((a, b) => b - a);
+  const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
   years.forEach((y) => {
     const opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;
     yearSelect.appendChild(opt);
   });
+  const publishers = Array.from(new Set(normalizedData.map((d) => d.publisher).filter(Boolean))).sort();
+  publishers.forEach((publisher) => {
+    const opt = document.createElement('option');
+    opt.value = publisher;
+    opt.textContent = publisher;
+    publisherSelect.appendChild(opt);
+  });
 
   // Show total count if applicable
   if (countSpan) {
-    countSpan.textContent = data.length;
+    countSpan.textContent = normalizedData.length;
   }
 
   // Render publication cards
@@ -437,11 +511,10 @@ function initSection(data, containerId, searchId, filterId, countId) {
     items.forEach((entry) => {
       const col = document.createElement('div');
       col.className = 'col-md-6';
-      col.setAttribute('data-year', entry.year);
-      col.setAttribute('data-text', (entry.title + ' ' + entry.authors).toLowerCase());
       let html = '<div class="publication-card card h-100">';
       html += '<div class="card-body">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
+      html += `<p class="text-sm text-accent2 mb-2"><i class="fa-regular fa-calendar me-1"></i>${entry.year}</p>`;
       // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
@@ -459,10 +532,10 @@ function initSection(data, containerId, searchId, filterId, countId) {
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
       // Build badges
-      html += '<div class="d-flex flex-wrap gap-2">';
+      html += '<div class="d-flex flex-wrap gap-2 mt-3 pt-1">';
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fa fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
       }
       // Publisher badge with Academicon icon if available
       if (entry.publisher) {
@@ -500,29 +573,50 @@ function initSection(data, containerId, searchId, filterId, countId) {
     });
   }
 
-  // Initial render
-  renderCards(data);
-
   // Search and filter logic
   function applyFilter() {
     const term = searchInput.value.trim().toLowerCase();
     const year = yearSelect.value;
-    Array.from(container.children).forEach((col) => {
-      const matchesText = col.dataset.text.includes(term);
-      const matchesYear = year === 'all' || col.dataset.year === year;
-      col.style.display = matchesText && matchesYear ? '' : 'none';
+    const publisher = publisherSelect.value;
+    const sortMode = sortSelect.value;
+    const filtered = normalizedData.filter((entry) => {
+      const haystack = `${entry.title || ''} ${entry.authors || ''} ${entry.journal || ''} ${entry.venue || ''} ${entry.publisher || ''}`.toLowerCase();
+      const matchesText = haystack.includes(term);
+      const matchesYear = year === 'all' || String(entry.year) === year;
+      const matchesPublisher = publisher === 'all' || (entry.publisher || '') === publisher;
+      return matchesText && matchesYear && matchesPublisher;
     });
+    renderCards(sortData(filtered, sortMode));
+    if (resultsCount) {
+      resultsCount.textContent = `Showing ${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
+    }
   }
 
   searchInput.addEventListener('input', applyFilter);
   yearSelect.addEventListener('change', applyFilter);
+  publisherSelect.addEventListener('change', applyFilter);
+  sortSelect.addEventListener('change', applyFilter);
+  clearButton.addEventListener('click', () => {
+    searchInput.value = '';
+    yearSelect.value = 'all';
+    publisherSelect.value = 'all';
+    sortSelect.value = 'latest';
+    applyFilter();
+  });
+  applyFilter();
 }
 
 // Initialise publications once DOM is ready
 function initializePublications() {
-  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count');
-  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count');
-  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count');
+  const allData = [
+    ...journalData.map((item) => ({ ...item })),
+    ...conferenceData.map((item) => ({ ...item })),
+    ...chapterData.map((item) => ({ ...item, journal: item.book }))
+  ];
+  initSection(allData, 'all-publications', 'all-search', 'all-year-filter', 'all-count', 'all-publisher-filter', 'all-sort', 'all-clear-filters', 'all-results-count');
+  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
+  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
+  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
 
   // AOS animations
   if (typeof AOS !== 'undefined') {
@@ -551,9 +645,179 @@ function initializePublications() {
   }
 }
 
+function initializeNews() {
+  const list = document.getElementById('news-list');
+  const search = document.getElementById('news-search');
+  const yearFilter = document.getElementById('news-year-filter');
+  const clearBtn = document.getElementById('news-clear');
+  const count = document.getElementById('news-count');
+
+  if (!list || !search || !yearFilter || !clearBtn || !count) return;
+
+  const sorted = [...newsData].sort((a, b) => {
+    if (Boolean(b.pinned) !== Boolean(a.pinned)) return b.pinned ? 1 : -1;
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  const years = Array.from(new Set(sorted.map((n) => new Date(n.date).getFullYear()))).sort((a, b) => b - a);
+  years.forEach((year) => {
+    const opt = document.createElement('option');
+    opt.value = String(year);
+    opt.textContent = String(year);
+    yearFilter.appendChild(opt);
+  });
+
+  function render(items) {
+    list.innerHTML = '';
+    items.forEach((item) => {
+      const tags = (item.tags || []).map((tag) => `<span class="badge badge-default">#${tag}</span>`).join(' ');
+      const article = document.createElement('article');
+      article.className = 'publication-card';
+      article.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+          <div>
+            <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
+            <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
+            <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
+            <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
+          </div>
+          ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
+        </div>`;
+      list.appendChild(article);
+    });
+    count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
+  }
+
+  function apply() {
+    const term = search.value.trim().toLowerCase();
+    const selectedYear = yearFilter.value;
+    const filtered = sorted.filter((item) => {
+      const year = String(new Date(item.date).getFullYear());
+      const haystack = `${item.title} ${item.summary} ${(item.tags || []).join(' ')}`.toLowerCase();
+      return (selectedYear === 'all' || selectedYear === year) && haystack.includes(term);
+    });
+    render(filtered);
+  }
+
+  search.addEventListener('input', apply);
+  yearFilter.addEventListener('change', apply);
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    yearFilter.value = 'all';
+    apply();
+  });
+
+  apply();
+}
+
+function initializeChatbot() {
+  const messages = document.getElementById('chatbot-messages');
+  const input = document.getElementById('chatbot-input');
+  const send = document.getElementById('chatbot-send');
+  const chips = document.querySelectorAll('.chatbot-chip');
+  if (!messages || !input || !send) return;
+
+  // Optional cloud key hook. Leave empty to use local profile-grounded fallback.
+  const CLOUD_API_KEY = window.FRANCIS_CHATBOT_API_KEY || '';
+  const CLOUD_MODEL = 'gpt-4.1-mini';
+
+  const knowledgeBlob = JSON.stringify({
+    publications: { journals: journalData, conferences: conferenceData, chapters: chapterData },
+    news: newsData
+  });
+
+  function addBubble(text, role = 'assistant') {
+    const bubble = document.createElement('div');
+    bubble.className = role === 'user'
+      ? 'max-w-[85%] ml-auto rounded-lg px-3 py-2 bg-accent2 text-dark'
+      : 'max-w-[85%] rounded-lg px-3 py-2 bg-tertiary text-gray-100';
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function fallbackAnswer(question) {
+    const q = question.toLowerCase();
+    if (q.includes('research') || q.includes('area') || q.includes('expert')) {
+      return 'Francis focuses on medical imaging AI, deep learning, biomedical signal processing, and computer vision, with applications in diagnostics and healthcare.';
+    }
+    if (q.includes('recognition') || q.includes('award') || q.includes('best presenter') || q.includes('stanford')) {
+      return 'Notable recognitions include being featured in OneNews for Stanford scientist rankings and being selected as one of the best presenters at ICBSP 2023.';
+    }
+    if (q.includes('recent') || q.includes('publication') || q.includes('paper')) {
+      const latest = [...journalData].sort((a, b) => Number(b.year) - Number(a.year)).slice(0, 3)
+        .map((p) => `• ${p.year}: ${p.title}`).join('\n');
+      return `Here are recent works:\n${latest}`;
+    }
+    return 'I can help with Francis’ profile, publications, recognitions, affiliations, and research expertise. Please ask within those topics.';
+  }
+
+  async function ask() {
+    const question = input.value.trim();
+    if (!question) return;
+    addBubble(question, 'user');
+    input.value = '';
+    addBubble('Thinking…');
+    const thinkingBubble = messages.lastElementChild;
+    send.disabled = true;
+    try {
+      if (!CLOUD_API_KEY) {
+        thinkingBubble.textContent = fallbackAnswer(question);
+      } else {
+        const response = await fetch('https://api.openai.com/v1/responses', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${CLOUD_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: CLOUD_MODEL,
+            input: [
+              {
+                role: 'system',
+                content: `You are a strict personal-profile assistant. ${profileContext}
+Only answer questions about Francis Jesmar P. Montalbo based on the provided data.
+If the user asks unrelated questions, say you can only answer profile-related questions.`
+              },
+              {
+                role: 'user',
+                content: `Profile data:\n${knowledgeBlob}\n\nQuestion: ${question}`
+              }
+            ]
+          })
+        });
+        const data = await response.json();
+        const text = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response generated.';
+        thinkingBubble.textContent = text;
+      }
+    } catch (err) {
+      thinkingBubble.textContent = `Unable to answer right now: ${err.message}`;
+    } finally {
+      send.disabled = false;
+    }
+  }
+
+  send.addEventListener('click', ask);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') ask();
+  });
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      input.value = chip.dataset.question || '';
+      ask();
+    });
+  });
+}
+
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializePublications);
+  document.addEventListener('DOMContentLoaded', () => {
+    initializePublications();
+    initializeNews();
+    initializeChatbot();
+  });
 } else {
   initializePublications();
+  initializeNews();
+  initializeChatbot();
 }
