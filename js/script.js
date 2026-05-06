@@ -412,13 +412,28 @@ const closedAccessIconClass = 'ai ai-closed-access';
  * @param {string} countId - id of span to show total count (optional)
  */
 function initSection(data, containerId, searchId, filterId, countId) {
+  const normalizedData = [...data].sort((a, b) => {
+    const yearDiff = Number(b.year || 0) - Number(a.year || 0);
+    if (yearDiff !== 0) return yearDiff;
+
+    const dateA = a.date ? Date.parse(a.date) : Number.NaN;
+    const dateB = b.date ? Date.parse(b.date) : Number.NaN;
+    const hasDateA = Number.isFinite(dateA);
+    const hasDateB = Number.isFinite(dateB);
+
+    if (hasDateA && hasDateB && dateB !== dateA) return dateB - dateA;
+    if (hasDateA && !hasDateB) return -1;
+    if (!hasDateA && hasDateB) return 1;
+
+    return (a.title || '').localeCompare(b.title || '');
+  });
   const container = document.getElementById(containerId);
   const searchInput = document.getElementById(searchId);
   const yearSelect = document.getElementById(filterId);
   const countSpan = document.getElementById(countId);
 
   // Populate year dropdown with unique years
-  const years = Array.from(new Set(data.map((d) => d.year))).sort((a, b) => b - a);
+  const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
   years.forEach((y) => {
     const opt = document.createElement('option');
     opt.value = y;
@@ -428,7 +443,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
 
   // Show total count if applicable
   if (countSpan) {
-    countSpan.textContent = data.length;
+    countSpan.textContent = normalizedData.length;
   }
 
   // Render publication cards
@@ -442,6 +457,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
       let html = '<div class="publication-card card h-100">';
       html += '<div class="card-body">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
+      html += `<p class="text-sm text-accent2 mb-2"><i class="fa-regular fa-calendar me-1"></i>${entry.year}</p>`;
       // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
@@ -501,7 +517,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
   }
 
   // Initial render
-  renderCards(data);
+  renderCards(normalizedData);
 
   // Search and filter logic
   function applyFilter() {
