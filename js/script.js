@@ -717,14 +717,11 @@ function initializeChatbot() {
   const chips = document.querySelectorAll('.chatbot-chip');
   if (!messages || !input || !send) return;
 
-  // Optional cloud key hook. Leave empty to use local profile-grounded fallback.
-  const CLOUD_API_KEY = window.FRANCIS_CHATBOT_API_KEY || '';
-  const CLOUD_MODEL = 'gpt-4.1-mini';
-
-  const knowledgeBlob = JSON.stringify({
-    publications: { journals: journalData, conferences: conferenceData, chapters: chapterData },
-    news: newsData
-  });
+  const allWorks = [
+    ...journalData.map((w) => ({ ...w, type: 'Journal' })),
+    ...conferenceData.map((w) => ({ ...w, type: 'Conference' })),
+    ...chapterData.map((w) => ({ ...w, type: 'Chapter' }))
+  ];
 
   function addBubble(text, role = 'assistant') {
     const bubble = document.createElement('div');
@@ -738,6 +735,12 @@ function initializeChatbot() {
 
   function fallbackAnswer(question) {
     const q = question.toLowerCase();
+    if (!q.includes('francis') && /(who are you|weather|politics|stock|bitcoin|movie|recipe)/.test(q)) {
+      return 'I can only answer questions specifically about Francis Jesmar P. Montalbo and his profile/work.';
+    }
+    if (q.includes('who is') || q.includes('bio') || q.includes('introduce')) {
+      return 'Dr. Francis Jesmar P. Montalbo is an Associate Professor, Research Scientist, AI & Deep Learning Specialist, and Software Engineer affiliated with Batangas State University.';
+    }
     if (q.includes('research') || q.includes('area') || q.includes('expert')) {
       return 'Francis focuses on medical imaging AI, deep learning, biomedical signal processing, and computer vision, with applications in diagnostics and healthcare.';
     }
@@ -748,6 +751,21 @@ function initializeChatbot() {
       const latest = [...journalData].sort((a, b) => Number(b.year) - Number(a.year)).slice(0, 3)
         .map((p) => `• ${p.year}: ${p.title}`).join('\n');
       return `Here are recent works:\n${latest}`;
+    }
+    if (q.includes('conference') || q.includes('presenter')) {
+      const conf = conferenceData.slice(0, 3).map((c) => `• ${c.year}: ${c.title}`).join('\n');
+      return `Selected conference works:\n${conf}`;
+    }
+    if (q.includes('news') || q.includes('feature') || q.includes('recognition')) {
+      const highlights = newsData.map((n) => `• ${n.date}: ${n.title}`).join('\n');
+      return `Recent highlights:\n${highlights}`;
+    }
+    const matched = allWorks.filter((item) => {
+      const blob = `${item.title} ${item.authors || ''} ${item.journal || ''} ${item.venue || ''}`.toLowerCase();
+      return q.split(/\s+/).some((t) => t.length > 4 && blob.includes(t));
+    }).slice(0, 3);
+    if (matched.length) {
+      return `I found these related works:\n${matched.map((m) => `• [${m.type}] ${m.year}: ${m.title}`).join('\n')}`;
     }
     return 'I can help with Francis’ profile, publications, recognitions, affiliations, and research expertise. Please ask within those topics.';
   }
@@ -761,35 +779,7 @@ function initializeChatbot() {
     const thinkingBubble = messages.lastElementChild;
     send.disabled = true;
     try {
-      if (!CLOUD_API_KEY) {
-        thinkingBubble.textContent = fallbackAnswer(question);
-      } else {
-        const response = await fetch('https://api.openai.com/v1/responses', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${CLOUD_API_KEY}`
-          },
-          body: JSON.stringify({
-            model: CLOUD_MODEL,
-            input: [
-              {
-                role: 'system',
-                content: `You are a strict personal-profile assistant. ${profileContext}
-Only answer questions about Francis Jesmar P. Montalbo based on the provided data.
-If the user asks unrelated questions, say you can only answer profile-related questions.`
-              },
-              {
-                role: 'user',
-                content: `Profile data:\n${knowledgeBlob}\n\nQuestion: ${question}`
-              }
-            ]
-          })
-        });
-        const data = await response.json();
-        const text = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response generated.';
-        thinkingBubble.textContent = text;
-      }
+      thinkingBubble.textContent = fallbackAnswer(question);
     } catch (err) {
       thinkingBubble.textContent = `Unable to answer right now: ${err.message}`;
     } finally {
