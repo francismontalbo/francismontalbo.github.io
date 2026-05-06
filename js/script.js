@@ -386,21 +386,22 @@ const chapterData = [
 // News posts (easy content management: add newest items here).
 const newsData = [
   {
-    date: "2026-04-15",
-    title: "Accepted: MHADFormer in Applied Soft Computing",
-    summary: "Our work on MHADFormer for Alzheimer’s diagnosis from MRI scans was accepted and published in Applied Soft Computing (Article 114624).",
-    tags: ["publication", "health-ai", "milestone"],
-    link: "https://doi.org/10.1016/j.asoc.2026.114624",
-    linkLabel: "Read article",
+    date: "2026-05-05",
+    title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
+    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    tags: ["media-feature", "stanford-top-2%", "research-impact"],
+    link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
+    linkLabel: "Read feature",
     pinned: true
   },
   {
-    date: "2025-01-01",
-    title: "Released TUMbRAIN code and publication",
-    summary: "Published TUMbRAIN in Neurocomputing and released the accompanying repository for reproducible experiments.",
-    tags: ["publication", "open-source", "medical-imaging"],
-    link: "https://github.com/francismontalbo/tumbrain",
-    linkLabel: "View code"
+    date: "2023-10-22",
+    title: "ICBSP 2023: Selected as One of the Best Presenters",
+    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    tags: ["best-presenter", "international-conference", "ai-research"],
+    link: "https://www.icbsp.org/icbsp2023.html",
+    linkLabel: "Conference page",
+    pinned: true
   }
 ];
 
@@ -598,6 +599,12 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
 // Initialise publications once DOM is ready
 function initializePublications() {
+  const allData = [
+    ...journalData.map((item) => ({ ...item })),
+    ...conferenceData.map((item) => ({ ...item })),
+    ...chapterData.map((item) => ({ ...item, journal: item.book }))
+  ];
+  initSection(allData, 'all-publications', 'all-search', 'all-year-filter', 'all-count', 'all-publisher-filter', 'all-sort', 'all-clear-filters', 'all-results-count');
   initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
   initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
   initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');

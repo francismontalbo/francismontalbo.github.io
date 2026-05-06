@@ -206,6 +206,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
+        text-decoration: none !important;
+      }
+      .badge-code, .badge-code i, .publication-card a.badge-code {
+        color: #0B0F08 !important;
+      }
+      .badge-code:hover {
+        background-color: #B7C970;
+        color: #0B0F08 !important;
+        text-decoration: none !important;
       }
 
       /* Additional custom classes for card and timeline styling */
@@ -586,16 +595,37 @@
 <section id="works" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(40,63,35,0.85), rgba(40,63,35,0.85)), url('assets/img/publications.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
           <h2 class="text-3xl font-semibold mb-4 text-accent2">Works</h2>
-          <p class="text-sm text-gray-300 mb-6">Publications are arranged by type and sorted by latest year/date for easier browsing. For the most current citation profile, view Google Scholar: <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="text-accent2 hover:text-accent underline">PV8dJDkAAAAJ</a>.</p>
+          <p class="text-sm text-gray-300 mb-6">Publications are arranged by type and sorted by latest year/date for easier browsing. For the most updated and more accurate research profile (including citation metrics), view Google Scholar: <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="text-accent2 hover:text-accent underline">PV8dJDkAAAAJ</a> and Scopus: <a href="https://www.scopus.com/authid/detail.uri?authorId=57221928564" target="_blank" class="text-accent2 hover:text-accent underline">Author ID 57221928564</a>.</p>
           <!-- Removed static Top Works section to rely on dynamic publications -->
           <!-- Tabs -->
           <div class="tabs flex flex-col sm:flex-row gap-4 mb-8">
+            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="all-tab">All</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="journal-tab">Journals</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="conference-tab">Conferences</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="chapters-tab">Chapters</button>
           </div>
+          <!-- All -->
+          <div id="all-tab" class="tab-content">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
+              <input id="all-search" type="text" placeholder="Search all publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+              <select id="all-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Years</option>
+              </select>
+              <select id="all-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="all-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="all-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+            </div>
+            <p id="all-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
+            <div id="all-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+          </div>
           <!-- Journals -->
-          <div id="journal-tab" class="tab-content">
+          <div id="journal-tab" class="tab-content hidden">
             <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="journal-search" type="text" placeholder="Search journal publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="journal-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
@@ -663,7 +693,7 @@
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
           <div>
             <h2 class="text-3xl font-semibold text-accent2">News</h2>
-            <p class="text-sm text-gray-300 mt-2">Major life and career updates in a blog-style timeline. To add a post, append one object to <code>newsData</code> in <code>js/script.js</code>.</p>
+          <p class="text-sm text-gray-300 mt-2">Major life and career updates in a blog-style timeline—highlighting impact, recognition, and real-world contributions.</p>
           </div>
           <span id="news-count" class="text-xs text-gray-400">0 posts</span>
         </div>
