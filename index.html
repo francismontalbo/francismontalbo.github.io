@@ -206,6 +206,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
+        text-decoration: none !important;
+      }
+      .badge-code, .badge-code i, .publication-card a.badge-code {
+        color: #0B0F08 !important;
+      }
+      .badge-code:hover {
+        background-color: #B7C970;
+        color: #0B0F08 !important;
+        text-decoration: none !important;
       }
 
       /* Additional custom classes for card and timeline styling */
@@ -244,6 +253,8 @@
           <li><a href="#experience" class="hover:text-accent">Experience</a></li>
           <li><a href="#skills" class="hover:text-accent">Skills</a></li>
           <li><a href="#works" class="hover:text-accent">Works</a></li>
+          <li><a href="#news" class="hover:text-accent">News</a></li>
+          <li><a href="#chatbot" class="hover:text-accent">Chatbot</a></li>
           <li><a href="#achievements" class="hover:text-accent">Achievements</a></li>
           <li><a href="#contact" class="hover:text-accent">Contact</a></li>
         </ul>
@@ -255,6 +266,8 @@
         <a href="#experience" class="block py-1 hover:text-accent">Experience</a>
         <a href="#skills" class="block py-1 hover:text-accent">Skills</a>
         <a href="#works" class="block py-1 hover:text-accent">Works</a>
+        <a href="#news" class="block py-1 hover:text-accent">News</a>
+        <a href="#chatbot" class="block py-1 hover:text-accent">Chatbot</a>
         <a href="#achievements" class="block py-1 hover:text-accent">Achievements</a>
         <a href="#contact" class="block py-1 hover:text-accent">Contact</a>
       </div>
@@ -583,44 +596,136 @@
     <!-- Works Section -->
 <section id="works" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(40,63,35,0.85), rgba(40,63,35,0.85)), url('assets/img/publications.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl font-semibold mb-10 text-accent2">Works</h2>
+          <h2 class="text-3xl font-semibold mb-4 text-accent2">Works</h2>
+          <p class="text-sm text-gray-300 mb-6">Publications are arranged by type and sorted by latest year/date for easier browsing. For the most updated and more accurate research profile (including citation metrics), view Google Scholar: <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="text-accent2 hover:text-accent underline">PV8dJDkAAAAJ</a> and Scopus: <a href="https://www.scopus.com/authid/detail.uri?authorId=57221928564" target="_blank" class="text-accent2 hover:text-accent underline">Author ID 57221928564</a>.</p>
           <!-- Removed static Top Works section to rely on dynamic publications -->
           <!-- Tabs -->
           <div class="tabs flex flex-col sm:flex-row gap-4 mb-8">
+            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="all-tab">All</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="journal-tab">Journals</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="conference-tab">Conferences</button>
             <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="chapters-tab">Chapters</button>
           </div>
+          <!-- All -->
+          <div id="all-tab" class="tab-content">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
+              <input id="all-search" type="text" placeholder="Search all publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+              <select id="all-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Years</option>
+              </select>
+              <select id="all-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="all-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="all-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+            </div>
+            <p id="all-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
+            <div id="all-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+          </div>
           <!-- Journals -->
-          <div id="journal-tab" class="tab-content">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+          <div id="journal-tab" class="tab-content hidden">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="journal-search" type="text" placeholder="Search journal publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="journal-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="journal-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="journal-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="journal-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="journal-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="journal-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
           <!-- Conferences -->
           <div id="conference-tab" class="tab-content hidden">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="conf-search" type="text" placeholder="Search conference publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="conf-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="conf-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="conf-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="conf-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="conf-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="conference-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
           <!-- Chapters -->
           <div id="chapters-tab" class="tab-content hidden">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="chapters-search" type="text" placeholder="Search book chapters…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="chapters-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="chapters-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="chapters-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="chapters-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="chapters-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="book-chapters" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
+      </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="py-20 bg-dark text-gray-100 relative" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-3xl font-semibold text-accent2">News</h2>
+          <p class="text-sm text-gray-300 mt-2">Major life and career updates in a blog-style timeline—highlighting impact, recognition, and real-world contributions.</p>
+          </div>
+          <span id="news-count" class="text-xs text-gray-400">0 posts</span>
+        </div>
+        <div class="flex flex-col md:flex-row gap-3 mb-6">
+          <input id="news-search" type="text" placeholder="Search updates by title, summary, or tags…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+          <select id="news-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+            <option value="all">All Years</option>
+          </select>
+          <button id="news-clear" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+        </div>
+        <div id="news-list" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <!-- Personal Chatbot Section -->
+    <section id="chatbot" class="py-20 bg-primaryDark text-gray-100 relative" data-aos="fade-up">
+      <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold text-accent2 mb-3">Ask Francis AI</h2>
+        <p class="text-sm text-gray-300 mb-6">A profile-grounded assistant that answers only about Dr. Francis Jesmar P. Montalbo (research, work, skills, and achievements).</p>
+        <div class="publication-card">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <input id="chatbot-api-key" type="password" placeholder="OpenAI API key (sk-...)" class="md:col-span-2 px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="chatbot-model" type="text" value="gpt-4.1-mini" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+          </div>
+          <div class="flex gap-3 mb-4">
+            <input id="chatbot-input" type="text" placeholder="Ask about publications, awards, affiliations, skills..." class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <button id="chatbot-send" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Ask</button>
+          </div>
+          <div id="chatbot-output" class="rounded-md bg-primaryDark border border-primary p-4 text-sm text-gray-100 min-h-[120px]">Hi! Ask me anything about Francis’ profile. I will only answer profile-related questions.</div>
+        </div>
       </div>
     </section>
 
@@ -732,16 +837,5 @@
     <!-- Custom Script for publications -->
     <!-- Load custom publications script with defer to ensure DOM is parsed before execution -->
     <script src="js/script.js" defer></script>
-    <!-- Inline publications script -->
-    <script>
-      /* arrays and helper functions from scripts.js here */
-      …
-      // If the DOM is still loading, defer initialisation to DOMContentLoaded; otherwise run immediately.
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializePublications);
-      } else {
-        initializePublications();
-      }
-    </script>
   </body>
 </html>
