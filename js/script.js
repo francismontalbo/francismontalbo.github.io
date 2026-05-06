@@ -501,10 +501,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
       // Build badges
-      html += '<div class="d-flex flex-wrap gap-2">';
+      html += '<div class="d-flex flex-wrap gap-2 mt-3 pt-1">';
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
       }
       // Publisher badge with Academicon icon if available
       if (entry.publisher) {
