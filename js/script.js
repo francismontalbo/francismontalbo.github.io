@@ -10,6 +10,19 @@
 
 const journalData = [
   {
+    year: 2026,
+    authors: "FJP Montalbo",
+    title:
+      "MHADFormer: A Cost-Efficient Multiscale Hybrid Transformer Mixer Model for Automating Alzheimer’s Disease Diagnosis from MRI Scans",
+    journal: "Applied Soft Computing",
+    volume: "114624",
+    date: "2026",
+    doi: "10.1016/j.asoc.2026.114624",
+    doiUrl: "https://doi.org/10.1016/j.asoc.2026.114624",
+    codeUrl: "https://github.com/francismontalbo/mhadformer",
+    publisher: "Elsevier"
+  },
+  {
     year: 2025,
     authors: "FJP Montalbo",
     title:
@@ -411,24 +424,54 @@ const closedAccessIconClass = 'ai ai-closed-access';
  * @param {string} filterId - id of year filter select
  * @param {string} countId - id of span to show total count (optional)
  */
-function initSection(data, containerId, searchId, filterId, countId) {
+function initSection(data, containerId, searchId, filterId, countId, publisherFilterId, sortId, clearId, resultsCountId) {
+  const parseDate = (entry) => {
+    const parsed = entry.date ? Date.parse(entry.date) : Number.NaN;
+    return Number.isFinite(parsed) ? parsed : Number(entry.year || 0);
+  };
+  const sortData = (items, sortMode = 'latest') => {
+    const sorted = [...items];
+    sorted.sort((a, b) => {
+      if (sortMode === 'title') {
+        return (a.title || '').localeCompare(b.title || '');
+      }
+      const yearDiff = Number(a.year || 0) - Number(b.year || 0);
+      if (yearDiff !== 0) return sortMode === 'oldest' ? yearDiff : -yearDiff;
+      const dateDiff = parseDate(a) - parseDate(b);
+      if (dateDiff !== 0) return sortMode === 'oldest' ? dateDiff : -dateDiff;
+      return (a.title || '').localeCompare(b.title || '');
+    });
+    return sorted;
+  };
+  const normalizedData = sortData(data, 'latest');
   const container = document.getElementById(containerId);
   const searchInput = document.getElementById(searchId);
   const yearSelect = document.getElementById(filterId);
+  const publisherSelect = document.getElementById(publisherFilterId);
+  const sortSelect = document.getElementById(sortId);
+  const clearButton = document.getElementById(clearId);
+  const resultsCount = document.getElementById(resultsCountId);
   const countSpan = document.getElementById(countId);
 
   // Populate year dropdown with unique years
-  const years = Array.from(new Set(data.map((d) => d.year))).sort((a, b) => b - a);
+  const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
   years.forEach((y) => {
     const opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;
     yearSelect.appendChild(opt);
   });
+  const publishers = Array.from(new Set(normalizedData.map((d) => d.publisher).filter(Boolean))).sort();
+  publishers.forEach((publisher) => {
+    const opt = document.createElement('option');
+    opt.value = publisher;
+    opt.textContent = publisher;
+    publisherSelect.appendChild(opt);
+  });
 
   // Show total count if applicable
   if (countSpan) {
-    countSpan.textContent = data.length;
+    countSpan.textContent = normalizedData.length;
   }
 
   // Render publication cards
@@ -437,11 +480,10 @@ function initSection(data, containerId, searchId, filterId, countId) {
     items.forEach((entry) => {
       const col = document.createElement('div');
       col.className = 'col-md-6';
-      col.setAttribute('data-year', entry.year);
-      col.setAttribute('data-text', (entry.title + ' ' + entry.authors).toLowerCase());
       let html = '<div class="publication-card card h-100">';
       html += '<div class="card-body">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
+      html += `<p class="text-sm text-accent2 mb-2"><i class="fa-regular fa-calendar me-1"></i>${entry.year}</p>`;
       // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
@@ -462,7 +504,7 @@ function initSection(data, containerId, searchId, filterId, countId) {
       html += '<div class="d-flex flex-wrap gap-2">';
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fa fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
       }
       // Publisher badge with Academicon icon if available
       if (entry.publisher) {
@@ -500,29 +542,44 @@ function initSection(data, containerId, searchId, filterId, countId) {
     });
   }
 
-  // Initial render
-  renderCards(data);
-
   // Search and filter logic
   function applyFilter() {
     const term = searchInput.value.trim().toLowerCase();
     const year = yearSelect.value;
-    Array.from(container.children).forEach((col) => {
-      const matchesText = col.dataset.text.includes(term);
-      const matchesYear = year === 'all' || col.dataset.year === year;
-      col.style.display = matchesText && matchesYear ? '' : 'none';
+    const publisher = publisherSelect.value;
+    const sortMode = sortSelect.value;
+    const filtered = normalizedData.filter((entry) => {
+      const haystack = `${entry.title || ''} ${entry.authors || ''} ${entry.journal || ''} ${entry.venue || ''} ${entry.publisher || ''}`.toLowerCase();
+      const matchesText = haystack.includes(term);
+      const matchesYear = year === 'all' || String(entry.year) === year;
+      const matchesPublisher = publisher === 'all' || (entry.publisher || '') === publisher;
+      return matchesText && matchesYear && matchesPublisher;
     });
+    renderCards(sortData(filtered, sortMode));
+    if (resultsCount) {
+      resultsCount.textContent = `Showing ${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
+    }
   }
 
   searchInput.addEventListener('input', applyFilter);
   yearSelect.addEventListener('change', applyFilter);
+  publisherSelect.addEventListener('change', applyFilter);
+  sortSelect.addEventListener('change', applyFilter);
+  clearButton.addEventListener('click', () => {
+    searchInput.value = '';
+    yearSelect.value = 'all';
+    publisherSelect.value = 'all';
+    sortSelect.value = 'latest';
+    applyFilter();
+  });
+  applyFilter();
 }
 
 // Initialise publications once DOM is ready
 function initializePublications() {
-  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count');
-  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count');
-  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count');
+  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
+  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
+  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
 
   // AOS animations
   if (typeof AOS !== 'undefined') {
