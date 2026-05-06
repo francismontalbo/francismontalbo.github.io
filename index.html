@@ -594,32 +594,62 @@
           </div>
           <!-- Journals -->
           <div id="journal-tab" class="tab-content">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="journal-search" type="text" placeholder="Search journal publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="journal-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="journal-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="journal-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="journal-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="journal-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="journal-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
           <!-- Conferences -->
           <div id="conference-tab" class="tab-content hidden">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="conf-search" type="text" placeholder="Search conference publications…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="conf-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="conf-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="conf-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="conf-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="conf-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="conference-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
           <!-- Chapters -->
           <div id="chapters-tab" class="tab-content hidden">
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <div class="flex flex-col lg:flex-row gap-3 mb-4">
               <input id="chapters-search" type="text" placeholder="Search book chapters…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
               <select id="chapters-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
                 <option value="all">All Years</option>
               </select>
+              <select id="chapters-publisher-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="all">All Publishers</option>
+              </select>
+              <select id="chapters-sort" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+                <option value="latest">Sort: Latest</option>
+                <option value="oldest">Sort: Oldest</option>
+                <option value="title">Sort: Title A–Z</option>
+              </select>
+              <button id="chapters-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
             </div>
+            <p id="chapters-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="book-chapters" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
       </div>
