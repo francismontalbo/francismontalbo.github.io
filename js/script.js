@@ -405,6 +405,15 @@ const newsData = [
   }
 ];
 
+const profileContext = `
+Name: Dr. Francis Jesmar P. Montalbo
+Roles: Associate Professor, Research Scientist, AI & Deep Learning Specialist, Software Engineer
+Affiliation: Batangas State University
+Research: medical imaging AI, deep learning, biomedical signal processing, computer vision
+Selected Achievements: OneNews Stanford scientists feature; ICBSP 2023 best presenter
+Use only this profile context plus on-page publications/news data. If asked outside scope, politely refuse.
+`;
+
 // Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
   'Elsevier': 'badge-elsevier',
@@ -701,13 +710,74 @@ function initializeNews() {
   apply();
 }
 
+function initializeChatbot() {
+  const keyInput = document.getElementById('chatbot-api-key');
+  const modelInput = document.getElementById('chatbot-model');
+  const input = document.getElementById('chatbot-input');
+  const send = document.getElementById('chatbot-send');
+  const output = document.getElementById('chatbot-output');
+  if (!keyInput || !modelInput || !input || !send || !output) return;
+
+  const knowledgeBlob = JSON.stringify({
+    publications: { journals: journalData, conferences: conferenceData, chapters: chapterData },
+    news: newsData
+  });
+
+  async function ask() {
+    const question = input.value.trim();
+    if (!question) return;
+    output.textContent = 'Thinking…';
+    send.disabled = true;
+    try {
+      const apiKey = keyInput.value.trim();
+      if (!apiKey) throw new Error('Please provide an OpenAI API key.');
+      const response = await fetch('https://api.openai.com/v1/responses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: modelInput.value.trim() || 'gpt-4.1-mini',
+          input: [
+            {
+              role: 'system',
+              content: `You are a strict personal-profile assistant. ${profileContext}
+Only answer questions about Francis Jesmar P. Montalbo based on the provided data.
+If the user asks unrelated questions, say you can only answer profile-related questions.`
+            },
+            {
+              role: 'user',
+              content: `Profile data:\n${knowledgeBlob}\n\nQuestion: ${question}`
+            }
+          ]
+        })
+      });
+      const data = await response.json();
+      const text = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response generated.';
+      output.textContent = text;
+    } catch (err) {
+      output.textContent = `Unable to answer right now: ${err.message}`;
+    } finally {
+      send.disabled = false;
+    }
+  }
+
+  send.addEventListener('click', ask);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') ask();
+  });
+}
+
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initializePublications();
     initializeNews();
+    initializeChatbot();
   });
 } else {
   initializePublications();
   initializeNews();
+  initializeChatbot();
 }
