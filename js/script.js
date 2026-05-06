@@ -383,6 +383,27 @@ const chapterData = [
   }
 ];
 
+// News posts (easy content management: add newest items here).
+const newsData = [
+  {
+    date: "2026-04-15",
+    title: "Accepted: MHADFormer in Applied Soft Computing",
+    summary: "Our work on MHADFormer for Alzheimer’s diagnosis from MRI scans was accepted and published in Applied Soft Computing (Article 114624).",
+    tags: ["publication", "health-ai", "milestone"],
+    link: "https://doi.org/10.1016/j.asoc.2026.114624",
+    linkLabel: "Read article",
+    pinned: true
+  },
+  {
+    date: "2025-01-01",
+    title: "Released TUMbRAIN code and publication",
+    summary: "Published TUMbRAIN in Neurocomputing and released the accompanying repository for reproducible experiments.",
+    tags: ["publication", "open-source", "medical-imaging"],
+    link: "https://github.com/francismontalbo/tumbrain",
+    linkLabel: "View code"
+  }
+];
+
 // Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
   'Elsevier': 'badge-elsevier',
@@ -608,9 +629,78 @@ function initializePublications() {
   }
 }
 
+function initializeNews() {
+  const list = document.getElementById('news-list');
+  const search = document.getElementById('news-search');
+  const yearFilter = document.getElementById('news-year-filter');
+  const clearBtn = document.getElementById('news-clear');
+  const count = document.getElementById('news-count');
+
+  if (!list || !search || !yearFilter || !clearBtn || !count) return;
+
+  const sorted = [...newsData].sort((a, b) => {
+    if (Boolean(b.pinned) !== Boolean(a.pinned)) return b.pinned ? 1 : -1;
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  const years = Array.from(new Set(sorted.map((n) => new Date(n.date).getFullYear()))).sort((a, b) => b - a);
+  years.forEach((year) => {
+    const opt = document.createElement('option');
+    opt.value = String(year);
+    opt.textContent = String(year);
+    yearFilter.appendChild(opt);
+  });
+
+  function render(items) {
+    list.innerHTML = '';
+    items.forEach((item) => {
+      const tags = (item.tags || []).map((tag) => `<span class="badge badge-default">#${tag}</span>`).join(' ');
+      const article = document.createElement('article');
+      article.className = 'publication-card';
+      article.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+          <div>
+            <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
+            <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
+            <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
+            <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
+          </div>
+          ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
+        </div>`;
+      list.appendChild(article);
+    });
+    count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
+  }
+
+  function apply() {
+    const term = search.value.trim().toLowerCase();
+    const selectedYear = yearFilter.value;
+    const filtered = sorted.filter((item) => {
+      const year = String(new Date(item.date).getFullYear());
+      const haystack = `${item.title} ${item.summary} ${(item.tags || []).join(' ')}`.toLowerCase();
+      return (selectedYear === 'all' || selectedYear === year) && haystack.includes(term);
+    });
+    render(filtered);
+  }
+
+  search.addEventListener('input', apply);
+  yearFilter.addEventListener('change', apply);
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    yearFilter.value = 'all';
+    apply();
+  });
+
+  apply();
+}
+
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializePublications);
+  document.addEventListener('DOMContentLoaded', () => {
+    initializePublications();
+    initializeNews();
+  });
 } else {
   initializePublications();
+  initializeNews();
 }

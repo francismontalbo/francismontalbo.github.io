@@ -244,6 +244,7 @@
           <li><a href="#experience" class="hover:text-accent">Experience</a></li>
           <li><a href="#skills" class="hover:text-accent">Skills</a></li>
           <li><a href="#works" class="hover:text-accent">Works</a></li>
+          <li><a href="#news" class="hover:text-accent">News</a></li>
           <li><a href="#achievements" class="hover:text-accent">Achievements</a></li>
           <li><a href="#contact" class="hover:text-accent">Contact</a></li>
         </ul>
@@ -255,6 +256,7 @@
         <a href="#experience" class="block py-1 hover:text-accent">Experience</a>
         <a href="#skills" class="block py-1 hover:text-accent">Skills</a>
         <a href="#works" class="block py-1 hover:text-accent">Works</a>
+        <a href="#news" class="block py-1 hover:text-accent">News</a>
         <a href="#achievements" class="block py-1 hover:text-accent">Achievements</a>
         <a href="#contact" class="block py-1 hover:text-accent">Contact</a>
       </div>
@@ -652,6 +654,27 @@
             <p id="chapters-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="book-chapters" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
           </div>
+      </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="py-20 bg-dark text-gray-100 relative" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-3xl font-semibold text-accent2">News</h2>
+            <p class="text-sm text-gray-300 mt-2">Major life and career updates in a blog-style timeline. To add a post, append one object to <code>newsData</code> in <code>js/script.js</code>.</p>
+          </div>
+          <span id="news-count" class="text-xs text-gray-400">0 posts</span>
+        </div>
+        <div class="flex flex-col md:flex-row gap-3 mb-6">
+          <input id="news-search" type="text" placeholder="Search updates by title, summary, or tags…" class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+          <select id="news-year-filter" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none">
+            <option value="all">All Years</option>
+          </select>
+          <button id="news-clear" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+        </div>
+        <div id="news-list" class="space-y-4"></div>
       </div>
     </section>
 
