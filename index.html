@@ -716,15 +716,18 @@
         <h2 class="text-3xl font-semibold text-accent2 mb-3">Ask Francis AI</h2>
         <p class="text-sm text-gray-300 mb-6">A profile-grounded assistant that answers only about Dr. Francis Jesmar P. Montalbo (research, work, skills, and achievements).</p>
         <div class="publication-card">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-            <input id="chatbot-api-key" type="password" placeholder="OpenAI API key (sk-...)" class="md:col-span-2 px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
-            <input id="chatbot-model" type="text" value="gpt-4.1-mini" class="px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+          <div id="chatbot-messages" class="rounded-md bg-primaryDark border border-primary p-4 text-sm text-gray-100 min-h-[260px] max-h-[420px] overflow-y-auto space-y-3 mb-4">
+            <div class="max-w-[85%] rounded-lg px-3 py-2 bg-tertiary text-gray-100">Hi! I’m Francis AI. Ask me about Francis’ publications, awards, affiliations, and expertise.</div>
           </div>
-          <div class="flex gap-3 mb-4">
-            <input id="chatbot-input" type="text" placeholder="Ask about publications, awards, affiliations, skills..." class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+          <div class="flex flex-wrap gap-2 mb-4">
+            <button class="chatbot-chip px-3 py-1 rounded-full text-xs bg-primary text-gray-100 border border-primary hover:bg-tertiary" data-question="What are Francis' top research areas?">Research Areas</button>
+            <button class="chatbot-chip px-3 py-1 rounded-full text-xs bg-primary text-gray-100 border border-primary hover:bg-tertiary" data-question="What major recognitions has Francis received?">Recognitions</button>
+            <button class="chatbot-chip px-3 py-1 rounded-full text-xs bg-primary text-gray-100 border border-primary hover:bg-tertiary" data-question="Show recent publications by Francis.">Recent Works</button>
+          </div>
+          <div class="flex gap-3">
+            <input id="chatbot-input" type="text" placeholder="Type your question..." class="flex-grow px-4 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
             <button id="chatbot-send" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Ask</button>
           </div>
-          <div id="chatbot-output" class="rounded-md bg-primaryDark border border-primary p-4 text-sm text-gray-100 min-h-[120px]">Hi! Ask me anything about Francis’ profile. I will only answer profile-related questions.</div>
         </div>
       </div>
     </section>

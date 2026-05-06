@@ -711,53 +711,87 @@ function initializeNews() {
 }
 
 function initializeChatbot() {
-  const keyInput = document.getElementById('chatbot-api-key');
-  const modelInput = document.getElementById('chatbot-model');
+  const messages = document.getElementById('chatbot-messages');
   const input = document.getElementById('chatbot-input');
   const send = document.getElementById('chatbot-send');
-  const output = document.getElementById('chatbot-output');
-  if (!keyInput || !modelInput || !input || !send || !output) return;
+  const chips = document.querySelectorAll('.chatbot-chip');
+  if (!messages || !input || !send) return;
+
+  // Optional cloud key hook. Leave empty to use local profile-grounded fallback.
+  const CLOUD_API_KEY = window.FRANCIS_CHATBOT_API_KEY || '';
+  const CLOUD_MODEL = 'gpt-4.1-mini';
 
   const knowledgeBlob = JSON.stringify({
     publications: { journals: journalData, conferences: conferenceData, chapters: chapterData },
     news: newsData
   });
 
+  function addBubble(text, role = 'assistant') {
+    const bubble = document.createElement('div');
+    bubble.className = role === 'user'
+      ? 'max-w-[85%] ml-auto rounded-lg px-3 py-2 bg-accent2 text-dark'
+      : 'max-w-[85%] rounded-lg px-3 py-2 bg-tertiary text-gray-100';
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function fallbackAnswer(question) {
+    const q = question.toLowerCase();
+    if (q.includes('research') || q.includes('area') || q.includes('expert')) {
+      return 'Francis focuses on medical imaging AI, deep learning, biomedical signal processing, and computer vision, with applications in diagnostics and healthcare.';
+    }
+    if (q.includes('recognition') || q.includes('award') || q.includes('best presenter') || q.includes('stanford')) {
+      return 'Notable recognitions include being featured in OneNews for Stanford scientist rankings and being selected as one of the best presenters at ICBSP 2023.';
+    }
+    if (q.includes('recent') || q.includes('publication') || q.includes('paper')) {
+      const latest = [...journalData].sort((a, b) => Number(b.year) - Number(a.year)).slice(0, 3)
+        .map((p) => `• ${p.year}: ${p.title}`).join('\n');
+      return `Here are recent works:\n${latest}`;
+    }
+    return 'I can help with Francis’ profile, publications, recognitions, affiliations, and research expertise. Please ask within those topics.';
+  }
+
   async function ask() {
     const question = input.value.trim();
     if (!question) return;
-    output.textContent = 'Thinking…';
+    addBubble(question, 'user');
+    input.value = '';
+    addBubble('Thinking…');
+    const thinkingBubble = messages.lastElementChild;
     send.disabled = true;
     try {
-      const apiKey = keyInput.value.trim();
-      if (!apiKey) throw new Error('Please provide an OpenAI API key.');
-      const response = await fetch('https://api.openai.com/v1/responses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: modelInput.value.trim() || 'gpt-4.1-mini',
-          input: [
-            {
-              role: 'system',
-              content: `You are a strict personal-profile assistant. ${profileContext}
+      if (!CLOUD_API_KEY) {
+        thinkingBubble.textContent = fallbackAnswer(question);
+      } else {
+        const response = await fetch('https://api.openai.com/v1/responses', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${CLOUD_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: CLOUD_MODEL,
+            input: [
+              {
+                role: 'system',
+                content: `You are a strict personal-profile assistant. ${profileContext}
 Only answer questions about Francis Jesmar P. Montalbo based on the provided data.
 If the user asks unrelated questions, say you can only answer profile-related questions.`
-            },
-            {
-              role: 'user',
-              content: `Profile data:\n${knowledgeBlob}\n\nQuestion: ${question}`
-            }
-          ]
-        })
-      });
-      const data = await response.json();
-      const text = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response generated.';
-      output.textContent = text;
+              },
+              {
+                role: 'user',
+                content: `Profile data:\n${knowledgeBlob}\n\nQuestion: ${question}`
+              }
+            ]
+          })
+        });
+        const data = await response.json();
+        const text = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response generated.';
+        thinkingBubble.textContent = text;
+      }
     } catch (err) {
-      output.textContent = `Unable to answer right now: ${err.message}`;
+      thinkingBubble.textContent = `Unable to answer right now: ${err.message}`;
     } finally {
       send.disabled = false;
     }
@@ -766,6 +800,12 @@ If the user asks unrelated questions, say you can only answer profile-related qu
   send.addEventListener('click', ask);
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') ask();
+  });
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      input.value = chip.dataset.question || '';
+      ask();
+    });
   });
 }
 
