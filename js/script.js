@@ -410,6 +410,7 @@ Name: Dr. Francis Jesmar P. Montalbo
 Roles: Associate Professor, Research Scientist, AI & Deep Learning Specialist, Software Engineer
 Affiliation: Batangas State University
 Research: medical imaging AI, deep learning, biomedical signal processing, computer vision
+Education: Doctorate in Information Technology (Technological Institute of the Philippines-Manila)
 Selected Achievements: OneNews Stanford scientists feature; ICBSP 2023 best presenter
 Use only this profile context plus on-page publications/news data. If asked outside scope, politely refuse.
 `;
@@ -779,9 +780,14 @@ function initializeChatbot() {
     const thinkingBubble = messages.lastElementChild;
     send.disabled = true;
     try {
-      thinkingBubble.textContent = fallbackAnswer(question);
+      const grounding = `PROFILE:\n${profileContext}\n\nNEWS:\n${newsData.map((n) => `${n.date} - ${n.title}`).join('\n')}\n\nWORKS:\n${allWorks.slice(0, 60).map((w) => `${w.year} | ${w.title}`).join('\n')}`;
+      const llmPrompt = `You are Francis AI, a professional profile assistant.\nRules:\n1) Answer only about Francis Jesmar P. Montalbo.\n2) Use only the provided grounding data.\n3) If not in data, clearly say it is not available.\n\n${grounding}\n\nUser question: ${question}`;
+      const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(llmPrompt)}`);
+      if (!response.ok) throw new Error('Cloud LLM unavailable');
+      const text = (await response.text()).trim();
+      thinkingBubble.textContent = text || fallbackAnswer(question);
     } catch (err) {
-      thinkingBubble.textContent = `Unable to answer right now: ${err.message}`;
+      thinkingBubble.textContent = fallbackAnswer(question);
     } finally {
       send.disabled = false;
     }
