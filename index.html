@@ -855,6 +855,40 @@
         chatbotFab.addEventListener('touchstart', openWidget, { passive: true });
         if (chatbotClose) chatbotClose.addEventListener('click', closeWidget);
       }
+
+      // Fallback message handler (guarantees basic replies if external chatbot script fails to bind)
+      const chatbotMessages = document.getElementById('chatbot-messages');
+      const chatbotInput = document.getElementById('chatbot-input');
+      const chatbotSend = document.getElementById('chatbot-send');
+      if (chatbotMessages && chatbotInput && chatbotSend && !chatbotSend.dataset.boundFallback) {
+        const addFallbackBubble = (text, role = 'assistant') => {
+          const row = document.createElement('div');
+          row.className = `flex items-start gap-2 ${role === 'user' ? 'justify-end' : ''}`;
+          row.innerHTML = role === 'user'
+            ? `<div class="w-8 h-8 rounded-full bg-accent2 text-dark flex items-center justify-center font-bold order-2">You</div><div class="max-w-[80%] rounded-2xl rounded-tr-sm px-4 py-3 bg-accent2 text-dark shadow">${text}</div>`
+            : `<div class="w-8 h-8 rounded-full bg-accent text-dark flex items-center justify-center font-bold">AI</div><div class="max-w-[80%] rounded-2xl rounded-tl-sm px-4 py-3 bg-tertiary text-gray-100 shadow">${text}</div>`;
+          chatbotMessages.appendChild(row);
+          chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        };
+        const fallbackAnswer = (q) => {
+          const query = q.toLowerCase();
+          if (query.includes('contact') || query.includes('email')) return 'Contact Dr. Francis Jesmar P. Montalbo at francismontalbo@ieee.org or francisjesmar.montalbo@g.batstate-u.edu.ph.';
+          if (query.includes('scholar') || query.includes('scopus') || query.includes('h-index')) return 'Profiles: Google Scholar (user=PV8dJDkAAAAJ) and Scopus (authorId=57221928564).';
+          return 'Thanks for your question. The assistant is in fallback mode right now; please try again in a few seconds for full live responses.';
+        };
+        const sendFallbackMessage = () => {
+          const q = chatbotInput.value.trim();
+          if (!q) return;
+          addFallbackBubble(q, 'user');
+          chatbotInput.value = '';
+          addFallbackBubble(fallbackAnswer(q), 'assistant');
+        };
+        chatbotSend.addEventListener('click', sendFallbackMessage);
+        chatbotInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') sendFallbackMessage();
+        });
+        chatbotSend.dataset.boundFallback = '1';
+      }
     </script>
     <!-- Custom Script for publications -->
     <!-- Load custom publications script with defer to ensure DOM is parsed before execution -->
