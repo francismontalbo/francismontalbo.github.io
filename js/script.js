@@ -688,6 +688,15 @@ function initializeNews() {
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
         </div>`;
       list.appendChild(article);
+      const button = article.querySelector('button[data-summary-target]');
+      if (button) {
+        button.addEventListener('click', async () => {
+          const target = article.querySelector(`#${button.dataset.summaryTarget}`);
+          button.disabled = true;
+          await generateNewsSummary(item, target);
+          button.disabled = false;
+        });
+      }
     });
     count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
   }
@@ -812,6 +821,34 @@ function initializeChatbot() {
       scopusH: extract(scopusText, hIndexPatterns)
     };
   }
+
+  const chatHistory = [];
+  const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
+
+  async function fetchLiveMetricsSnapshot() {
+    const scholarUrl = 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en';
+    const scopusUrl = 'https://www.scopus.com/authid/detail.uri?authorId=57221928564';
+    const [scholarText, scopusText] = await Promise.all([
+      fetch(`https://r.jina.ai/http://${scholarUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text()),
+      fetch(`https://r.jina.ai/http://${scopusUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text())
+    ]);
+    const hIndexPatterns = [/h-index[^0-9]{0,20}(\d{1,3})/i, /h index[^0-9]{0,20}(\d{1,3})/i];
+    const citePatterns = [/citations[^0-9]{0,20}(\d{1,7})/i, /cited by[^0-9]{0,20}(\d{1,7})/i];
+    const extract = (text, patterns) => {
+      for (const p of patterns) {
+        const m = text.match(p);
+        if (m && m[1]) return m[1];
+      }
+      return null;
+    };
+    return {
+      scholarH: extract(scholarText, hIndexPatterns),
+      scholarCitations: extract(scholarText, citePatterns),
+      scopusH: extract(scopusText, hIndexPatterns)
+    };
+  }
+
+  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
