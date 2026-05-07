@@ -1,4 +1,5 @@
 // Centralized site data for publications, news, and profile context.
+(function () {
 
 const journalData = [
   {
@@ -417,3 +418,4 @@ When asked for contact, give exact email addresses and links above.
 
 
 window.SiteData = { journalData, conferenceData, chapterData, newsData, profileContext };
+})();
