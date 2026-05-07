@@ -379,6 +379,18 @@ const chapterData = [
 // News posts (easy content management: add newest items here).
 const newsData = [
   {
+    date: "2026-04-10",
+    title: "DOST ATLANTIS Project Spotlight: Smart Automated Greenhouse Innovation",
+    summary: "Dr. Francis Jesmar P. Montalbo serves as project staff, scientist, and software engineer/developer for the funded DOST ATLANTIS initiative—an advanced automated greenhouse system integrating intelligent agriculture for lettuce and tilapia production.",
+    expandedSummary: "The DOST-PCAARRD feature on the ATLANTIS project highlights a high-impact, technology-driven agricultural innovation designed to automate greenhouse operations for lettuce and tilapia systems. Dr. Francis Jesmar P. Montalbo is a core contributor to the initiative as project staff, scientist, and software engineer/developer, and is among the key proponents who helped shape the project concept and implementation direction. This milestone reflects strong interdisciplinary leadership in AI-enabled and software-driven applied research with direct societal and food-system relevance.\n\n🎬 Watch the funded ATLANTIS project video: https://www.dailymotion.com/video/x8yxn5u",
+    tags: ["dost-funded", "atlantis-project", "automated-greenhouse", "software-engineering", "agri-innovation"],
+    link: "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-atlantis-project-developed-an-automated-greenhouse-for-lettuce-and-tilapia",
+    linkLabel: "Read DOST feature",
+    image: "assets/img/experience.jpg",
+    imageAlt: "DOST ATLANTIS project feature and innovation milestone",
+    pinned: true
+  },
+  {
     date: "2026-03-25",
     title: "Batangas State University Recognition: Scopus H-index and Research Impact",
     summary: "Dr. Francis Jesmar P. Montalbo was officially recognized by Batangas State University among faculty with higher Scopus h-index values, highlighting measurable and sustained research impact in citations and publications.",
