@@ -388,19 +388,25 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    summary: "My recognition in OneNews’ Stanford scientists coverage highlights me as part of a highly selective group of Filipino researchers with internationally visible impact—strengthening my profile as a trusted leader for advanced AI and biomedical innovation partnerships.",
+    expandedSummary: "This national feature positions my work as globally competitive and consistently high-impact. Being recognized in the Stanford scientists context reinforces my credibility as a research leader who delivers internationally relevant outputs in AI and biomedical domains—an important signal for collaborators, institutional partners, and industry stakeholders seeking proven expertise.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
+    image: "assets/img/profile.png",
+    imageAlt: "Dr. Francis Jesmar P. Montalbo profile photo",
     pinned: true
   },
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    summary: "Being selected as one of ICBSP 2023’s best presenters showcases the excellence, clarity, and competitive strength of my research in front of an international expert audience.",
+    expandedSummary: "This distinction elevates my standing beyond participation—it reflects top-tier performance among global presenters at a respected international conference. Combined with ACM-published proceedings and broad international visibility, the recognition strengthens my profile for high-value research collaborations, speaking opportunities, and cross-border innovation partnerships.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
+    image: "https://www.icbsp.org/style/image/history/icbsp2023/ICBSP2023GP.png",
+    imageAlt: "ICBSP 2023 conference group photo",
     pinned: true
   }
 ];
@@ -670,16 +676,22 @@ function initializeNews() {
 
   function render(items) {
     list.innerHTML = '';
-    items.forEach((item) => {
+    items.forEach((item, index) => {
       const tags = (item.tags || []).map((tag) => `<span class="badge badge-default">#${tag}</span>`).join(' ');
       const article = document.createElement('article');
+      const summaryId = `news-expanded-${index}-${item.date}`.replace(/[^a-zA-Z0-9-_]/g, '');
       article.className = 'publication-card';
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-          <div>
+          <div class="w-full">
+            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" />` : ''}
             <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
+            <details class="mt-3">
+              <summary class="cursor-pointer text-sm text-accent">Expand: detailed summary</summary>
+              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
+            </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
@@ -716,82 +728,143 @@ function initializeChatbot() {
   const input = document.getElementById('chatbot-input');
   const send = document.getElementById('chatbot-send');
   const chips = document.querySelectorAll('.chatbot-chip');
-  if (!messages || !input || !send) return;
+  const fab = document.getElementById('chatbot-fab');
+  const widget = document.getElementById('chatbot-widget');
+  const closeBtn = document.getElementById('chatbot-close');
+  const status = document.getElementById('chatbot-status');
+  if (!messages || !input || !send || !fab || !widget || !closeBtn || !status) return;
 
   const allWorks = [
     ...journalData.map((w) => ({ ...w, type: 'Journal' })),
     ...conferenceData.map((w) => ({ ...w, type: 'Conference' })),
     ...chapterData.map((w) => ({ ...w, type: 'Chapter' }))
   ];
+  const ragCorpus = [
+    ...journalData.map((item) => ({
+      type: 'journal',
+      title: item.title || '',
+      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.journal || ''} ${item.doi || ''}`,
+      payload: `${item.year || ''} | Journal | ${item.title || ''}${item.journal ? ` (${item.journal})` : ''}`
+    })),
+    ...conferenceData.map((item) => ({
+      type: 'conference',
+      title: item.title || '',
+      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.venue || ''} ${item.doi || ''}`,
+      payload: `${item.year || ''} | Conference | ${item.title || ''}${item.venue ? ` (${item.venue})` : ''}`
+    })),
+    ...chapterData.map((item) => ({
+      type: 'chapter',
+      title: item.title || '',
+      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.book || ''}`,
+      payload: `${item.year || ''} | Chapter | ${item.title || ''}${item.book ? ` (${item.book})` : ''}`
+    })),
+    ...newsData.map((item) => ({
+      type: 'news',
+      title: item.title || '',
+      text: `${item.date || ''} ${item.title || ''} ${item.summary || ''} ${(item.tags || []).join(' ')}`,
+      payload: `${item.date || ''} | News | ${item.title || ''} — ${item.summary || ''}`
+    }))
+  ];
+
+  function tokenize(text) {
+    return (text || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter((t) => t.length > 2);
+  }
+
+  function retrieveContext(query, limit = 8) {
+    const qTokens = tokenize(query);
+    const qSet = new Set(qTokens);
+    if (!qSet.size) return [];
+    const scored = ragCorpus.map((doc) => {
+      const tokens = tokenize(doc.text);
+      let score = 0;
+      tokens.forEach((token) => {
+        if (qSet.has(token)) score += 1;
+      });
+      if (qTokens.some((t) => (doc.title || '').toLowerCase().includes(t))) score += 3;
+      if (doc.type === 'news' && qTokens.some((t) => ['news', 'award', 'recognition', 'feature'].includes(t))) score += 2;
+      return { ...doc, score };
+    }).filter((doc) => doc.score > 0);
+    scored.sort((a, b) => b.score - a.score);
+    return scored.slice(0, limit).map((doc) => doc.payload);
+  }
 
   function addBubble(text, role = 'assistant') {
+    const row = document.createElement('div');
+    row.className = `flex items-start gap-2 ${role === 'user' ? 'justify-end' : ''}`;
+    const avatar = document.createElement('div');
+    avatar.className = `w-8 h-8 rounded-full flex items-center justify-center font-bold ${role === 'user' ? 'bg-accent2 text-dark order-2' : 'bg-accent text-dark'}`;
+    avatar.textContent = role === 'user' ? 'You' : 'AI';
     const bubble = document.createElement('div');
     bubble.className = role === 'user'
-      ? 'max-w-[85%] ml-auto rounded-lg px-3 py-2 bg-accent2 text-dark'
-      : 'max-w-[85%] rounded-lg px-3 py-2 bg-tertiary text-gray-100';
+      ? 'max-w-[80%] rounded-2xl rounded-tr-sm px-4 py-3 bg-accent2 text-dark shadow'
+      : 'max-w-[80%] rounded-2xl rounded-tl-sm px-4 py-3 bg-tertiary text-gray-100 shadow';
     bubble.textContent = text;
-    messages.appendChild(bubble);
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messages.appendChild(row);
     messages.scrollTop = messages.scrollHeight;
+    return bubble;
   }
 
-  function fallbackAnswer(question) {
-    const q = question.toLowerCase();
-    if (!q.includes('francis') && /(who are you|weather|politics|stock|bitcoin|movie|recipe)/.test(q)) {
-      return 'I can only answer questions specifically about Francis Jesmar P. Montalbo and his profile/work.';
+  async function callLLM(messagesPayload) {
+    const prompt = messagesPayload.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');
+    const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+    if (!response.ok) {
+      throw new Error(`LLM request failed (${response.status})`);
     }
-    if (q.includes('who is') || q.includes('bio') || q.includes('introduce')) {
-      return 'Dr. Francis Jesmar P. Montalbo is an Associate Professor, Research Scientist, AI & Deep Learning Specialist, and Software Engineer affiliated with Batangas State University.';
-    }
-    if (q.includes('research') || q.includes('area') || q.includes('expert')) {
-      return 'Francis focuses on medical imaging AI, deep learning, biomedical signal processing, and computer vision, with applications in diagnostics and healthcare.';
-    }
-    if (q.includes('recognition') || q.includes('award') || q.includes('best presenter') || q.includes('stanford')) {
-      return 'Notable recognitions include being featured in OneNews for Stanford scientist rankings and being selected as one of the best presenters at ICBSP 2023.';
-    }
-    if (q.includes('recent') || q.includes('publication') || q.includes('paper')) {
-      const latest = [...journalData].sort((a, b) => Number(b.year) - Number(a.year)).slice(0, 3)
-        .map((p) => `• ${p.year}: ${p.title}`).join('\n');
-      return `Here are recent works:\n${latest}`;
-    }
-    if (q.includes('conference') || q.includes('presenter')) {
-      const conf = conferenceData.slice(0, 3).map((c) => `• ${c.year}: ${c.title}`).join('\n');
-      return `Selected conference works:\n${conf}`;
-    }
-    if (q.includes('news') || q.includes('feature') || q.includes('recognition')) {
-      const highlights = newsData.map((n) => `• ${n.date}: ${n.title}`).join('\n');
-      return `Recent highlights:\n${highlights}`;
-    }
-    const matched = allWorks.filter((item) => {
-      const blob = `${item.title} ${item.authors || ''} ${item.journal || ''} ${item.venue || ''}`.toLowerCase();
-      return q.split(/\s+/).some((t) => t.length > 4 && blob.includes(t));
-    }).slice(0, 3);
-    if (matched.length) {
-      return `I found these related works:\n${matched.map((m) => `• [${m.type}] ${m.year}: ${m.title}`).join('\n')}`;
-    }
-    return 'I can help with Francis’ profile, publications, recognitions, affiliations, and research expertise. Please ask within those topics.';
+    return (await response.text()).trim();
   }
+
+  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
     if (!question) return;
     addBubble(question, 'user');
     input.value = '';
-    addBubble('Thinking…');
-    const thinkingBubble = messages.lastElementChild;
+    const thinkingBubble = addBubble('Thinking…');
     send.disabled = true;
     try {
-      const grounding = `PROFILE:\n${profileContext}\n\nNEWS:\n${newsData.map((n) => `${n.date} - ${n.title}`).join('\n')}\n\nWORKS:\n${allWorks.slice(0, 60).map((w) => `${w.year} | ${w.title}`).join('\n')}`;
-      const llmPrompt = `You are Francis AI, a professional profile assistant.\nRules:\n1) Answer only about Francis Jesmar P. Montalbo.\n2) Use only the provided grounding data.\n3) If not in data, clearly say it is not available.\n\n${grounding}\n\nUser question: ${question}`;
-      const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(llmPrompt)}`);
-      if (!response.ok) throw new Error('Cloud LLM unavailable');
-      const text = (await response.text()).trim();
-      thinkingBubble.textContent = text || fallbackAnswer(question);
+      const retrieved = retrieveContext(question, 10);
+      const grounding = `PROFILE:\n${profileContext}\n\nRETRIEVED_CONTEXT:\n${retrieved.length ? retrieved.join('\n') : 'No highly relevant matches found.'}`;
+      chatHistory.push({ role: 'user', content: question });
+      const payload = [
+        {
+          role: 'system',
+          content: `You are Francis AI, a modern assistant for this portfolio website.
+Prioritize accuracy and clarity.
+Use RETRIEVED_CONTEXT first when answering profile-related queries.
+If context is insufficient, explicitly say so instead of inventing details.
+${grounding}`
+        },
+        ...chatHistory.slice(-8)
+      ];
+      status.textContent = 'Thinking...';
+      const text = await callLLM(payload);
+      const finalText = text || 'I could not generate a response right now. Please try again.';
+      thinkingBubble.textContent = finalText;
+      chatHistory.push({ role: 'assistant', content: finalText });
+      status.textContent = 'Online mode enabled.';
     } catch (err) {
-      thinkingBubble.textContent = fallbackAnswer(question);
+      thinkingBubble.textContent = err.message || 'The LLM service is temporarily unavailable. Please try again in a moment.';
+      status.textContent = 'Connection error. Please try again.';
     } finally {
       send.disabled = false;
     }
   }
+
+  fab.addEventListener('click', () => {
+    widget.classList.remove('hidden');
+    fab.classList.add('hidden');
+    if (!messages.dataset.booted) {
+      addBubble('Hi! I’m Francis AI. Ask anything—especially about Francis, his works, and achievements.');
+      messages.dataset.booted = '1';
+    }
+  });
+  closeBtn.addEventListener('click', () => {
+    widget.classList.add('hidden');
+    fab.classList.remove('hidden');
+  });
 
   send.addEventListener('click', ask);
   input.addEventListener('keydown', (event) => {
