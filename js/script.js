@@ -799,6 +799,20 @@ function initializeChatbot() {
     return (await response.text()).trim();
   }
 
+  function buildLocalFallback(question, retrieved) {
+    const q = (question || '').toLowerCase();
+    if (q.includes('contact') || q.includes('email') || q.includes('reach')) {
+      return 'You can contact Dr. Francis Jesmar P. Montalbo via francismontalbo@ieee.org and francisjesmar.montalbo@g.batstate-u.edu.ph. Profiles: Google Scholar, Scopus, ORCID, LinkedIn, and ResearchGate are available on this page.';
+    }
+    if (q.includes('h-index') || q.includes('h index') || q.includes('citation') || q.includes('scopus') || q.includes('scholar')) {
+      return 'For the latest metrics, please check the official profiles directly: Google Scholar (user=PV8dJDkAAAAJ) and Scopus (authorId=57221928564).';
+    }
+    if (retrieved && retrieved.length) {
+      return `Based on available on-page data, the most relevant information is:\n• ${retrieved.slice(0, 4).join('\n• ')}`;
+    }
+    return 'I’m currently unable to reach the live model. Please try again in a moment, or ask about publications, recognitions, contact details, or profiles shown on this page.';
+  }
+
   const chatHistory = [];
   const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
 
@@ -865,13 +879,14 @@ ${grounding}`
       ];
       statusEl.textContent = 'Thinking...';
       const text = await callLLM(payload);
-      const finalText = text || 'I could not generate a response right now. Please try again.';
+      const finalText = text || buildLocalFallback(question, retrieved);
       thinkingBubble.textContent = finalText;
       chatHistory.push({ role: 'assistant', content: finalText });
       statusEl.textContent = 'Online mode enabled.';
     } catch (err) {
-      thinkingBubble.textContent = err.message || 'The LLM service is temporarily unavailable. Please try again in a moment.';
-      statusEl.textContent = 'Connection error. Please try again.';
+      const retrieved = retrieveContext(question, 10);
+      thinkingBubble.textContent = buildLocalFallback(question, retrieved);
+      statusEl.textContent = 'Live model unreachable; fallback mode active.';
     } finally {
       send.disabled = false;
     }
