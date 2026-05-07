@@ -388,7 +388,8 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    summary: "OneNews reported that the Philippines had 58 scientists in Stanford’s global list (up from 50 the prior year), and I was recognized among Filipino researchers contributing visible international impact.",
+    expandedSummary: "The OneNews feature discusses the Philippines’ representation in Stanford’s global scientist ranking and notes that the country still trails several ASEAN peers despite year-over-year gains. Within this context, my inclusion highlights sustained visibility in international research and reflects the broader relevance of my AI and biomedical work.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
@@ -397,7 +398,8 @@ const newsData = [
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    summary: "ICBSP 2023 in Singapore gathered global delegates and featured four oral sessions where one best oral presenter was selected per session; I was selected as one of the best presenters.",
+    expandedSummary: "The official ICBSP 2023 page confirms a successful hybrid international conference with broad participation across countries, keynote talks from recognized experts, and peer-reviewed proceedings published by ACM (indexed by Ei Compendex and Scopus). Being selected as one of the best presenters places my work among the strongest session-level contributions at a competitive international venue.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
@@ -703,9 +705,8 @@ ${articleText}`;
             <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
             <details class="mt-3">
-              <summary class="cursor-pointer text-sm text-accent">Expand: AI summary of linked article</summary>
-              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">Click "Generate" to load an expanded summary.</p>
-              ${item.link ? `<button data-summary-target="${summaryId}" class="mt-2 px-3 py-1 rounded-md bg-primary text-gray-100 border border-primary hover:bg-tertiary text-xs">Generate</button>` : ''}
+              <summary class="cursor-pointer text-sm text-accent">Expand: detailed summary</summary>
+              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
             </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
