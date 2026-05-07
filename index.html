@@ -837,6 +837,26 @@
           document.getElementById(target).classList.remove('hidden');
         });
       });
+
+      // Fallback chatbot toggle wiring (kept minimal so widget can always open even if external script errors)
+      const chatbotFab = document.getElementById('chatbot-fab');
+      const chatbotWidget = document.getElementById('chatbot-widget');
+      const chatbotClose = document.getElementById('chatbot-close');
+      if (chatbotFab && chatbotWidget) {
+        const openWidget = () => {
+          chatbotWidget.classList.remove('hidden');
+          chatbotWidget.style.display = 'block';
+          chatbotFab.classList.add('hidden');
+        };
+        const closeWidget = () => {
+          chatbotWidget.classList.add('hidden');
+          chatbotWidget.style.display = '';
+          chatbotFab.classList.remove('hidden');
+        };
+        chatbotFab.addEventListener('click', openWidget);
+        chatbotFab.addEventListener('touchstart', openWidget, { passive: true });
+        if (chatbotClose) chatbotClose.addEventListener('click', closeWidget);
+      }
     </script>
     <!-- Custom Script for publications -->
     <!-- Load custom publications script with defer to ensure DOM is parsed before execution -->
