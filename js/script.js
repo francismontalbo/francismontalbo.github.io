@@ -8,7 +8,16 @@
 // properties such as volume, pages, location, doi, doiUrl, codeUrl,
 // publisher, access ("open" or "closed"), and pubmedUrl (link to PubMed if available).
 
-const { journalData = [], conferenceData = [], chapterData = [], newsData = [], profileContext = '' } = window.SiteData || {};
+function getSiteData() {
+  const data = window.SiteData || {};
+  return {
+    journalData: data.journalData || [],
+    conferenceData: data.conferenceData || [],
+    chapterData: data.chapterData || [],
+    newsData: data.newsData || [],
+    profileContext: data.profileContext || ''
+  };
+}
 
 // Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
@@ -211,6 +220,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
 // Initialise publications once DOM is ready
 function initializePublications() {
+  const { journalData, conferenceData, chapterData } = getSiteData();
   const allData = [
     ...journalData.map((item) => ({ ...item })),
     ...conferenceData.map((item) => ({ ...item })),
@@ -249,6 +259,7 @@ function initializePublications() {
 }
 
 function initializeNews() {
+  const { newsData } = getSiteData();
   const list = document.getElementById('news-list');
   const count = document.getElementById('news-count');
 
