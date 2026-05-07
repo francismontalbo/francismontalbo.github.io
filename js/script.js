@@ -492,6 +492,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   const clearButton = document.getElementById(clearId);
   const resultsCount = document.getElementById(resultsCountId);
   const countSpan = document.getElementById(countId);
+  if (!container || !searchInput || !yearSelect || !publisherSelect || !sortSelect || !clearButton) {
+    return;
+  }
 
   // Populate year dropdown with unique years
   const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
@@ -823,32 +826,6 @@ function initializeChatbot() {
   }
 
   const chatHistory = [];
-  const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
-
-  async function fetchLiveMetricsSnapshot() {
-    const scholarUrl = 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en';
-    const scopusUrl = 'https://www.scopus.com/authid/detail.uri?authorId=57221928564';
-    const [scholarText, scopusText] = await Promise.all([
-      fetch(`https://r.jina.ai/http://${scholarUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text()),
-      fetch(`https://r.jina.ai/http://${scopusUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text())
-    ]);
-    const hIndexPatterns = [/h-index[^0-9]{0,20}(\d{1,3})/i, /h index[^0-9]{0,20}(\d{1,3})/i];
-    const citePatterns = [/citations[^0-9]{0,20}(\d{1,7})/i, /cited by[^0-9]{0,20}(\d{1,7})/i];
-    const extract = (text, patterns) => {
-      for (const p of patterns) {
-        const m = text.match(p);
-        if (m && m[1]) return m[1];
-      }
-      return null;
-    };
-    return {
-      scholarH: extract(scholarText, hIndexPatterns),
-      scholarCitations: extract(scholarText, citePatterns),
-      scopusH: extract(scopusText, hIndexPatterns)
-    };
-  }
-
-  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
@@ -936,12 +913,12 @@ ${grounding}`
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    initializePublications();
-    initializeNews();
-    initializeChatbot();
+    try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
+    try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+    try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
   });
 } else {
-  initializePublications();
-  initializeNews();
-  initializeChatbot();
+  try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
+  try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+  try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
 }
