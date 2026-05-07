@@ -691,6 +691,15 @@ function initializeNews() {
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
         </div>`;
       list.appendChild(article);
+      const button = article.querySelector('button[data-summary-target]');
+      if (button) {
+        button.addEventListener('click', async () => {
+          const target = article.querySelector(`#${button.dataset.summaryTarget}`);
+          button.disabled = true;
+          await generateNewsSummary(item, target);
+          button.disabled = false;
+        });
+      }
     });
     count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
   }
@@ -815,6 +824,8 @@ function initializeChatbot() {
       scopusH: extract(scopusText, hIndexPatterns)
     };
   }
+
+  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
