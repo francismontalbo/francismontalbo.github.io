@@ -656,46 +656,14 @@ function initializePublications() {
 
 function initializeNews() {
   const list = document.getElementById('news-list');
-  const search = document.getElementById('news-search');
-  const yearFilter = document.getElementById('news-year-filter');
-  const clearBtn = document.getElementById('news-clear');
   const count = document.getElementById('news-count');
 
-  if (!list || !search || !yearFilter || !clearBtn || !count) return;
+  if (!list || !count) return;
 
   const sorted = [...newsData].sort((a, b) => {
     if (Boolean(b.pinned) !== Boolean(a.pinned)) return b.pinned ? 1 : -1;
     return new Date(b.date) - new Date(a.date);
   });
-
-  const years = Array.from(new Set(sorted.map((n) => new Date(n.date).getFullYear()))).sort((a, b) => b - a);
-  years.forEach((year) => {
-    const opt = document.createElement('option');
-    opt.value = String(year);
-    opt.textContent = String(year);
-    yearFilter.appendChild(opt);
-  });
-
-  async function generateNewsSummary(item, container) {
-    if (!item.link) return;
-    container.textContent = 'Generating expanded summary…';
-    try {
-      const extracted = await fetch(`https://r.jina.ai/http://${item.link.replace(/^https?:\/\//, '')}`);
-      if (!extracted.ok) throw new Error('Cannot fetch article content');
-      const articleText = (await extracted.text()).slice(0, 12000);
-      const prompt = `You summarize news about Dr. Francis Jesmar P. Montalbo.
-Create a concise expanded summary (max 4 bullet points) based only on the source text.
-Tone: professional and strongly positive, emphasizing Francis's impact and excellence without inventing facts.
-Source text:
-${articleText}`;
-      const llm = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
-      if (!llm.ok) throw new Error('Summary model unavailable');
-      const summary = (await llm.text()).trim();
-      container.textContent = summary || 'No summary generated.';
-    } catch (error) {
-      container.textContent = 'Unable to generate expanded summary right now. Please open the source link directly.';
-    }
-  }
 
   function render(items) {
     list.innerHTML = '';
@@ -732,27 +700,7 @@ ${articleText}`;
     });
     count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
   }
-
-  function apply() {
-    const term = search.value.trim().toLowerCase();
-    const selectedYear = yearFilter.value;
-    const filtered = sorted.filter((item) => {
-      const year = String(new Date(item.date).getFullYear());
-      const haystack = `${item.title} ${item.summary} ${(item.tags || []).join(' ')}`.toLowerCase();
-      return (selectedYear === 'all' || selectedYear === year) && haystack.includes(term);
-    });
-    render(filtered);
-  }
-
-  search.addEventListener('input', apply);
-  yearFilter.addEventListener('change', apply);
-  clearBtn.addEventListener('click', () => {
-    search.value = '';
-    yearFilter.value = 'all';
-    apply();
-  });
-
-  apply();
+  render(sorted);
 }
 
 function initializeChatbot() {
@@ -846,6 +794,32 @@ function initializeChatbot() {
       throw new Error(`LLM request failed (${response.status})`);
     }
     return (await response.text()).trim();
+  }
+
+  const chatHistory = [];
+  const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
+
+  async function fetchLiveMetricsSnapshot() {
+    const scholarUrl = 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en';
+    const scopusUrl = 'https://www.scopus.com/authid/detail.uri?authorId=57221928564';
+    const [scholarText, scopusText] = await Promise.all([
+      fetch(`https://r.jina.ai/http://${scholarUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text()),
+      fetch(`https://r.jina.ai/http://${scopusUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text())
+    ]);
+    const hIndexPatterns = [/h-index[^0-9]{0,20}(\d{1,3})/i, /h index[^0-9]{0,20}(\d{1,3})/i];
+    const citePatterns = [/citations[^0-9]{0,20}(\d{1,7})/i, /cited by[^0-9]{0,20}(\d{1,7})/i];
+    const extract = (text, patterns) => {
+      for (const p of patterns) {
+        const m = text.match(p);
+        if (m && m[1]) return m[1];
+      }
+      return null;
+    };
+    return {
+      scholarH: extract(scholarText, hIndexPatterns),
+      scholarCitations: extract(scholarText, citePatterns),
+      scopusH: extract(scopusText, hIndexPatterns)
+    };
   }
 
   const chatHistory = [];
