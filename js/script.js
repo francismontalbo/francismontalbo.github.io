@@ -764,7 +764,8 @@ function initializeChatbot() {
   const widget = document.getElementById('chatbot-widget');
   const closeBtn = document.getElementById('chatbot-close');
   const status = document.getElementById('chatbot-status');
-  if (!messages || !input || !send || !fab || !widget || !closeBtn || !status) return;
+  if (!messages || !input || !send || !fab || !widget) return;
+  const statusEl = status || { textContent: '' };
 
   const allWorks = [
     ...journalData.map((w) => ({ ...w, type: 'Journal' })),
@@ -885,16 +886,16 @@ function initializeChatbot() {
     try {
       const qLower = question.toLowerCase();
       if (liveMetricsTriggers.some((t) => qLower.includes(t))) {
-        status.textContent = 'Checking live metrics...';
+        statusEl.textContent = 'Checking live metrics...';
         try {
           const live = await fetchLiveMetricsSnapshot();
           const metricsReply = `Latest live snapshot I can retrieve right now:\n• Google Scholar h-index: ${live.scholarH || 'not detected'}\n• Google Scholar citations: ${live.scholarCitations || 'not detected'}\n• Scopus h-index: ${live.scopusH || 'not detected'}\n\nOfficial links:\n• Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n• Scopus: https://www.scopus.com/authid/detail.uri?authorId=57221928564`;
           thinkingBubble.textContent = metricsReply;
           chatHistory.push({ role: 'assistant', content: metricsReply });
-          status.textContent = 'Online mode enabled.';
+          statusEl.textContent = 'Online mode enabled.';
           return;
         } catch (metricError) {
-          status.textContent = 'Live metrics fetch failed; answering with known links.';
+          statusEl.textContent = 'Live metrics fetch failed; answering with known links.';
         }
       }
       const retrieved = retrieveContext(question, 10);
@@ -911,32 +912,40 @@ ${grounding}`
         },
         ...chatHistory.slice(-8)
       ];
-      status.textContent = 'Thinking...';
+      statusEl.textContent = 'Thinking...';
       const text = await callLLM(payload);
       const finalText = text || 'I could not generate a response right now. Please try again.';
       thinkingBubble.textContent = finalText;
       chatHistory.push({ role: 'assistant', content: finalText });
-      status.textContent = 'Online mode enabled.';
+      statusEl.textContent = 'Online mode enabled.';
     } catch (err) {
       thinkingBubble.textContent = err.message || 'The LLM service is temporarily unavailable. Please try again in a moment.';
-      status.textContent = 'Connection error. Please try again.';
+      statusEl.textContent = 'Connection error. Please try again.';
     } finally {
       send.disabled = false;
     }
   }
 
-  fab.addEventListener('click', () => {
+  const openWidget = () => {
     widget.classList.remove('hidden');
+    widget.style.display = 'block';
     fab.classList.add('hidden');
+    fab.setAttribute('aria-expanded', 'true');
     if (!messages.dataset.booted) {
       addBubble('Hi! I’m Francis AI. Ask anything—especially about Francis, his works, and achievements.');
       messages.dataset.booted = '1';
     }
-  });
-  closeBtn.addEventListener('click', () => {
+  };
+  const closeWidget = () => {
     widget.classList.add('hidden');
+    widget.style.display = '';
     fab.classList.remove('hidden');
-  });
+    fab.setAttribute('aria-expanded', 'false');
+  };
+
+  fab.addEventListener('click', openWidget);
+  fab.addEventListener('pointerdown', openWidget);
+  if (closeBtn) closeBtn.addEventListener('click', closeWidget);
 
   send.addEventListener('click', ask);
   input.addEventListener('keydown', (event) => {
