@@ -388,7 +388,8 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    summary: "OneNews reported that the Philippines had 58 scientists in Stanford’s global list (up from 50 the prior year), and I was recognized among Filipino researchers contributing visible international impact.",
+    expandedSummary: "The OneNews feature discusses the Philippines’ representation in Stanford’s global scientist ranking and notes that the country still trails several ASEAN peers despite year-over-year gains. Within this context, my inclusion highlights sustained visibility in international research and reflects the broader relevance of my AI and biomedical work.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
@@ -397,7 +398,8 @@ const newsData = [
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    summary: "ICBSP 2023 in Singapore gathered global delegates and featured four oral sessions where one best oral presenter was selected per session; I was selected as one of the best presenters.",
+    expandedSummary: "The official ICBSP 2023 page confirms a successful hybrid international conference with broad participation across countries, keynote talks from recognized experts, and peer-reviewed proceedings published by ACM (indexed by Ei Compendex and Scopus). Being selected as one of the best presenters places my work among the strongest session-level contributions at a competitive international venue.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
@@ -670,16 +672,21 @@ function initializeNews() {
 
   function render(items) {
     list.innerHTML = '';
-    items.forEach((item) => {
+    items.forEach((item, index) => {
       const tags = (item.tags || []).map((tag) => `<span class="badge badge-default">#${tag}</span>`).join(' ');
       const article = document.createElement('article');
+      const summaryId = `news-expanded-${index}-${item.date}`.replace(/[^a-zA-Z0-9-_]/g, '');
       article.className = 'publication-card';
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-          <div>
+          <div class="w-full">
             <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
+            <details class="mt-3">
+              <summary class="cursor-pointer text-sm text-accent">Expand: detailed summary</summary>
+              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
+            </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
@@ -716,7 +723,11 @@ function initializeChatbot() {
   const input = document.getElementById('chatbot-input');
   const send = document.getElementById('chatbot-send');
   const chips = document.querySelectorAll('.chatbot-chip');
-  if (!messages || !input || !send) return;
+  const providerSelect = document.getElementById('chatbot-provider');
+  const modelInput = document.getElementById('chatbot-model');
+  const apiKeyInput = document.getElementById('chatbot-api-key');
+  const status = document.getElementById('chatbot-status');
+  if (!messages || !input || !send || !providerSelect || !modelInput || !apiKeyInput || !status) return;
 
   const allWorks = [
     ...journalData.map((w) => ({ ...w, type: 'Journal' })),
@@ -725,69 +736,92 @@ function initializeChatbot() {
   ];
 
   function addBubble(text, role = 'assistant') {
+    const row = document.createElement('div');
+    row.className = `flex items-start gap-2 ${role === 'user' ? 'justify-end' : ''}`;
+    const avatar = document.createElement('div');
+    avatar.className = `w-8 h-8 rounded-full flex items-center justify-center font-bold ${role === 'user' ? 'bg-accent2 text-dark order-2' : 'bg-accent text-dark'}`;
+    avatar.textContent = role === 'user' ? 'You' : 'AI';
     const bubble = document.createElement('div');
     bubble.className = role === 'user'
-      ? 'max-w-[85%] ml-auto rounded-lg px-3 py-2 bg-accent2 text-dark'
-      : 'max-w-[85%] rounded-lg px-3 py-2 bg-tertiary text-gray-100';
+      ? 'max-w-[80%] rounded-2xl rounded-tr-sm px-4 py-3 bg-accent2 text-dark shadow'
+      : 'max-w-[80%] rounded-2xl rounded-tl-sm px-4 py-3 bg-tertiary text-gray-100 shadow';
     bubble.textContent = text;
-    messages.appendChild(bubble);
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messages.appendChild(row);
     messages.scrollTop = messages.scrollHeight;
+    return bubble;
   }
 
-  function fallbackAnswer(question) {
-    const q = question.toLowerCase();
-    if (!q.includes('francis') && /(who are you|weather|politics|stock|bitcoin|movie|recipe)/.test(q)) {
-      return 'I can only answer questions specifically about Francis Jesmar P. Montalbo and his profile/work.';
-    }
-    if (q.includes('who is') || q.includes('bio') || q.includes('introduce')) {
-      return 'Dr. Francis Jesmar P. Montalbo is an Associate Professor, Research Scientist, AI & Deep Learning Specialist, and Software Engineer affiliated with Batangas State University.';
-    }
-    if (q.includes('research') || q.includes('area') || q.includes('expert')) {
-      return 'Francis focuses on medical imaging AI, deep learning, biomedical signal processing, and computer vision, with applications in diagnostics and healthcare.';
-    }
-    if (q.includes('recognition') || q.includes('award') || q.includes('best presenter') || q.includes('stanford')) {
-      return 'Notable recognitions include being featured in OneNews for Stanford scientist rankings and being selected as one of the best presenters at ICBSP 2023.';
-    }
-    if (q.includes('recent') || q.includes('publication') || q.includes('paper')) {
-      const latest = [...journalData].sort((a, b) => Number(b.year) - Number(a.year)).slice(0, 3)
-        .map((p) => `• ${p.year}: ${p.title}`).join('\n');
-      return `Here are recent works:\n${latest}`;
-    }
-    if (q.includes('conference') || q.includes('presenter')) {
-      const conf = conferenceData.slice(0, 3).map((c) => `• ${c.year}: ${c.title}`).join('\n');
-      return `Selected conference works:\n${conf}`;
-    }
-    if (q.includes('news') || q.includes('feature') || q.includes('recognition')) {
-      const highlights = newsData.map((n) => `• ${n.date}: ${n.title}`).join('\n');
-      return `Recent highlights:\n${highlights}`;
-    }
-    const matched = allWorks.filter((item) => {
-      const blob = `${item.title} ${item.authors || ''} ${item.journal || ''} ${item.venue || ''}`.toLowerCase();
-      return q.split(/\s+/).some((t) => t.length > 4 && blob.includes(t));
-    }).slice(0, 3);
-    if (matched.length) {
-      return `I found these related works:\n${matched.map((m) => `• [${m.type}] ${m.year}: ${m.title}`).join('\n')}`;
-    }
-    return 'I can help with Francis’ profile, publications, recognitions, affiliations, and research expertise. Please ask within those topics.';
+  function getClientConfig() {
+    const provider = providerSelect.value;
+    const model = modelInput.value.trim();
+    const key = apiKeyInput.value.trim();
+    return { provider, model, key };
   }
+
+  async function callLLM(messagesPayload) {
+    const { provider, model, key } = getClientConfig();
+    if (!model) throw new Error('Please provide a model name.');
+    if (provider !== 'ollama' && !key) throw new Error('Please provide an API key.');
+
+    let endpoint = '';
+    const headers = { 'Content-Type': 'application/json' };
+    if (provider === 'openrouter') {
+      endpoint = 'https://openrouter.ai/api/v1/chat/completions';
+      headers.Authorization = `Bearer ${key}`;
+      headers['HTTP-Referer'] = window.location.origin;
+      headers['X-Title'] = 'Francis AI Portfolio';
+    } else if (provider === 'openai') {
+      endpoint = 'https://api.openai.com/v1/chat/completions';
+      headers.Authorization = `Bearer ${key}`;
+    } else {
+      endpoint = 'http://localhost:11434/v1/chat/completions';
+    }
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ model, messages: messagesPayload, temperature: 0.4 })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`LLM request failed (${response.status}): ${errText.slice(0, 180)}`);
+    }
+    const json = await response.json();
+    return json.choices?.[0]?.message?.content?.trim() || '';
+  }
+
+  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
     if (!question) return;
     addBubble(question, 'user');
     input.value = '';
-    addBubble('Thinking…');
-    const thinkingBubble = messages.lastElementChild;
+    const thinkingBubble = addBubble('Thinking…');
     send.disabled = true;
     try {
-      const grounding = `PROFILE:\n${profileContext}\n\nNEWS:\n${newsData.map((n) => `${n.date} - ${n.title}`).join('\n')}\n\nWORKS:\n${allWorks.slice(0, 60).map((w) => `${w.year} | ${w.title}`).join('\n')}`;
-      const llmPrompt = `You are Francis AI, a professional profile assistant.\nRules:\n1) Answer only about Francis Jesmar P. Montalbo.\n2) Use only the provided grounding data.\n3) If not in data, clearly say it is not available.\n\n${grounding}\n\nUser question: ${question}`;
-      const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(llmPrompt)}`);
-      if (!response.ok) throw new Error('Cloud LLM unavailable');
-      const text = (await response.text()).trim();
-      thinkingBubble.textContent = text || fallbackAnswer(question);
+      const grounding = `PROFILE:\n${profileContext}\n\nNEWS:\n${newsData.map((n) => `${n.date} - ${n.title}`).join('\n')}\n\nWORKS:\n${allWorks.slice(0, 80).map((w) => `${w.year} | ${w.title}`).join('\n')}`;
+      chatHistory.push({ role: 'user', content: question });
+      const payload = [
+        {
+          role: 'system',
+          content: `You are Francis AI, a modern assistant in a portfolio site.
+Prioritize accuracy and clarity.
+When relevant, ground answers on this context:
+${grounding}`
+        },
+        ...chatHistory.slice(-8)
+      ];
+      status.textContent = `Connected mode: ${providerSelect.value} · model: ${modelInput.value.trim() || '(missing)'}`;
+      const text = await callLLM(payload);
+      const finalText = text || 'I could not generate a response right now. Please try again.';
+      thinkingBubble.textContent = finalText;
+      chatHistory.push({ role: 'assistant', content: finalText });
     } catch (err) {
-      thinkingBubble.textContent = fallbackAnswer(question);
+      thinkingBubble.textContent = err.message || 'The LLM service is temporarily unavailable. Please try again in a moment.';
+      status.textContent = 'Connection error: check provider, model, API key, and browser/network settings.';
     } finally {
       send.disabled = false;
     }
