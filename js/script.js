@@ -388,25 +388,25 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "My recognition in OneNews’ Stanford scientists coverage highlights me as part of a highly selective group of Filipino researchers with internationally visible impact—strengthening my profile as a trusted leader for advanced AI and biomedical innovation partnerships.",
-    expandedSummary: "This national feature positions my work as globally competitive and consistently high-impact. Being recognized in the Stanford scientists context reinforces my credibility as a research leader who delivers internationally relevant outputs in AI and biomedical domains—an important signal for collaborators, institutional partners, and industry stakeholders seeking proven expertise.",
+    summary: "Dr. Francis Jesmar P. Montalbo is recognized in OneNews’ Stanford scientists coverage, reinforcing his position among high-impact Filipino researchers with internationally visible contributions in artificial intelligence, biomedical signal processing, and medical imaging innovation.",
+    expandedSummary: "The OneNews feature strengthens the public profile of Dr. Francis Jesmar P. Montalbo as a globally competitive AI research scientist from the Philippines. His inclusion in the Stanford scientists context highlights sustained excellence, international research visibility, and trusted expertise—key indicators for universities, industry partners, and institutions seeking strategic collaboration in advanced AI and biomedical technologies.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
-    image: "assets/img/profile.png",
-    imageAlt: "Dr. Francis Jesmar P. Montalbo profile photo",
+    image: "assets/img/achievements.jpg",
+    imageAlt: "Dr. Francis Jesmar P. Montalbo achievements and recognitions photo",
     pinned: true
   },
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "Being selected as one of ICBSP 2023’s best presenters showcases the excellence, clarity, and competitive strength of my research in front of an international expert audience.",
-    expandedSummary: "This distinction elevates my standing beyond participation—it reflects top-tier performance among global presenters at a respected international conference. Combined with ACM-published proceedings and broad international visibility, the recognition strengthens my profile for high-value research collaborations, speaking opportunities, and cross-border innovation partnerships.",
+    summary: "Dr. Francis Jesmar P. Montalbo was selected as one of the Best Presenters at ICBSP 2023 in Singapore, underscoring his research excellence and international leadership in biomedical imaging, signal processing, and applied artificial intelligence.",
+    expandedSummary: "This international conference distinction positions Dr. Francis Jesmar P. Montalbo among top-performing global presenters in a competitive scientific forum. With ICBSP proceedings published by ACM and recognized in major indexing ecosystems, this achievement amplifies his authority, credibility, and strategic value for global research partnerships, keynote engagements, and cross-border innovation programs.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
-    image: "https://www.icbsp.org/style/image/history/icbsp2023/ICBSP2023GP.png",
-    imageAlt: "ICBSP 2023 conference group photo",
+    image: "assets/img/experience.jpg",
+    imageAlt: "Dr. Francis Jesmar P. Montalbo international conference and research experience photo",
     pinned: true
   }
 ];
