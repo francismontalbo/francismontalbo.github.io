@@ -813,7 +813,8 @@ function initializeChatbot() {
     return 'I’m currently unable to reach the live model. Please try again in a moment, or ask about publications, recognitions, contact details, or profiles shown on this page.';
   }
 
-  const chatHistory = [];
+  var chatHistory = window.__francisChatHistory || [];
+  window.__francisChatHistory = chatHistory;
   const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
 
   async function fetchLiveMetricsSnapshot() {
