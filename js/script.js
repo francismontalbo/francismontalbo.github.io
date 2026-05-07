@@ -388,7 +388,8 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "I was highlighted in OneNews’ coverage of the Stanford global scientist rankings—reinforcing my standing as an internationally recognized Filipino researcher contributing high-impact AI and biomedical signal processing work.",
+    summary: "OneNews reported that the Philippines had 58 scientists in Stanford’s global list (up from 50 the prior year), and I was recognized among Filipino researchers contributing visible international impact.",
+    expandedSummary: "The OneNews feature discusses the Philippines’ representation in Stanford’s global scientist ranking and notes that the country still trails several ASEAN peers despite year-over-year gains. Within this context, my inclusion highlights sustained visibility in international research and reflects the broader relevance of my AI and biomedical work.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
@@ -397,7 +398,8 @@ const newsData = [
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "At ICBSP 2023, my presentation was selected among the conference’s best presenters—reflecting the clarity, novelty, and applied value of my research in biomedical imaging and AI.",
+    summary: "ICBSP 2023 in Singapore gathered global delegates and featured four oral sessions where one best oral presenter was selected per session; I was selected as one of the best presenters.",
+    expandedSummary: "The official ICBSP 2023 page confirms a successful hybrid international conference with broad participation across countries, keynote talks from recognized experts, and peer-reviewed proceedings published by ACM (indexed by Ei Compendex and Scopus). Being selected as one of the best presenters places my work among the strongest session-level contributions at a competitive international venue.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
@@ -703,9 +705,8 @@ ${articleText}`;
             <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
             <details class="mt-3">
-              <summary class="cursor-pointer text-sm text-accent">Expand: AI summary of linked article</summary>
-              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">Click "Generate" to load an expanded summary.</p>
-              ${item.link ? `<button data-summary-target="${summaryId}" class="mt-2 px-3 py-1 rounded-md bg-primary text-gray-100 border border-primary hover:bg-tertiary text-xs">Generate</button>` : ''}
+              <summary class="cursor-pointer text-sm text-accent">Expand: detailed summary</summary>
+              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
             </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
@@ -752,11 +753,11 @@ function initializeChatbot() {
   const input = document.getElementById('chatbot-input');
   const send = document.getElementById('chatbot-send');
   const chips = document.querySelectorAll('.chatbot-chip');
-  const providerSelect = document.getElementById('chatbot-provider');
-  const modelInput = document.getElementById('chatbot-model');
-  const apiKeyInput = document.getElementById('chatbot-api-key');
+  const fab = document.getElementById('chatbot-fab');
+  const widget = document.getElementById('chatbot-widget');
+  const closeBtn = document.getElementById('chatbot-close');
   const status = document.getElementById('chatbot-status');
-  if (!messages || !input || !send || !providerSelect || !modelInput || !apiKeyInput || !status) return;
+  if (!messages || !input || !send || !fab || !widget || !closeBtn || !status) return;
 
   const allWorks = [
     ...journalData.map((w) => ({ ...w, type: 'Journal' })),
@@ -782,43 +783,13 @@ function initializeChatbot() {
     return bubble;
   }
 
-  function getClientConfig() {
-    const provider = providerSelect.value;
-    const model = modelInput.value.trim();
-    const key = apiKeyInput.value.trim();
-    return { provider, model, key };
-  }
-
   async function callLLM(messagesPayload) {
-    const { provider, model, key } = getClientConfig();
-    if (!model) throw new Error('Please provide a model name.');
-    if (provider !== 'ollama' && !key) throw new Error('Please provide an API key.');
-
-    let endpoint = '';
-    const headers = { 'Content-Type': 'application/json' };
-    if (provider === 'openrouter') {
-      endpoint = 'https://openrouter.ai/api/v1/chat/completions';
-      headers.Authorization = `Bearer ${key}`;
-      headers['HTTP-Referer'] = window.location.origin;
-      headers['X-Title'] = 'Francis AI Portfolio';
-    } else if (provider === 'openai') {
-      endpoint = 'https://api.openai.com/v1/chat/completions';
-      headers.Authorization = `Bearer ${key}`;
-    } else {
-      endpoint = 'http://localhost:11434/v1/chat/completions';
-    }
-
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ model, messages: messagesPayload, temperature: 0.4 })
-    });
+    const prompt = messagesPayload.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');
+    const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
     if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`LLM request failed (${response.status}): ${errText.slice(0, 180)}`);
+      throw new Error(`LLM request failed (${response.status})`);
     }
-    const json = await response.json();
-    return json.choices?.[0]?.message?.content?.trim() || '';
+    return (await response.text()).trim();
   }
 
   const chatHistory = [];
@@ -843,18 +814,32 @@ ${grounding}`
         },
         ...chatHistory.slice(-8)
       ];
-      status.textContent = `Connected mode: ${providerSelect.value} · model: ${modelInput.value.trim() || '(missing)'}`;
+      status.textContent = 'Thinking...';
       const text = await callLLM(payload);
       const finalText = text || 'I could not generate a response right now. Please try again.';
       thinkingBubble.textContent = finalText;
       chatHistory.push({ role: 'assistant', content: finalText });
+      status.textContent = 'Online mode enabled.';
     } catch (err) {
       thinkingBubble.textContent = err.message || 'The LLM service is temporarily unavailable. Please try again in a moment.';
-      status.textContent = 'Connection error: check provider, model, API key, and browser/network settings.';
+      status.textContent = 'Connection error. Please try again.';
     } finally {
       send.disabled = false;
     }
   }
+
+  fab.addEventListener('click', () => {
+    widget.classList.remove('hidden');
+    fab.classList.add('hidden');
+    if (!messages.dataset.booted) {
+      addBubble('Hi! I’m Francis AI. Ask anything—especially about Francis, his works, and achievements.');
+      messages.dataset.booted = '1';
+    }
+  });
+  closeBtn.addEventListener('click', () => {
+    widget.classList.add('hidden');
+    fab.classList.remove('hidden');
+  });
 
   send.addEventListener('click', ask);
   input.addEventListener('keydown', (event) => {
