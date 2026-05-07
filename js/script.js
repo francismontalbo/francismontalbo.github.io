@@ -418,7 +418,9 @@ Affiliation: Batangas State University
 Research: medical imaging AI, deep learning, biomedical signal processing, computer vision
 Education: Doctorate in Information Technology (Technological Institute of the Philippines-Manila)
 Selected Achievements: OneNews Stanford scientists feature; ICBSP 2023 best presenter
-Use only this profile context plus on-page publications/news data. If asked outside scope, politely refuse.
+Contact Emails: francismontalbo@ieee.org; francisjesmar.montalbo@g.batstate-u.edu.ph
+Profiles: Scopus https://www.scopus.com/authid/detail.uri?authorId=57221928564 | Google Scholar https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en | ORCID https://orcid.org/0000-0002-1493-5080 | LinkedIn https://www.linkedin.com/in/sirjmmontalbo/ | ResearchGate https://www.researchgate.net/profile/Francis_Jesmar_Montalbo
+When asked for contact, give exact email addresses and links above.
 `;
 
 // Mapping of publishers to custom badge classes
@@ -846,6 +848,32 @@ function initializeChatbot() {
   }
 
   const chatHistory = [];
+  const liveMetricsTriggers = ['h-index', 'h index', 'citations', 'google scholar', 'scopus', 'metrics'];
+
+  async function fetchLiveMetricsSnapshot() {
+    const scholarUrl = 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en';
+    const scopusUrl = 'https://www.scopus.com/authid/detail.uri?authorId=57221928564';
+    const [scholarText, scopusText] = await Promise.all([
+      fetch(`https://r.jina.ai/http://${scholarUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text()),
+      fetch(`https://r.jina.ai/http://${scopusUrl.replace(/^https?:\/\//, '')}`).then((r) => r.text())
+    ]);
+    const hIndexPatterns = [/h-index[^0-9]{0,20}(\d{1,3})/i, /h index[^0-9]{0,20}(\d{1,3})/i];
+    const citePatterns = [/citations[^0-9]{0,20}(\d{1,7})/i, /cited by[^0-9]{0,20}(\d{1,7})/i];
+    const extract = (text, patterns) => {
+      for (const p of patterns) {
+        const m = text.match(p);
+        if (m && m[1]) return m[1];
+      }
+      return null;
+    };
+    return {
+      scholarH: extract(scholarText, hIndexPatterns),
+      scholarCitations: extract(scholarText, citePatterns),
+      scopusH: extract(scopusText, hIndexPatterns)
+    };
+  }
+
+  const chatHistory = [];
 
   async function ask() {
     const question = input.value.trim();
@@ -855,6 +883,20 @@ function initializeChatbot() {
     const thinkingBubble = addBubble('Thinking…');
     send.disabled = true;
     try {
+      const qLower = question.toLowerCase();
+      if (liveMetricsTriggers.some((t) => qLower.includes(t))) {
+        status.textContent = 'Checking live metrics...';
+        try {
+          const live = await fetchLiveMetricsSnapshot();
+          const metricsReply = `Latest live snapshot I can retrieve right now:\n• Google Scholar h-index: ${live.scholarH || 'not detected'}\n• Google Scholar citations: ${live.scholarCitations || 'not detected'}\n• Scopus h-index: ${live.scopusH || 'not detected'}\n\nOfficial links:\n• Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n• Scopus: https://www.scopus.com/authid/detail.uri?authorId=57221928564`;
+          thinkingBubble.textContent = metricsReply;
+          chatHistory.push({ role: 'assistant', content: metricsReply });
+          status.textContent = 'Online mode enabled.';
+          return;
+        } catch (metricError) {
+          status.textContent = 'Live metrics fetch failed; answering with known links.';
+        }
+      }
       const retrieved = retrieveContext(question, 10);
       const grounding = `PROFILE:\n${profileContext}\n\nRETRIEVED_CONTEXT:\n${retrieved.length ? retrieved.join('\n') : 'No highly relevant matches found.'}`;
       chatHistory.push({ role: 'user', content: question });
