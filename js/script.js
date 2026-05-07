@@ -674,6 +674,27 @@ function initializeNews() {
     yearFilter.appendChild(opt);
   });
 
+  async function generateNewsSummary(item, container) {
+    if (!item.link) return;
+    container.textContent = 'Generating expanded summary…';
+    try {
+      const extracted = await fetch(`https://r.jina.ai/http://${item.link.replace(/^https?:\/\//, '')}`);
+      if (!extracted.ok) throw new Error('Cannot fetch article content');
+      const articleText = (await extracted.text()).slice(0, 12000);
+      const prompt = `You summarize news about Dr. Francis Jesmar P. Montalbo.
+Create a concise expanded summary (max 4 bullet points) based only on the source text.
+Tone: professional and strongly positive, emphasizing Francis's impact and excellence without inventing facts.
+Source text:
+${articleText}`;
+      const llm = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+      if (!llm.ok) throw new Error('Summary model unavailable');
+      const summary = (await llm.text()).trim();
+      container.textContent = summary || 'No summary generated.';
+    } catch (error) {
+      container.textContent = 'Unable to generate expanded summary right now. Please open the source link directly.';
+    }
+  }
+
   function render(items) {
     list.innerHTML = '';
     items.forEach((item, index) => {
@@ -697,6 +718,15 @@ function initializeNews() {
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
         </div>`;
       list.appendChild(article);
+      const button = article.querySelector('button[data-summary-target]');
+      if (button) {
+        button.addEventListener('click', async () => {
+          const target = article.querySelector(`#${button.dataset.summaryTarget}`);
+          button.disabled = true;
+          await generateNewsSummary(item, target);
+          button.disabled = false;
+        });
+      }
     });
     count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
   }
