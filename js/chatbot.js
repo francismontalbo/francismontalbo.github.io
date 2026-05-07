@@ -19,54 +19,8 @@ function initializeChatbot() {
     ...conferenceData.map((w) => ({ ...w, type: 'Conference' })),
     ...chapterData.map((w) => ({ ...w, type: 'Chapter' }))
   ];
-  const ragCorpus = [
-    ...journalData.map((item) => ({
-      type: 'journal',
-      title: item.title || '',
-      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.journal || ''} ${item.doi || ''}`,
-      payload: `${item.year || ''} | Journal | ${item.title || ''}${item.journal ? ` (${item.journal})` : ''}`
-    })),
-    ...conferenceData.map((item) => ({
-      type: 'conference',
-      title: item.title || '',
-      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.venue || ''} ${item.doi || ''}`,
-      payload: `${item.year || ''} | Conference | ${item.title || ''}${item.venue ? ` (${item.venue})` : ''}`
-    })),
-    ...chapterData.map((item) => ({
-      type: 'chapter',
-      title: item.title || '',
-      text: `${item.year || ''} ${item.authors || ''} ${item.title || ''} ${item.book || ''}`,
-      payload: `${item.year || ''} | Chapter | ${item.title || ''}${item.book ? ` (${item.book})` : ''}`
-    })),
-    ...newsData.map((item) => ({
-      type: 'news',
-      title: item.title || '',
-      text: `${item.date || ''} ${item.title || ''} ${item.summary || ''} ${(item.tags || []).join(' ')}`,
-      payload: `${item.date || ''} | News | ${item.title || ''} — ${item.summary || ''}`
-    }))
-  ];
-
-  function tokenize(text) {
-    return (text || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter((t) => t.length > 2);
-  }
-
-  function retrieveContext(query, limit = 8) {
-    const qTokens = tokenize(query);
-    const qSet = new Set(qTokens);
-    if (!qSet.size) return [];
-    const scored = ragCorpus.map((doc) => {
-      const tokens = tokenize(doc.text);
-      let score = 0;
-      tokens.forEach((token) => {
-        if (qSet.has(token)) score += 1;
-      });
-      if (qTokens.some((t) => (doc.title || '').toLowerCase().includes(t))) score += 3;
-      if (doc.type === 'news' && qTokens.some((t) => ['news', 'award', 'recognition', 'feature'].includes(t))) score += 2;
-      return { ...doc, score };
-    }).filter((doc) => doc.score > 0);
-    scored.sort((a, b) => b.score - a.score);
-    return scored.slice(0, limit).map((doc) => doc.payload);
-  }
+  const rag = window.FrancisRAG;
+  const siteData = { journalData, conferenceData, chapterData, newsData, profileContext };
 
   function addBubble(text, role = 'assistant') {
     const row = document.createElement('div');
@@ -158,7 +112,7 @@ function initializeChatbot() {
           statusEl.textContent = 'Live metrics fetch failed; answering with known links.';
         }
       }
-      const retrieved = retrieveContext(question, 10);
+      const retrieved = rag ? rag.buildContext(question, siteData, 12) : [];
       const grounding = `PROFILE:\n${profileContext}\n\nRETRIEVED_CONTEXT:\n${retrieved.length ? retrieved.join('\n') : 'No highly relevant matches found.'}`;
       chatHistory.push({ role: 'user', content: question });
       const payload = [
@@ -179,7 +133,7 @@ ${grounding}`
       chatHistory.push({ role: 'assistant', content: finalText });
       statusEl.textContent = 'Online mode enabled.';
     } catch (err) {
-      const retrieved = retrieveContext(question, 10);
+      const retrieved = rag ? rag.buildContext(question, siteData, 12) : [];
       thinkingBubble.textContent = buildLocalFallback(question, retrieved);
       statusEl.textContent = 'Live model unreachable; fallback mode active.';
     } finally {
