@@ -388,21 +388,25 @@ const newsData = [
   {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
-    summary: "OneNews reported that the Philippines had 58 scientists in Stanford’s global list (up from 50 the prior year), and I was recognized among Filipino researchers contributing visible international impact.",
-    expandedSummary: "The OneNews feature discusses the Philippines’ representation in Stanford’s global scientist ranking and notes that the country still trails several ASEAN peers despite year-over-year gains. Within this context, my inclusion highlights sustained visibility in international research and reflects the broader relevance of my AI and biomedical work.",
+    summary: "My recognition in OneNews’ Stanford scientists coverage highlights me as part of a highly selective group of Filipino researchers with internationally visible impact—strengthening my profile as a trusted leader for advanced AI and biomedical innovation partnerships.",
+    expandedSummary: "This national feature positions my work as globally competitive and consistently high-impact. Being recognized in the Stanford scientists context reinforces my credibility as a research leader who delivers internationally relevant outputs in AI and biomedical domains—an important signal for collaborators, institutional partners, and industry stakeholders seeking proven expertise.",
     tags: ["media-feature", "stanford-top-2%", "research-impact"],
     link: "https://www.onenews.ph/articles/phl-has-fewest-scientists-in-asean-stanford-list",
     linkLabel: "Read feature",
+    image: "assets/img/profile.png",
+    imageAlt: "Dr. Francis Jesmar P. Montalbo profile photo",
     pinned: true
   },
   {
     date: "2023-10-22",
     title: "ICBSP 2023: Selected as One of the Best Presenters",
-    summary: "ICBSP 2023 in Singapore gathered global delegates and featured four oral sessions where one best oral presenter was selected per session; I was selected as one of the best presenters.",
-    expandedSummary: "The official ICBSP 2023 page confirms a successful hybrid international conference with broad participation across countries, keynote talks from recognized experts, and peer-reviewed proceedings published by ACM (indexed by Ei Compendex and Scopus). Being selected as one of the best presenters places my work among the strongest session-level contributions at a competitive international venue.",
+    summary: "Being selected as one of ICBSP 2023’s best presenters showcases the excellence, clarity, and competitive strength of my research in front of an international expert audience.",
+    expandedSummary: "This distinction elevates my standing beyond participation—it reflects top-tier performance among global presenters at a respected international conference. Combined with ACM-published proceedings and broad international visibility, the recognition strengthens my profile for high-value research collaborations, speaking opportunities, and cross-border innovation partnerships.",
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
+    image: "https://www.icbsp.org/style/image/history/icbsp2023/ICBSP2023GP.png",
+    imageAlt: "ICBSP 2023 conference group photo",
     pinned: true
   }
 ];
@@ -701,6 +705,7 @@ ${articleText}`;
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
+            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" />` : ''}
             <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
