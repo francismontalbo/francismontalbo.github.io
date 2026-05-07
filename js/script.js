@@ -8,7 +8,7 @@
 // properties such as volume, pages, location, doi, doiUrl, codeUrl,
 // publisher, access ("open" or "closed"), and pubmedUrl (link to PubMed if available).
 
-const { journalData, conferenceData, chapterData, newsData, profileContext } = window.SiteData || {};
+const { journalData = [], conferenceData = [], chapterData = [], newsData = [], profileContext = '' } = window.SiteData || {};
 
 // Mapping of publishers to custom badge classes
 const publisherBadgeMap = {
@@ -79,13 +79,14 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   const clearButton = document.getElementById(clearId);
   const resultsCount = document.getElementById(resultsCountId);
   const countSpan = document.getElementById(countId);
-  if (!container || !searchInput || !yearSelect || !publisherSelect || !sortSelect || !clearButton) {
+  if (!container) {
     return;
   }
 
   // Populate year dropdown with unique years
   const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
   years.forEach((y) => {
+    if (!yearSelect) return;
     const opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;
@@ -93,6 +94,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   });
   const publishers = Array.from(new Set(normalizedData.map((d) => d.publisher).filter(Boolean))).sort();
   publishers.forEach((publisher) => {
+    if (!publisherSelect) return;
     const opt = document.createElement('option');
     opt.value = publisher;
     opt.textContent = publisher;
@@ -174,10 +176,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
   // Search and filter logic
   function applyFilter() {
-    const term = searchInput.value.trim().toLowerCase();
-    const year = yearSelect.value;
-    const publisher = publisherSelect.value;
-    const sortMode = sortSelect.value;
+    const term = (searchInput?.value || '').trim().toLowerCase();
+    const year = yearSelect?.value || 'all';
+    const publisher = publisherSelect?.value || 'all';
+    const sortMode = sortSelect?.value || 'latest';
     const filtered = normalizedData.filter((entry) => {
       const haystack = `${entry.title || ''} ${entry.authors || ''} ${entry.journal || ''} ${entry.venue || ''} ${entry.publisher || ''}`.toLowerCase();
       const matchesText = haystack.includes(term);
@@ -191,17 +193,19 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     }
   }
 
-  searchInput.addEventListener('input', applyFilter);
-  yearSelect.addEventListener('change', applyFilter);
-  publisherSelect.addEventListener('change', applyFilter);
-  sortSelect.addEventListener('change', applyFilter);
-  clearButton.addEventListener('click', () => {
-    searchInput.value = '';
-    yearSelect.value = 'all';
-    publisherSelect.value = 'all';
-    sortSelect.value = 'latest';
-    applyFilter();
-  });
+  if (searchInput) searchInput.addEventListener('input', applyFilter);
+  if (yearSelect) yearSelect.addEventListener('change', applyFilter);
+  if (publisherSelect) publisherSelect.addEventListener('change', applyFilter);
+  if (sortSelect) sortSelect.addEventListener('change', applyFilter);
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      if (yearSelect) yearSelect.value = 'all';
+      if (publisherSelect) publisherSelect.value = 'all';
+      if (sortSelect) sortSelect.value = 'latest';
+      applyFilter();
+    });
+  }
   applyFilter();
 }
 

@@ -1,6 +1,6 @@
 // Chatbot module
 
-const { journalData, conferenceData, chapterData, newsData, profileContext } = window.SiteData || {};
+const { journalData = [], conferenceData = [], chapterData = [], newsData = [], profileContext = '' } = window.SiteData || {};
 
 function initializeChatbot() {
   const messages = document.getElementById('chatbot-messages');
