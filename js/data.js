@@ -379,6 +379,18 @@ const chapterData = [
 // News posts (easy content management: add newest items here).
 const newsData = [
   {
+    date: "2026-03-25",
+    title: "Batangas State University Recognition: Scopus H-index and Research Impact",
+    summary: "Dr. Francis Jesmar P. Montalbo was officially recognized by Batangas State University among faculty with higher Scopus h-index values, highlighting measurable and sustained research impact in citations and publications.",
+    expandedSummary: "In the university’s official recognition update (data as of March 25, 2026), Dr. Francis Jesmar P. Montalbo of the College of Informatics and Computing Sciences was featured among top-performing faculty based on Scopus h-index and research impact indicators. This distinction reinforces his strong scholarly visibility, citation performance, and publication track record in high-impact research environments.",
+    tags: ["scopus-h-index", "research-impact", "batangas-state-university", "faculty-recognition"],
+    link: "https://www.facebook.com/photo?fbid=1389710493174025&set=pcb.1389717616506646",
+    linkLabel: "View announcement",
+    image: "assets/img/achievements.jpg",
+    imageAlt: "Faculty recognized for Scopus h-index and research impact",
+    pinned: true
+  },
+  {
     date: "2026-05-05",
     title: "National Spotlight: Recognized in OneNews Stanford Scientists Feature",
     summary: "Dr. Francis Jesmar P. Montalbo is recognized in OneNews’ Stanford scientists coverage, reinforcing his position among high-impact Filipino researchers with internationally visible contributions in artificial intelligence, biomedical signal processing, and medical imaging innovation.",
