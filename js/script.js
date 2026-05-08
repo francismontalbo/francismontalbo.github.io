@@ -277,15 +277,17 @@ function initializeNews() {
       const article = document.createElement('article');
       const summaryId = `news-expanded-${index}-${item.date}`.replace(/[^a-zA-Z0-9-_]/g, '');
       article.className = 'publication-card';
+      article.setAttribute('itemscope', '');
+      article.setAttribute('itemtype', 'https://schema.org/NewsArticle');
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
-            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" />` : ''}
-            <p class="text-xs text-accent2">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
-            <h3 class="text-lg font-semibold mt-1">${item.title}</h3>
-            <p class="text-sm text-gray-200 mt-2">${item.summary}</p>
+            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" itemprop="image" />` : ''}
+            <p class="text-xs text-accent2"><time datetime="${item.date}" itemprop="datePublished">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
+            <h3 class="text-lg font-semibold mt-1" itemprop="headline">${item.title}</h3>
+            <p class="text-sm text-gray-200 mt-2" itemprop="description">${item.summary}</p>
             <details class="mt-3">
-              <summary class="cursor-pointer text-sm text-accent">Expand: detailed summary</summary>
+              <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
               <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
             </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
@@ -306,6 +308,38 @@ function initializeNews() {
     count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
   }
   render(sorted);
+
+  const newsJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": sorted.map((item) => ({
+      "@type": "NewsArticle",
+      headline: item.title,
+      description: item.summary,
+      datePublished: item.date,
+      dateModified: item.date,
+      image: item.image ? new URL(item.image, window.location.origin).href : undefined,
+      url: item.link || window.location.href,
+      keywords: (item.tags || []).join(', '),
+      author: {
+        "@type": "Person",
+        name: "Dr. Francis Jesmar P. Montalbo"
+      },
+      publisher: {
+        "@type": "Person",
+        name: "Dr. Francis Jesmar P. Montalbo"
+      }
+    }))
+  };
+
+  let newsStructuredData = document.getElementById('news-structured-data');
+  if (!newsStructuredData) {
+    newsStructuredData = document.createElement('script');
+    newsStructuredData.id = 'news-structured-data';
+    newsStructuredData.type = 'application/ld+json';
+    document.head.appendChild(newsStructuredData);
+  }
+  newsStructuredData.textContent = JSON.stringify(newsJsonLd);
+
 }
 
 // Run initialisation immediately or defer to DOMContentLoaded
