@@ -386,8 +386,8 @@ const newsData = [
     tags: ["dost-funded", "atlantis-project", "automated-greenhouse", "software-engineering", "agri-innovation"],
     link: "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-atlantis-project-developed-an-automated-greenhouse-for-lettuce-and-tilapia",
     linkLabel: "Read DOST feature",
-    image: "assets/img/experience.jpg",
-    imageAlt: "DOST ATLANTIS project feature and innovation milestone",
+    image: "assets/img/project_atlantis_francis_montalbo_inventor_scientist_engineer_inventor_ceo.png",
+    imageAlt: "DOST ATLANTIS automated greenhouse innovation led by Dr. Francis Jesmar P. Montalbo",
     pinned: true
   },
   {
@@ -398,8 +398,8 @@ const newsData = [
     tags: ["scopus-h-index", "research-impact", "batangas-state-university", "faculty-recognition"],
     link: "https://www.facebook.com/photo?fbid=1389710493174025&set=pcb.1389717616506646",
     linkLabel: "View announcement",
-    image: "assets/img/achievements.jpg",
-    imageAlt: "Faculty recognized for Scopus h-index and research impact",
+    image: "assets/img/francismontalbo_publication_top_hindex_achievement_recognition_award_2026.jpg",
+    imageAlt: "Batangas State University recognition for Scopus h-index and research impact in 2026",
     pinned: true
   },
   {
@@ -422,8 +422,8 @@ const newsData = [
     tags: ["best-presenter", "international-conference", "ai-research"],
     link: "https://www.icbsp.org/icbsp2023.html",
     linkLabel: "Conference page",
-    image: "assets/img/experience.jpg",
-    imageAlt: "Dr. Francis Jesmar P. Montalbo international conference and research experience photo",
+    image: "assets/img/francis_montalb_best_research_paper_presented_2023_ICBSP2023BP2.jpg",
+    imageAlt: "ICBSP 2023 Best Presenter recognition of Dr. Francis Jesmar P. Montalbo",
     pinned: true
   }
 ];
