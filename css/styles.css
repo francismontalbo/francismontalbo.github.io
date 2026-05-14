@@ -264,3 +264,410 @@ footer {
   height: 100% !important;
 }
 
+/* Extracted from index.html for maintainability */
+      /* Base typography adjustments */
+      body {
+        font-family: 'Inter', sans-serif;
+        color: #0f172a;
+        background-color: #F8FBFF;
+      }
+
+      #hero p, #about p, #socials p, #experience p, #skills p, #works p, #news p, #achievements p, #contact p,
+      #socials li, #achievements li, #contact li { color: #F8FAFC; }
+      section.bg-dark .text-gray-300,
+      section.bg-dark .text-gray-400,
+      section.bg-primaryDark .text-gray-300,
+      section.bg-primaryDark .text-gray-400,
+      footer .text-gray-300,
+      footer .text-gray-400 {
+        color: #E2E8F0 !important;
+      }
+      h1, h2, h3, h4 {
+        font-weight: 600;
+      }
+      /* Badge colour definitions for publishers and code buttons */
+      .badge-code {
+        /* Code badge: use accent colour for better contrast */
+        background-color: #93C5FD;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .badge-elsevier {
+        background-color: #60A5FA;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-springer {
+        background-color: #93C5FD;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-sage {
+        background-color: #BFDBFE;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-degruyter {
+        background-color: #DBEAFE;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-ksii {
+        background-color: #EAF2FF;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-ijain {
+        background-color: #93C5FD;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-iop {
+        background-color: #93C5FD;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-acm {
+        background-color: #DBEAFE;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-ieee {
+        background-color: #BFDBFE;
+        color: #0F172A;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      /* Note: .badge-default is defined below for dynamic works */
+
+      /* Custom definitions for dynamic publication cards and bootstrap-like classes */
+      .card {
+        background-color: #DBEAFE; /* dark green background for cards */
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        color: #F5F5F5;
+        margin-bottom: 1rem;
+      }
+      .card-body {
+        padding: 1rem;
+      }
+      .publication-card {
+        background-color: #EAF2FF; /* dark brown card background for works */
+        border-radius: 0.5rem;
+        padding: 1.25rem;
+        color: #F5F5F5;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .card-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #60A5FA; /* bronze accent for titles */
+        margin-bottom: 0.25rem;
+      }
+      .card-text {
+        font-size: 0.875rem;
+        color: #D1D5DB; /* light gray for text */
+      }
+
+      /* Style links inside publication cards (e.g., DOIs) to stand out */
+      .publication-card a {
+        color: #93C5FD;
+        text-decoration: underline;
+      }
+
+      .news-media-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      .news-media-row.has-video {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .news-media {
+        height: 220px;
+        border: 1px solid #BFDBFE;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        background: #E2E8F0;
+      }
+      .news-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .news-video-wrap > div {
+        height: 100% !important;
+        padding-bottom: 0 !important;
+      }
+      .news-video-wrap iframe {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .news-image {
+        cursor: zoom-in;
+      }
+      .image-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .image-modal.hidden { display: none; }
+      .image-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+      }
+      .image-modal-content {
+        position: relative;
+        width: min(95vw, 1100px);
+        height: min(90vh, 800px);
+        background: #0F172A;
+        border: 1px solid #BFDBFE;
+        border-radius: 0.75rem;
+        overflow: hidden;
+      }
+      .image-modal-close { position:absolute; top:10px; right:12px; z-index:2; color:white; font-size:2rem; }
+      .image-modal-controls { position:absolute; top:12px; left:12px; z-index:2; display:flex; gap:0.5rem; }
+      .image-modal-controls button { background:#93C5FD; color:#0F172A; padding:0.3rem 0.6rem; border-radius:0.375rem; }
+      .image-modal-stage { width:100%; height:100%; display:flex; align-items:center; justify-content:center; cursor:grab; overflow:hidden; }
+      #image-modal-target { max-width:100%; max-height:100%; transform-origin:center center; user-select:none; }
+
+      .d-flex {
+        display: flex;
+      }
+      .flex-wrap {
+        flex-wrap: wrap;
+      }
+      .gap-2 {
+        gap: 0.5rem;
+      }
+      .me-1 {
+        margin-right: 0.25rem;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+      }
+      .badge-default {
+        background-color: #1D4ED8; /* muted blue as default */
+        color: #F5F5F5;
+      }
+      /* Reusable button system */
+      .ui-btn,
+      .clickable-btn,
+      .link-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 2.35rem;
+        padding: 0.5rem 0.85rem;
+        border-radius: 0.6rem;
+        border: 1px solid #60A5FA;
+        background: rgba(255, 255, 255, 0.1);
+        color: #F5F5F5;
+        font-weight: 600;
+        line-height: 1.1;
+        cursor: pointer;
+        transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.1s ease;
+      }
+      .ui-btn:hover,
+      .clickable-btn:hover,
+      .link-button:hover,
+      .ui-btn:focus-visible,
+      .clickable-btn:focus-visible,
+      .link-button:focus-visible {
+        background: #2563EB;
+        border-color: #93C5FD;
+        color: #FFFFFF;
+        transform: translateY(-1px);
+      }
+      .ui-btn:active,
+      .clickable-btn:active,
+      .link-button:active { transform: translateY(0); }
+      .ui-btn-primary { background: #2563EB; color: #FFFFFF; border-color: #1D4ED8; }
+      .ui-btn-primary:hover, .ui-btn-primary:focus-visible { background: #1D4ED8; color: #FFFFFF; }
+      .ui-btn-outline { background: transparent; color: #93C5FD; border-width: 2px; }
+      .ui-btn-outline:hover, .ui-btn-outline:focus-visible { background: #93C5FD; color: #0F172A; }
+      .ui-btn-sm { min-height: 2rem; padding: 0.35rem 0.65rem; font-size: 0.875rem; }
+      /* Override second .badge-code definition for consistency */
+      .badge-code {
+        background-color: #93C5FD;
+        color: #0F172A;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        text-decoration: none !important;
+      }
+      .badge-code, .badge-code i, .publication-card a.badge-code {
+        color: #0F172A !important;
+      }
+      .badge-code:hover {
+        background-color: #3B82F6;
+        color: #0F172A !important;
+        text-decoration: none !important;
+      }
+
+      /* Additional custom classes for card and timeline styling */
+      .card-shadow {
+        @apply shadow-lg rounded-lg overflow-hidden;
+      }
+      .experience-item {
+        @apply flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-lg bg-primaryDark text-white;
+      }
+      .experience-item .icon {
+        @apply text-accent text-3xl;
+      }
+      /* Achievements and contact cards */
+      .achievements-card {
+        @apply bg-primaryDark p-6 rounded-lg text-white;
+      }
+.contact-card {
+        @apply bg-primaryDark p-6 rounded-lg text-white;
+      }
+
+/* Readability hardening for key UI controls and cards */
+.tab {
+  background-color: #1E40AF !important;
+  color: #F8FAFC !important;
+  border: 1px solid #60A5FA !important;
+}
+.tab:hover,
+.tab:focus-visible,
+.tab.bg-tertiary {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+}
+
+.publication-card,
+.card.publication-card {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+.publication-card .card-title,
+.publication-card h5 {
+  color: #BFDBFE !important;
+}
+.publication-card .card-text,
+.publication-card p {
+  color: #E2E8F0 !important;
+}
+
+#news-list .publication-card {
+  background: rgba(15, 23, 42, 0.92) !important;
+}
+#news-list .publication-card time,
+#news-list .publication-card .text-xs,
+#news-list .publication-card p {
+  color: #E2E8F0 !important;
+}
+
+/* Light professional theme overrides: white surfaces, dark text, blue accents */
+.bg-dark { background-color: #FFFFFF !important; }
+.bg-primaryDark { background-color: #F8FAFC !important; }
+.bg-tertiary { background-color: #EFF6FF !important; }
+.text-gray-100, .text-gray-200, .text-gray-300, .text-gray-400 { color: #0F172A !important; }
+.border-primary { border-color: #BFDBFE !important; }
+
+section[id] {
+  color: #0F172A !important;
+}
+
+.publication-card,
+.card.publication-card,
+#news-list .publication-card {
+  background: #FFFFFF !important;
+  border: 1px solid #BFDBFE !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08) !important;
+}
+.publication-card .card-title,
+.publication-card h5,
+#news-list .publication-card h3 {
+  color: #1E3A8A !important;
+}
+.publication-card .card-text,
+.publication-card p,
+#news-list .publication-card p,
+#news-list .publication-card .text-xs,
+#news-list .publication-card time {
+  color: #1F2937 !important;
+}
+
+.tab,
+.ui-btn-primary {
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #1D4ED8 !important;
+}
+.tab:hover,
+.tab:focus-visible,
+.tab.bg-tertiary,
+.ui-btn-primary:hover,
+.ui-btn-primary:focus-visible {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+}
+.ui-btn-outline {
+  color: #1D4ED8 !important;
+  border-color: #1D4ED8 !important;
+  background: transparent !important;
+}
+.ui-btn-outline:hover,
+.ui-btn-outline:focus-visible {
+  background: #DBEAFE !important;
+  color: #0F172A !important;
+}
+
+/* Draggable + idle transparency for chatbot */
+#chatbot-widget,
+#chatbot-fab {
+  transition: opacity 0.25s ease, box-shadow 0.25s ease;
+}
+#chatbot-widget.chatbot-idle,
+#chatbot-fab.chatbot-idle {
+  opacity: 0.45;
+}
+#chatbot-widget.chatbot-active,
+#chatbot-fab.chatbot-active {
+  opacity: 1;
+}
+#chatbot-widget .chatbot-drag-handle,
+#chatbot-fab.chatbot-drag-handle {
+  cursor: grab;
+}
+#chatbot-widget.is-dragging .chatbot-drag-handle,
+#chatbot-fab.is-dragging {
+  cursor: grabbing;
+}
+    
