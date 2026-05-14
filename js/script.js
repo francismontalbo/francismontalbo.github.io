@@ -282,7 +282,12 @@ function initializeNews() {
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
-            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" itemprop="image" />` : ''}
+            ${(item.image || item.videoEmbed) ? `
+              <div class="news-media-row mb-3 ${item.videoEmbed ? 'has-video' : ''}">
+                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" /></div>` : ''}
+                ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
+              </div>
+            ` : ''}
             <p class="text-xs text-accent2"><time datetime="${item.date}" itemprop="datePublished">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1" itemprop="headline">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2" itemprop="description">${item.summary}</p>
