@@ -99,7 +99,7 @@
           isDragging = false;
           if (hasMoved) {
             el.dataset.draggingRecent = '1';
-            setTimeout(() => { delete el.dataset.draggingRecent; }, 220);
+            setTimeout(() => { delete el.dataset.draggingRecent; }, 700);
           }
           el.classList.remove('is-dragging');
           window.removeEventListener('mousemove', onMove);
@@ -110,6 +110,7 @@
         const onStart = (event) => {
           isDragging = true;
           hasMoved = false;
+          event.preventDefault();
           el.classList.add('is-dragging');
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
@@ -145,9 +146,8 @@
           resetIdleTimer(chatbotFab);
         };
         chatbotFab.addEventListener('click', openWidget);
-        chatbotFab.addEventListener('touchstart', openWidget, { passive: true });
         if (chatbotClose) chatbotClose.addEventListener('click', closeWidget);
-        ['mouseenter', 'focusin', 'touchstart'].forEach((evt) => {
+        ['mouseenter', 'focusin', 'pointerdown'].forEach((evt) => {
           chatbotWidget.addEventListener(evt, () => resetIdleTimer(chatbotWidget), { passive: true });
           chatbotFab.addEventListener(evt, () => resetIdleTimer(chatbotFab), { passive: true });
         });
