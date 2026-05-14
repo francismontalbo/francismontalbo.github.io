@@ -592,4 +592,82 @@ footer {
 #news-list .publication-card p {
   color: #E2E8F0 !important;
 }
+
+/* Light professional theme overrides: white surfaces, dark text, blue accents */
+.bg-dark { background-color: #FFFFFF !important; }
+.bg-primaryDark { background-color: #F8FAFC !important; }
+.bg-tertiary { background-color: #EFF6FF !important; }
+.text-gray-100, .text-gray-200, .text-gray-300, .text-gray-400 { color: #0F172A !important; }
+.border-primary { border-color: #BFDBFE !important; }
+
+section[id] {
+  color: #0F172A !important;
+}
+
+.publication-card,
+.card.publication-card,
+#news-list .publication-card {
+  background: #FFFFFF !important;
+  border: 1px solid #BFDBFE !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08) !important;
+}
+.publication-card .card-title,
+.publication-card h5,
+#news-list .publication-card h3 {
+  color: #1E3A8A !important;
+}
+.publication-card .card-text,
+.publication-card p,
+#news-list .publication-card p,
+#news-list .publication-card .text-xs,
+#news-list .publication-card time {
+  color: #1F2937 !important;
+}
+
+.tab,
+.ui-btn-primary {
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #1D4ED8 !important;
+}
+.tab:hover,
+.tab:focus-visible,
+.tab.bg-tertiary,
+.ui-btn-primary:hover,
+.ui-btn-primary:focus-visible {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+}
+.ui-btn-outline {
+  color: #1D4ED8 !important;
+  border-color: #1D4ED8 !important;
+  background: transparent !important;
+}
+.ui-btn-outline:hover,
+.ui-btn-outline:focus-visible {
+  background: #DBEAFE !important;
+  color: #0F172A !important;
+}
+
+/* Draggable + idle transparency for chatbot */
+#chatbot-widget,
+#chatbot-fab {
+  transition: opacity 0.25s ease, box-shadow 0.25s ease;
+}
+#chatbot-widget.chatbot-idle,
+#chatbot-fab.chatbot-idle {
+  opacity: 0.45;
+}
+#chatbot-widget.chatbot-active,
+#chatbot-fab.chatbot-active {
+  opacity: 1;
+}
+#chatbot-widget .chatbot-drag-handle,
+#chatbot-fab.chatbot-drag-handle {
+  cursor: grab;
+}
+#chatbot-widget.is-dragging .chatbot-drag-handle,
+#chatbot-fab.is-dragging {
+  cursor: grabbing;
+}
     

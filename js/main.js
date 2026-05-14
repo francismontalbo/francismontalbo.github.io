@@ -58,20 +58,91 @@
       const chatbotFab = document.getElementById('chatbot-fab');
       const chatbotWidget = document.getElementById('chatbot-widget');
       const chatbotClose = document.getElementById('chatbot-close');
+      let chatbotIdleTimer;
+      const setChatbotActive = (el) => {
+        if (!el) return;
+        el.classList.remove('chatbot-idle');
+        el.classList.add('chatbot-active');
+      };
+      const setChatbotIdle = (el) => {
+        if (!el) return;
+        el.classList.remove('chatbot-active');
+        el.classList.add('chatbot-idle');
+      };
+      const resetIdleTimer = (el) => {
+        clearTimeout(chatbotIdleTimer);
+        setChatbotActive(el);
+        chatbotIdleTimer = setTimeout(() => setChatbotIdle(el), 4000);
+      };
+      const makeDraggable = (el, handle) => {
+        if (!el || !handle) return;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let baseLeft = 0;
+        let baseTop = 0;
+        const onMove = (event) => {
+          if (!isDragging) return;
+          const x = event.clientX ?? event.touches?.[0]?.clientX;
+          const y = event.clientY ?? event.touches?.[0]?.clientY;
+          if (x == null || y == null) return;
+          const nextLeft = Math.min(window.innerWidth - el.offsetWidth - 8, Math.max(8, baseLeft + (x - startX)));
+          const nextTop = Math.min(window.innerHeight - el.offsetHeight - 8, Math.max(8, baseTop + (y - startY)));
+          el.style.left = `${nextLeft}px`;
+          el.style.top = `${nextTop}px`;
+          el.style.right = 'auto';
+          el.style.bottom = 'auto';
+        };
+        const onEnd = () => {
+          isDragging = false;
+          el.classList.remove('is-dragging');
+          window.removeEventListener('mousemove', onMove);
+          window.removeEventListener('mouseup', onEnd);
+          window.removeEventListener('touchmove', onMove);
+          window.removeEventListener('touchend', onEnd);
+        };
+        const onStart = (event) => {
+          isDragging = true;
+          el.classList.add('is-dragging');
+          const x = event.clientX ?? event.touches?.[0]?.clientX;
+          const y = event.clientY ?? event.touches?.[0]?.clientY;
+          startX = x || 0;
+          startY = y || 0;
+          const rect = el.getBoundingClientRect();
+          baseLeft = rect.left;
+          baseTop = rect.top;
+          window.addEventListener('mousemove', onMove);
+          window.addEventListener('mouseup', onEnd);
+          window.addEventListener('touchmove', onMove, { passive: true });
+          window.addEventListener('touchend', onEnd);
+        };
+        handle.addEventListener('mousedown', onStart);
+        handle.addEventListener('touchstart', onStart, { passive: true });
+      };
       if (chatbotFab && chatbotWidget) {
+        const widgetHandle = chatbotWidget.querySelector('.chatbot-drag-handle');
+        makeDraggable(chatbotWidget, widgetHandle);
+        makeDraggable(chatbotFab, chatbotFab);
+        resetIdleTimer(chatbotFab);
         const openWidget = () => {
           chatbotWidget.classList.remove('hidden');
           chatbotWidget.style.display = 'block';
           chatbotFab.classList.add('hidden');
+          resetIdleTimer(chatbotWidget);
         };
         const closeWidget = () => {
           chatbotWidget.classList.add('hidden');
           chatbotWidget.style.display = '';
           chatbotFab.classList.remove('hidden');
+          resetIdleTimer(chatbotFab);
         };
         chatbotFab.addEventListener('click', openWidget);
         chatbotFab.addEventListener('touchstart', openWidget, { passive: true });
         if (chatbotClose) chatbotClose.addEventListener('click', closeWidget);
+        ['mouseenter', 'focusin', 'touchstart'].forEach((evt) => {
+          chatbotWidget.addEventListener(evt, () => resetIdleTimer(chatbotWidget), { passive: true });
+          chatbotFab.addEventListener(evt, () => resetIdleTimer(chatbotFab), { passive: true });
+        });
       }
 
       // Fallback message handler (guarantees basic replies if external chatbot script fails to bind)
