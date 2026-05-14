@@ -743,4 +743,43 @@ footer .ui-btn {
   color: #0F172A !important;
   background: #FFFFFF !important;
 }
+
+/* Final visual direction: dark translucent surfaces + high contrast text (no flat white boxes) */
+.bg-dark { background-color: #0B1220 !important; }
+.bg-primaryDark { background-color: #0F172A !important; }
+.bg-tertiary { background-color: #1E293B !important; }
+
+#hero, #about, #socials, #experience, #skills, #works, #news, #achievements, #contact, footer {
+  color: #F8FAFC !important;
+}
+#hero p, #about p, #socials p, #experience p, #skills p, #works p, #news p, #achievements p, #contact p, footer p,
+#socials li, #skills li, #achievements li, #contact li, #experience li {
+  color: #E2E8F0 !important;
+}
+#hero h1, #hero h2, #hero h3, #hero h4,
+#about h2, #socials h2, #experience h2, #skills h2, #works h2, #news h2, #achievements h2, #contact h2, footer h3, footer h4 {
+  color: #BFDBFE !important;
+}
+
+.achievements-card,
+.contact-card,
+.experience-item,
+#socials .bg-primaryDark,
+#experience .bg-tertiary,
+#achievements .achievements-card,
+#contact .contact-card,
+footer .ui-btn,
+#socials .ui-btn, #socials .link-button {
+  background: rgba(15, 23, 42, 0.78) !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+.publication-card,
+#news-list .publication-card {
+  background: rgba(15, 23, 42, 0.84) !important;
+  border: 1px solid #334155 !important;
+}
+.publication-card .card-title, #news-list .publication-card h3 { color: #BFDBFE !important; }
+.publication-card .card-text, .publication-card p, #news-list .publication-card p, #news-list .publication-card .text-xs, #news-list .publication-card time { color: #E2E8F0 !important; }
     
