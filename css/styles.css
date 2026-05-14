@@ -702,4 +702,41 @@ input::placeholder,
 textarea::placeholder {
   color: #334155 !important;
 }
+
+/* Final contrast fixes for key content sections */
+#socials,
+#experience,
+#skills,
+#news,
+#achievements,
+#contact,
+footer {
+  color: #0F172A !important;
+}
+#socials h2, #socials h3, #experience h2, #experience h3, #experience h4,
+#skills h2, #skills h3, #news h2, #achievements h2, #achievements h3, #contact h2, #contact h3,
+footer h3, footer h4 {
+  color: #0B1F5E !important;
+}
+#socials p, #socials li, #experience p, #experience li, #skills p, #skills li,
+#news p, #achievements p, #achievements li, #contact p, #contact li, footer p, footer li, #news-count {
+  color: #1E293B !important;
+}
+#socials a, #contact a, footer a {
+  color: #1D4ED8 !important;
+}
+#socials a:hover, #contact a:hover, footer a:hover {
+  color: #1E3A8A !important;
+}
+
+/* Make profile links and role cards distinctly readable */
+#socials .ui-btn, #socials .link-button,
+#experience .experience-item,
+#achievements .achievements-card,
+#contact .contact-card,
+footer .ui-btn {
+  border-color: #93C5FD !important;
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+}
     
