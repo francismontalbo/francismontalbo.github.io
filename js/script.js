@@ -289,6 +289,7 @@ function initializeNews() {
             <details class="mt-3">
               <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
               <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
+              ${item.videoEmbed ? `<div class="mt-3">${item.videoEmbed}</div>` : ''}
             </details>
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
