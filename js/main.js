@@ -77,6 +77,7 @@
       const makeDraggable = (el, handle) => {
         if (!el || !handle) return;
         let isDragging = false;
+        let hasMoved = false;
         let startX = 0;
         let startY = 0;
         let baseLeft = 0;
@@ -88,6 +89,7 @@
           if (x == null || y == null) return;
           const nextLeft = Math.min(window.innerWidth - el.offsetWidth - 8, Math.max(8, baseLeft + (x - startX)));
           const nextTop = Math.min(window.innerHeight - el.offsetHeight - 8, Math.max(8, baseTop + (y - startY)));
+          if (Math.abs(x - startX) > 6 || Math.abs(y - startY) > 6) hasMoved = true;
           el.style.left = `${nextLeft}px`;
           el.style.top = `${nextTop}px`;
           el.style.right = 'auto';
@@ -95,6 +97,10 @@
         };
         const onEnd = () => {
           isDragging = false;
+          if (hasMoved) {
+            el.dataset.draggingRecent = '1';
+            setTimeout(() => { delete el.dataset.draggingRecent; }, 220);
+          }
           el.classList.remove('is-dragging');
           window.removeEventListener('mousemove', onMove);
           window.removeEventListener('mouseup', onEnd);
@@ -103,6 +109,7 @@
         };
         const onStart = (event) => {
           isDragging = true;
+          hasMoved = false;
           el.classList.add('is-dragging');
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
@@ -125,6 +132,7 @@
         makeDraggable(chatbotFab, chatbotFab);
         resetIdleTimer(chatbotFab);
         const openWidget = () => {
+          if (chatbotFab.dataset.draggingRecent) return;
           chatbotWidget.classList.remove('hidden');
           chatbotWidget.style.display = 'block';
           chatbotFab.classList.add('hidden');

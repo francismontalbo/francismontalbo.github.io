@@ -670,4 +670,36 @@ section[id] {
 #chatbot-fab.is-dragging {
   cursor: grabbing;
 }
+
+#chatbot-fab.chatbot-agentic {
+  background: linear-gradient(135deg, #1D4ED8, #2563EB 55%, #3B82F6);
+  border: 1px solid #93C5FD;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+#chatbot-fab.chatbot-agentic:hover,
+#chatbot-fab.chatbot-agentic:focus-visible {
+  background: linear-gradient(135deg, #1E40AF, #1D4ED8 55%, #2563EB);
+}
+#chatbot-fab.chatbot-agentic::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(147, 197, 253, 0.5);
+  animation: chatbotPulse 2.2s ease-out infinite;
+}
+@keyframes chatbotPulse {
+  0% { transform: scale(0.96); opacity: 0.65; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+/* Contrast hardening for remaining low-contrast text cases */
+.publication-card .text-sm,
+.publication-card .text-xs,
+#news-list .text-sm,
+#news-list .text-xs,
+input::placeholder,
+textarea::placeholder {
+  color: #334155 !important;
+}
     
