@@ -61,6 +61,7 @@ const closedAccessIconClass = 'ai ai-closed-access';
  * @param {string} countId - id of span to show total count (optional)
  */
 function initSection(data, containerId, searchId, filterId, countId, publisherFilterId, sortId, clearId, resultsCountId) {
+  const INITIAL_VISIBLE = 6;
   const parseDate = (entry) => {
     const parsed = entry.date ? Date.parse(entry.date) : Number.NaN;
     return Number.isFinite(parsed) ? parsed : Number(entry.year || 0);
@@ -91,6 +92,8 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   if (!container) {
     return;
   }
+  let visibleCount = INITIAL_VISIBLE;
+  let lastFiltered = [];
 
   // Populate year dropdown with unique years
   const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
@@ -117,8 +120,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
   // Render publication cards
   function renderCards(items) {
+    lastFiltered = items;
     container.innerHTML = '';
-    items.forEach((entry) => {
+    items.slice(0, visibleCount).forEach((entry) => {
       const col = document.createElement('div');
       col.className = 'col-md-6';
       let html = '<div class="publication-card card h-100">';
@@ -181,6 +185,22 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       col.innerHTML = html;
       container.appendChild(col);
     });
+
+    let loadMoreBtn = container.parentElement.querySelector(`[data-load-more-for="${containerId}"]`);
+    if (!loadMoreBtn) {
+      loadMoreBtn = document.createElement('button');
+      loadMoreBtn.type = 'button';
+      loadMoreBtn.className = 'badge badge-code mt-3';
+      loadMoreBtn.dataset.loadMoreFor = containerId;
+      loadMoreBtn.addEventListener('click', () => {
+        visibleCount += INITIAL_VISIBLE;
+        renderCards(lastFiltered);
+      });
+      container.parentElement.appendChild(loadMoreBtn);
+    }
+    const hiddenCount = items.length - Math.min(items.length, visibleCount);
+    loadMoreBtn.style.display = hiddenCount > 0 ? 'inline-flex' : 'none';
+    loadMoreBtn.textContent = hiddenCount > 0 ? `Load more works (${hiddenCount} remaining)` : '';
   }
 
   // Search and filter logic
@@ -196,6 +216,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       const matchesPublisher = publisher === 'all' || (entry.publisher || '') === publisher;
       return matchesText && matchesYear && matchesPublisher;
     });
+    visibleCount = INITIAL_VISIBLE;
     renderCards(sortData(filtered, sortMode));
     if (resultsCount) {
       resultsCount.textContent = `Showing ${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
@@ -282,14 +303,21 @@ function initializeNews() {
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
-            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" itemprop="image" />` : ''}
+            ${(item.image || item.videoEmbed) ? `
+              <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
+                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${item.image}" onclick="window.openImageModal && window.openImageModal(this)" /></div>` : ''}
+                ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
+              </div>
+            ` : ''}
             <p class="text-xs text-accent2"><time datetime="${item.date}" itemprop="datePublished">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1" itemprop="headline">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2" itemprop="description">${item.summary}</p>
-            <details class="mt-3">
-              <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
-              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
-            </details>
+            ${item.expandedSummary && item.expandedSummary !== item.summary && !item.videoEmbed ? `
+              <details class="mt-3">
+                <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
+                <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary}</p>
+              </details>
+            ` : ''}
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
@@ -342,15 +370,77 @@ function initializeNews() {
 
 }
 
+
+
+function initializeImageModal() {
+  if (document.getElementById('image-viewer-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'image-viewer-modal';
+  modal.className = 'image-modal hidden';
+  modal.innerHTML = `
+    <div class="image-modal-backdrop" data-close-modal="true"></div>
+    <div class="image-modal-content" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button class="image-modal-close" type="button" aria-label="Close image viewer">&times;</button>
+      <div class="image-modal-controls">
+        <button type="button" data-zoom="in">+</button>
+        <button type="button" data-zoom="out">−</button>
+        <button type="button" data-zoom="reset">Reset</button>
+      </div>
+      <div class="image-modal-stage">
+        <img id="image-modal-target" alt="Expanded image" draggable="false" />
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  const img = modal.querySelector('#image-modal-target');
+  const stage = modal.querySelector('.image-modal-stage');
+  let scale = 1, x = 0, y = 0, dragging = false, startX = 0, startY = 0;
+
+  const apply = () => { img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`; };
+  const reset = () => { scale = 1; x = 0; y = 0; apply(); };
+  const close = () => { modal.classList.add('hidden'); document.body.style.overflow=''; reset(); };
+
+  window.openImageModal = (trigger) => {
+    if (!trigger) return;
+    img.src = trigger.dataset.modalSrc || trigger.src;
+    img.alt = trigger.alt || 'Expanded image';
+    modal.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    reset();
+  };
+
+  modal.addEventListener('click', (e) => {
+    if (e.target.dataset.closeModal === 'true' || e.target.classList.contains('image-modal-close')) close();
+  });
+  modal.querySelector('[data-zoom="in"]').addEventListener('click', () => { scale = Math.min(5, scale + 0.2); apply(); });
+  modal.querySelector('[data-zoom="out"]').addEventListener('click', () => { scale = Math.max(1, scale - 0.2); apply(); });
+  modal.querySelector('[data-zoom="reset"]').addEventListener('click', reset);
+
+  stage.addEventListener('wheel', (e) => { e.preventDefault(); scale = Math.min(5, Math.max(1, scale + (e.deltaY < 0 ? 0.15 : -0.15))); apply(); }, { passive: false });
+  stage.addEventListener('mousedown', (e) => { dragging = true; startX = e.clientX - x; startY = e.clientY - y; stage.style.cursor='grabbing'; });
+  window.addEventListener('mousemove', (e) => { if (!dragging) return; x = e.clientX - startX; y = e.clientY - startY; apply(); });
+  window.addEventListener('mouseup', () => { dragging = false; stage.style.cursor='grab'; });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) close(); });
+
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('.news-image[data-modal-src]');
+    if (!trigger || !window.openImageModal) return;
+    window.openImageModal(trigger);
+  });
+}
+
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
     try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+    try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
     try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
   });
 } else {
   try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
   try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+  try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
   try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
 }
