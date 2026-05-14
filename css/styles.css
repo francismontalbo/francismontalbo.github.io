@@ -264,8 +264,3 @@ footer {
   height: 100% !important;
 }
 
-@media (max-width: 900px) {
-  .news-media-row.has-video {
-    grid-template-columns: 1fr;
-  }
-}
