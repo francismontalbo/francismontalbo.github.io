@@ -273,7 +273,15 @@ footer {
       }
 
       #hero p, #about p, #socials p, #experience p, #skills p, #works p, #news p, #achievements p, #contact p,
-      #socials li, #achievements li, #contact li { color: #E5E7EB; }
+      #socials li, #achievements li, #contact li { color: #F8FAFC; }
+      section.bg-dark .text-gray-300,
+      section.bg-dark .text-gray-400,
+      section.bg-primaryDark .text-gray-300,
+      section.bg-primaryDark .text-gray-400,
+      footer .text-gray-300,
+      footer .text-gray-400 {
+        color: #E2E8F0 !important;
+      }
       h1, h2, h3, h4 {
         font-weight: 600;
       }
