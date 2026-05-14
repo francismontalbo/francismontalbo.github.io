@@ -284,7 +284,7 @@ function initializeNews() {
           <div class="w-full">
             ${(item.image || item.videoEmbed) ? `
               <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
-                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${item.image}" /></div>` : ''}
+                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${item.image}" onclick="window.openImageModal && window.openImageModal(this)" /></div>` : ''}
                 ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
               </div>
             ` : ''}
@@ -380,6 +380,15 @@ function initializeImageModal() {
   const reset = () => { scale = 1; x = 0; y = 0; apply(); };
   const close = () => { modal.classList.add('hidden'); document.body.style.overflow=''; reset(); };
 
+  window.openImageModal = (trigger) => {
+    if (!trigger) return;
+    img.src = trigger.dataset.modalSrc || trigger.src;
+    img.alt = trigger.alt || 'Expanded image';
+    modal.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    reset();
+  };
+
   modal.addEventListener('click', (e) => {
     if (e.target.dataset.closeModal === 'true' || e.target.classList.contains('image-modal-close')) close();
   });
@@ -395,12 +404,8 @@ function initializeImageModal() {
 
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('.news-image[data-modal-src]');
-    if (!trigger) return;
-    img.src = trigger.dataset.modalSrc || trigger.src;
-    img.alt = trigger.alt || 'Expanded image';
-    modal.classList.remove('hidden');
-    document.body.style.overflow='hidden';
-    reset();
+    if (!trigger || !window.openImageModal) return;
+    window.openImageModal(trigger);
   });
 }
 
