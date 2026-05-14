@@ -282,14 +282,21 @@ function initializeNews() {
       article.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
-            ${item.image ? `<img src="${item.image}" alt="${item.imageAlt || item.title}" class="w-full max-h-72 object-cover rounded-lg border border-primary mb-3" loading="lazy" itemprop="image" />` : ''}
+            ${(item.image || item.videoEmbed) ? `
+              <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
+                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" /></div>` : ''}
+                ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
+              </div>
+            ` : ''}
             <p class="text-xs text-accent2"><time datetime="${item.date}" itemprop="datePublished">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
             <h3 class="text-lg font-semibold mt-1" itemprop="headline">${item.title}</h3>
             <p class="text-sm text-gray-200 mt-2" itemprop="description">${item.summary}</p>
-            <details class="mt-3">
-              <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
-              <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary || item.summary}</p>
-            </details>
+            ${item.expandedSummary && item.expandedSummary !== item.summary && !item.videoEmbed ? `
+              <details class="mt-3">
+                <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
+                <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary}</p>
+              </details>
+            ` : ''}
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
           ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
