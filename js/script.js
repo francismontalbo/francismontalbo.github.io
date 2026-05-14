@@ -283,7 +283,7 @@ function initializeNews() {
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div class="w-full">
             ${(item.image || item.videoEmbed) ? `
-              <div class="news-media-row mb-3 ${item.videoEmbed ? 'has-video' : ''}">
+              <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
                 ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" /></div>` : ''}
                 ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
               </div>
