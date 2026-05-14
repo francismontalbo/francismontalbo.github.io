@@ -4,11 +4,11 @@
           extend: {
             colors: {
               primary: '#DBEAFE',      // royal blue
-              primaryDark: '#EFF6FF',  // deep navy
-              tertiary: '#EAF2FF',    // slate blue
-              dark: '#F8FBFF',        // soft light blue
-              accent: '#60A5FA',      // trusted blue
-              accent2: '#93C5FD'      // cyan accent
+              primaryDark: '#1E3A8A',  // deep navy-blue
+              tertiary: '#1E293B',    // slate
+              dark: '#0B1220',        // rich dark bg
+              accent: '#2563EB',      // trusted blue
+              accent2: '#60A5FA'      // light accent blue
             }
           }
         }

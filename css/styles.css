@@ -272,11 +272,8 @@ footer {
         background-color: #F8FBFF;
       }
 
-      #hero, #about, #socials, #experience, #skills, #works, #news, #achievements, #contact {
-        color: #0f172a;
-      }
       #hero p, #about p, #socials p, #experience p, #skills p, #works p, #news p, #achievements p, #contact p,
-      #socials li, #achievements li, #contact li { color: #1f2937 !important; }
+      #socials li, #achievements li, #contact li { color: #E5E7EB; }
       h1, h2, h3, h4 {
         font-weight: 600;
       }
@@ -489,7 +486,7 @@ footer {
         padding: 0.5rem 0.85rem;
         border-radius: 0.6rem;
         border: 1px solid #60A5FA;
-        background: rgba(183, 132, 73, 0.12);
+        background: rgba(255, 255, 255, 0.1);
         color: #F5F5F5;
         font-weight: 600;
         line-height: 1.1;
@@ -502,16 +499,18 @@ footer {
       .ui-btn:focus-visible,
       .clickable-btn:focus-visible,
       .link-button:focus-visible {
-        background: #60A5FA;
+        background: #2563EB;
         border-color: #93C5FD;
-        color: #0F172A;
+        color: #FFFFFF;
         transform: translateY(-1px);
       }
       .ui-btn:active,
       .clickable-btn:active,
       .link-button:active { transform: translateY(0); }
-      .ui-btn-primary { background: #60A5FA; color: #0F172A; }
-      .ui-btn-outline { background: transparent; color: #60A5FA; border-width: 2px; }
+      .ui-btn-primary { background: #2563EB; color: #FFFFFF; border-color: #1D4ED8; }
+      .ui-btn-primary:hover, .ui-btn-primary:focus-visible { background: #1D4ED8; color: #FFFFFF; }
+      .ui-btn-outline { background: transparent; color: #93C5FD; border-width: 2px; }
+      .ui-btn-outline:hover, .ui-btn-outline:focus-visible { background: #93C5FD; color: #0F172A; }
       .ui-btn-sm { min-height: 2rem; padding: 0.35rem 0.65rem; font-size: 0.875rem; }
       /* Override second .badge-code definition for consistency */
       .badge-code {
