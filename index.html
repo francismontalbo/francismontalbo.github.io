@@ -260,6 +260,54 @@
         background-color: #264E70; /* muted blue as default */
         color: #F5F5F5;
       }
+      /* Strong visual treatment for clickable controls */
+      .clickable-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        border-radius: 0.6rem;
+        border: 2px solid transparent;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.26), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
+      }
+      .clickable-btn:hover,
+      .clickable-btn:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+        filter: brightness(1.06);
+      }
+      .clickable-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25), inset 0 2px 0 rgba(0, 0, 0, 0.2);
+      }
+      .clickable-btn:focus-visible {
+        outline: none;
+        border-color: #ACBD5E;
+      }
+      .link-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.1rem;
+        padding: 0.35rem 0.65rem;
+        border-radius: 9999px;
+        border: 1px solid #B78449;
+        background: rgba(183, 132, 73, 0.15);
+        color: #F5F5F5;
+        font-weight: 600;
+        transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+      }
+      .link-button:hover,
+      .link-button:focus-visible {
+        background: #B78449;
+        border-color: #ACBD5E;
+        color: #0B0F08;
+        transform: translateY(-1px);
+      }
       /* Override second .badge-code definition for consistency */
       .badge-code {
         background-color: #ACBD5E;
@@ -348,8 +396,8 @@
           I design and develop advanced AI and deep learning solutions that bridge academia and industry. Explore my work and discover how my research impacts real-world applications.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#works" class="bg-accent2 text-dark py-3 px-6 rounded-md font-semibold shadow-md hover:bg-accent hover:text-dark transition-colors">View Works</a>
-          <a href="#contact" class="border-2 border-accent2 text-accent2 py-3 px-6 rounded-md font-semibold hover:bg-accent2 hover:text-dark transition-colors">Get in Touch</a>
+          <a href="#works" class="clickable-btn bg-accent2 text-dark py-3 px-6">View Works</a>
+          <a href="#contact" class="clickable-btn border-2 border-accent2 text-accent2 py-3 px-6 hover:bg-accent2 hover:text-dark">Get in Touch</a>
         </div>
       </div>
     </section>
@@ -381,7 +429,7 @@
               <p>
                 Included in Elsevier &amp; Stanford’s Top 2% Most‑Cited Scientists (2019–2024), highlighting my global impact in AI research.
               </p>
-              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="text-accent2 hover:underline font-medium">View Profile</a>
+              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="clickable-btn bg-accent2 text-dark px-4 py-2 text-sm w-fit">View Profile</a>
             </div>
             <div class="p-6 bg-tertiary text-gray-200 rounded-lg shadow-lg flex flex-col gap-3" data-aos="fade-left" data-aos-delay="100">
               <div class="flex items-center gap-3">
@@ -391,7 +439,7 @@
               <p>
                 Explore my latest research ranking at Batangas State University and see how my work advances the field.
               </p>
-              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="text-accent2 hover:underline font-medium">View Ranking</a>
+              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="clickable-btn bg-accent2 text-dark px-4 py-2 text-sm w-fit">View Ranking</a>
             </div>
           </div>
         </div>
@@ -411,19 +459,19 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="ai ai-scopus-square text-accent2 text-2xl"></i>
-                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="hover:text-accent">Scopus</a>
+                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="link-button">Scopus</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-google-scholar-square text-accent2 text-2xl"></i>
-                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="hover:text-accent">Google Scholar</a>
+                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="link-button">Google Scholar</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-orcid-square text-accent2 text-2xl"></i>
-                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="hover:text-accent">ORCID</a>
+                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="link-button">ORCID</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-clarivate-square text-accent2 text-2xl"></i>
-                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="hover:text-accent">Web of Science</a>
+                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="link-button">Web of Science</a>
               </li>
             </ul>
           </div>
@@ -437,37 +485,37 @@
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:github"></span>
                 </span>
-                <a href="https://github.com/francismontalbo" target="_blank" class="hover:text-accent">GitHub</a>
+                <a href="https://github.com/francismontalbo" target="_blank" class="link-button">GitHub</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="simple-icons:kaggle"></span>
                 </span>
-                <a href="https://www.kaggle.com/francismon" target="_blank" class="hover:text-accent">Kaggle</a>
+                <a href="https://www.kaggle.com/francismon" target="_blank" class="link-button">Kaggle</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:linkedin"></span>
                 </span>
-                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="hover:text-accent">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="link-button">LinkedIn</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="simple-icons:researchgate"></span>
                 </span>
-                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="hover:text-accent">ResearchGate</a>
+                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="link-button">ResearchGate</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:facebook"></span>
                 </span>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
+                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="link-button">Facebook</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:twitter"></span>
                 </span>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
+                <a href="https://x.com/francismontalbo" target="_blank" class="link-button">X (Twitter)</a>
               </li>
             </ul>
           </div>
@@ -479,15 +527,15 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="vs:butterfly"></i>
-                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="hover:text-accent">Kudos</a>
+                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="link-button">Kudos</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="mdi:checkbox-blank"></i>
-                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="hover:text-accent">ScienceOpen</a>
+                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="link-button">ScienceOpen</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="simple-icons:loop"></i>
-                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="hover:text-accent">Loop Frontier</a>
+                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="link-button">Loop Frontier</a>
               </li>
             </ul>
           </div>
