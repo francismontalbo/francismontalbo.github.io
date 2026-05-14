@@ -190,7 +190,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     if (!loadMoreBtn) {
       loadMoreBtn = document.createElement('button');
       loadMoreBtn.type = 'button';
-      loadMoreBtn.className = 'badge badge-code mt-3';
+      loadMoreBtn.className = 'ui-btn ui-btn-sm ui-btn-primary mt-3';
       loadMoreBtn.dataset.loadMoreFor = containerId;
       loadMoreBtn.addEventListener('click', () => {
         visibleCount += INITIAL_VISIBLE;
@@ -320,7 +320,7 @@ function initializeNews() {
             ` : ''}
             <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
           </div>
-          ${item.link ? `<a href="${item.link}" target="_blank" class="badge badge-code whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
+          ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="ui-btn ui-btn-sm ui-btn-primary whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
         </div>`;
       list.appendChild(article);
       const button = article.querySelector('button[data-summary-target]');
