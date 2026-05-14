@@ -61,6 +61,7 @@ const closedAccessIconClass = 'ai ai-closed-access';
  * @param {string} countId - id of span to show total count (optional)
  */
 function initSection(data, containerId, searchId, filterId, countId, publisherFilterId, sortId, clearId, resultsCountId) {
+  const INITIAL_VISIBLE = 6;
   const parseDate = (entry) => {
     const parsed = entry.date ? Date.parse(entry.date) : Number.NaN;
     return Number.isFinite(parsed) ? parsed : Number(entry.year || 0);
@@ -91,6 +92,8 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   if (!container) {
     return;
   }
+  let visibleCount = INITIAL_VISIBLE;
+  let lastFiltered = [];
 
   // Populate year dropdown with unique years
   const years = Array.from(new Set(normalizedData.map((d) => d.year))).sort((a, b) => b - a);
@@ -117,8 +120,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
   // Render publication cards
   function renderCards(items) {
+    lastFiltered = items;
     container.innerHTML = '';
-    items.forEach((entry) => {
+    items.slice(0, visibleCount).forEach((entry) => {
       const col = document.createElement('div');
       col.className = 'col-md-6';
       let html = '<div class="publication-card card h-100">';
@@ -181,6 +185,22 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       col.innerHTML = html;
       container.appendChild(col);
     });
+
+    let loadMoreBtn = container.parentElement.querySelector(`[data-load-more-for="${containerId}"]`);
+    if (!loadMoreBtn) {
+      loadMoreBtn = document.createElement('button');
+      loadMoreBtn.type = 'button';
+      loadMoreBtn.className = 'badge badge-code mt-3';
+      loadMoreBtn.dataset.loadMoreFor = containerId;
+      loadMoreBtn.addEventListener('click', () => {
+        visibleCount += INITIAL_VISIBLE;
+        renderCards(lastFiltered);
+      });
+      container.parentElement.appendChild(loadMoreBtn);
+    }
+    const hiddenCount = items.length - Math.min(items.length, visibleCount);
+    loadMoreBtn.style.display = hiddenCount > 0 ? 'inline-flex' : 'none';
+    loadMoreBtn.textContent = hiddenCount > 0 ? `Load more works (${hiddenCount} remaining)` : '';
   }
 
   // Search and filter logic
@@ -196,6 +216,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       const matchesPublisher = publisher === 'all' || (entry.publisher || '') === publisher;
       return matchesText && matchesYear && matchesPublisher;
     });
+    visibleCount = INITIAL_VISIBLE;
     renderCards(sortData(filtered, sortMode));
     if (resultsCount) {
       resultsCount.textContent = `Showing ${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
