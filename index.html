@@ -801,9 +801,8 @@
     <!-- Achievements & Contact Section -->
 <section id="achievements" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(11,15,8,0.85), rgba(11,15,8,0.85)), url('assets/img/achievements.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements &amp; Contact</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Achievements Card -->
+        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements</h2>
+        <div class="grid grid-cols-1 gap-8">
           <div class="achievements-card" data-aos="fade-right">
             <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
               <i class="fa-solid fa-medal text-accent2"></i> Certifications &amp; Memberships
@@ -818,30 +817,37 @@
               <li class="flex items-start gap-2"><i class="fa-solid fa-certificate text-accent2"></i> Computer Systems Servicing NC II</li>
             </ul>
           </div>
-          <!-- Contact Card -->
-          <div id="contact" class="contact-card" data-aos="fade-left">
-            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-paper-plane text-accent2"></i> Contact Me
-            </h3>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="py-20 bg-primaryDark text-gray-100" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold mb-3 text-accent2">Contact</h2>
+        <p class="text-sm text-gray-300 mb-8 max-w-3xl">I’m open to collaborations in AI research, consulting, invited talks, and academic or industry partnerships. Send a quick message below and I’ll get back to you through the most appropriate email.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="contact-card" data-aos="fade-right">
+            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fa-solid fa-address-card text-accent2"></i> Direct Channels</h3>
             <ul class="space-y-3 text-sm">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-facebook-f text-accent2"></i>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-x-twitter text-accent2"></i>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
-              </li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a></li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-facebook-f text-accent2"></i><a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-x-twitter text-accent2"></i><a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a></li>
             </ul>
           </div>
+          <form id="contact-form" class="contact-card space-y-4" data-aos="fade-left">
+            <h3 class="text-xl font-semibold flex items-center gap-2"><i class="fa-solid fa-paper-plane text-accent2"></i> Send a Professional Inquiry</h3>
+            <input id="contact-name" required type="text" placeholder="Your full name" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-email" required type="email" placeholder="Your email address" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-subject" required type="text" placeholder="Subject (e.g., Collaboration, Speaking, Consultancy)" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <textarea id="contact-message" required rows="5" placeholder="Write your message..." class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none"></textarea>
+            <div>
+              <p class="text-xs text-gray-300 mb-2">Send this inquiry to:</p>
+              <label class="text-sm mr-4"><input type="radio" name="contact-destination" value="francismontalbo@ieee.org" checked class="mr-1">IEEE Email</label>
+              <label class="text-sm"><input type="radio" name="contact-destination" value="francisjesmar.montalbo@g.batstate-u.edu.ph" class="mr-1">University Email</label>
+            </div>
+            <button type="submit" class="ui-btn ui-btn-primary w-full">Compose Email Message</button>
+            <p id="contact-form-note" class="text-xs text-gray-400">This will open your email app with your message pre-filled.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -924,6 +930,21 @@
           document.getElementById(target).classList.remove('hidden');
         });
       });
+
+      // Contact form mailto composer
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const name = document.getElementById('contact-name')?.value.trim();
+          const email = document.getElementById('contact-email')?.value.trim();
+          const subject = document.getElementById('contact-subject')?.value.trim();
+          const message = document.getElementById('contact-message')?.value.trim();
+          const destination = contactForm.querySelector('input[name="contact-destination"]:checked')?.value || 'francismontalbo@ieee.org';
+          const bodyText = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+          window.location.href = `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+        });
+      }
 
       // Fallback chatbot toggle wiring (kept minimal so widget can always open even if external script errors)
       const chatbotFab = document.getElementById('chatbot-fab');
