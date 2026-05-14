@@ -260,6 +260,42 @@
         background-color: #264E70; /* muted blue as default */
         color: #F5F5F5;
       }
+      /* Reusable button system */
+      .ui-btn,
+      .clickable-btn,
+      .link-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 2.35rem;
+        padding: 0.5rem 0.85rem;
+        border-radius: 0.6rem;
+        border: 1px solid #B78449;
+        background: rgba(183, 132, 73, 0.12);
+        color: #F5F5F5;
+        font-weight: 600;
+        line-height: 1.1;
+        cursor: pointer;
+        transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.1s ease;
+      }
+      .ui-btn:hover,
+      .clickable-btn:hover,
+      .link-button:hover,
+      .ui-btn:focus-visible,
+      .clickable-btn:focus-visible,
+      .link-button:focus-visible {
+        background: #B78449;
+        border-color: #ACBD5E;
+        color: #0B0F08;
+        transform: translateY(-1px);
+      }
+      .ui-btn:active,
+      .clickable-btn:active,
+      .link-button:active { transform: translateY(0); }
+      .ui-btn-primary { background: #B78449; color: #0B0F08; }
+      .ui-btn-outline { background: transparent; color: #B78449; border-width: 2px; }
+      .ui-btn-sm { min-height: 2rem; padding: 0.35rem 0.65rem; font-size: 0.875rem; }
       /* Override second .badge-code definition for consistency */
       .badge-code {
         background-color: #ACBD5E;
@@ -348,8 +384,8 @@
           I design and develop advanced AI and deep learning solutions that bridge academia and industry. Explore my work and discover how my research impacts real-world applications.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#works" class="bg-accent2 text-dark py-3 px-6 rounded-md font-semibold shadow-md hover:bg-accent hover:text-dark transition-colors">View Works</a>
-          <a href="#contact" class="border-2 border-accent2 text-accent2 py-3 px-6 rounded-md font-semibold hover:bg-accent2 hover:text-dark transition-colors">Get in Touch</a>
+          <a href="#works" class="ui-btn ui-btn-primary py-3 px-6">View Works</a>
+          <a href="#contact" class="ui-btn ui-btn-outline py-3 px-6">Get in Touch</a>
         </div>
       </div>
     </section>
@@ -381,7 +417,7 @@
               <p>
                 Included in Elsevier &amp; Stanford’s Top 2% Most‑Cited Scientists (2019–2024), highlighting my global impact in AI research.
               </p>
-              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="text-accent2 hover:underline font-medium">View Profile</a>
+              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="ui-btn ui-btn-primary ui-btn-sm w-fit">View Profile</a>
             </div>
             <div class="p-6 bg-tertiary text-gray-200 rounded-lg shadow-lg flex flex-col gap-3" data-aos="fade-left" data-aos-delay="100">
               <div class="flex items-center gap-3">
@@ -391,7 +427,7 @@
               <p>
                 Explore my latest research ranking at Batangas State University and see how my work advances the field.
               </p>
-              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="text-accent2 hover:underline font-medium">View Ranking</a>
+              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="ui-btn ui-btn-primary ui-btn-sm w-fit">View Ranking</a>
             </div>
           </div>
         </div>
@@ -411,19 +447,19 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="ai ai-scopus-square text-accent2 text-2xl"></i>
-                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="hover:text-accent">Scopus</a>
+                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="ui-btn ui-btn-sm">Scopus</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-google-scholar-square text-accent2 text-2xl"></i>
-                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="hover:text-accent">Google Scholar</a>
+                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="ui-btn ui-btn-sm">Google Scholar</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-orcid-square text-accent2 text-2xl"></i>
-                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="hover:text-accent">ORCID</a>
+                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="ui-btn ui-btn-sm">ORCID</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-clarivate-square text-accent2 text-2xl"></i>
-                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="hover:text-accent">Web of Science</a>
+                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="ui-btn ui-btn-sm">Web of Science</a>
               </li>
             </ul>
           </div>
@@ -437,37 +473,37 @@
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:github"></span>
                 </span>
-                <a href="https://github.com/francismontalbo" target="_blank" class="hover:text-accent">GitHub</a>
+                <a href="https://www.github.com/francismontalbo" rel="noopener noreferrer" target="_blank" class="ui-btn ui-btn-sm">GitHub</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="simple-icons:kaggle"></span>
                 </span>
-                <a href="https://www.kaggle.com/francismon" target="_blank" class="hover:text-accent">Kaggle</a>
+                <a href="https://www.kaggle.com/francismon" target="_blank" class="ui-btn ui-btn-sm">Kaggle</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:linkedin"></span>
                 </span>
-                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="hover:text-accent">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="ui-btn ui-btn-sm">LinkedIn</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="simple-icons:researchgate"></span>
                 </span>
-                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="hover:text-accent">ResearchGate</a>
+                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="ui-btn ui-btn-sm">ResearchGate</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:facebook"></span>
                 </span>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
+                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="ui-btn ui-btn-sm">Facebook</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
                   <span class="iconify text-dark" data-icon="mdi:twitter"></span>
                 </span>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
+                <a href="https://x.com/francismontalbo" target="_blank" class="ui-btn ui-btn-sm">X (Twitter)</a>
               </li>
             </ul>
           </div>
@@ -479,15 +515,15 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="vs:butterfly"></i>
-                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="hover:text-accent">Kudos</a>
+                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="ui-btn ui-btn-sm">Kudos</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="mdi:checkbox-blank"></i>
-                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="hover:text-accent">ScienceOpen</a>
+                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="ui-btn ui-btn-sm">ScienceOpen</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="simple-icons:loop"></i>
-                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="hover:text-accent">Loop Frontier</a>
+                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="ui-btn ui-btn-sm">Loop Frontier</a>
               </li>
             </ul>
           </div>
@@ -765,9 +801,8 @@
     <!-- Achievements & Contact Section -->
 <section id="achievements" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(11,15,8,0.85), rgba(11,15,8,0.85)), url('assets/img/achievements.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements &amp; Contact</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Achievements Card -->
+        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements</h2>
+        <div class="grid grid-cols-1 gap-8">
           <div class="achievements-card" data-aos="fade-right">
             <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
               <i class="fa-solid fa-medal text-accent2"></i> Certifications &amp; Memberships
@@ -782,30 +817,37 @@
               <li class="flex items-start gap-2"><i class="fa-solid fa-certificate text-accent2"></i> Computer Systems Servicing NC II</li>
             </ul>
           </div>
-          <!-- Contact Card -->
-          <div id="contact" class="contact-card" data-aos="fade-left">
-            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-paper-plane text-accent2"></i> Contact Me
-            </h3>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="py-20 bg-primaryDark text-gray-100" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold mb-3 text-accent2">Contact</h2>
+        <p class="text-sm text-gray-300 mb-8 max-w-3xl">I’m open to collaborations in AI research, consulting, invited talks, and academic or industry partnerships. Send a quick message below and I’ll get back to you through the most appropriate email.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="contact-card" data-aos="fade-right">
+            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fa-solid fa-address-card text-accent2"></i> Direct Channels</h3>
             <ul class="space-y-3 text-sm">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-facebook-f text-accent2"></i>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-x-twitter text-accent2"></i>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
-              </li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a></li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-facebook-f text-accent2"></i><a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-x-twitter text-accent2"></i><a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a></li>
             </ul>
           </div>
+          <form id="contact-form" class="contact-card space-y-4" data-aos="fade-left">
+            <h3 class="text-xl font-semibold flex items-center gap-2"><i class="fa-solid fa-paper-plane text-accent2"></i> Send a Professional Inquiry</h3>
+            <input id="contact-name" required type="text" placeholder="Your full name" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-email" required type="email" placeholder="Your email address" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-subject" required type="text" placeholder="Subject (e.g., Collaboration, Speaking, Consultancy)" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <textarea id="contact-message" required rows="5" placeholder="Write your message..." class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none"></textarea>
+            <div>
+              <p class="text-xs text-gray-300 mb-2">Send this inquiry to:</p>
+              <label class="text-sm mr-4"><input type="radio" name="contact-destination" value="francismontalbo@ieee.org" checked class="mr-1">IEEE Email</label>
+              <label class="text-sm"><input type="radio" name="contact-destination" value="francisjesmar.montalbo@g.batstate-u.edu.ph" class="mr-1">University Email</label>
+            </div>
+            <button type="submit" class="ui-btn ui-btn-primary w-full">Compose Email Message</button>
+            <p id="contact-form-note" class="text-xs text-gray-400">This will open your email app with your message pre-filled.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -888,6 +930,21 @@
           document.getElementById(target).classList.remove('hidden');
         });
       });
+
+      // Contact form mailto composer
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const name = document.getElementById('contact-name')?.value.trim();
+          const email = document.getElementById('contact-email')?.value.trim();
+          const subject = document.getElementById('contact-subject')?.value.trim();
+          const message = document.getElementById('contact-message')?.value.trim();
+          const destination = contactForm.querySelector('input[name="contact-destination"]:checked')?.value || 'francismontalbo@ieee.org';
+          const bodyText = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+          window.location.href = `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+        });
+      }
 
       // Fallback chatbot toggle wiring (kept minimal so widget can always open even if external script errors)
       const chatbotFab = document.getElementById('chatbot-fab');
