@@ -782,4 +782,39 @@ footer .ui-btn,
 }
 .publication-card .card-title, #news-list .publication-card h3 { color: #BFDBFE !important; }
 .publication-card .card-text, .publication-card p, #news-list .publication-card p, #news-list .publication-card .text-xs, #news-list .publication-card time { color: #E2E8F0 !important; }
+
+/* ===== Hard override pack (final): enforce visible contrast in all reported areas ===== */
+#about .p-6.bg-tertiary,
+#experience .p-6.bg-tertiary,
+#experience .experience-item,
+#achievements .achievements-card,
+#contact .contact-card {
+  background: rgba(8, 15, 32, 0.82) !important;
+  border: 1px solid rgba(147, 197, 253, 0.28) !important;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.35) !important;
+}
+
+#about .p-6.bg-tertiary p,
+#experience .p-6.bg-tertiary p,
+#experience .experience-item p,
+#achievements .achievements-card li,
+#contact .contact-card li,
+#skills li,
+#skills p {
+  color: #E5E7EB !important;
+}
+
+#about .p-6.bg-tertiary h3,
+#experience h4,
+#skills h3,
+#achievements h3,
+#contact h3 {
+  color: #BFDBFE !important;
+}
+
+#skills .iconify, #skills .text-5xl { filter: drop-shadow(0 0 2px rgba(255,255,255,.3)); }
+
+#news p, #news .text-sm, #news .text-xs, #news #news-count {
+  color: #E5E7EB !important;
+}
     
