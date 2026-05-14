@@ -552,7 +552,44 @@ footer {
       .achievements-card {
         @apply bg-primaryDark p-6 rounded-lg text-white;
       }
-      .contact-card {
+.contact-card {
         @apply bg-primaryDark p-6 rounded-lg text-white;
       }
+
+/* Readability hardening for key UI controls and cards */
+.tab {
+  background-color: #1E40AF !important;
+  color: #F8FAFC !important;
+  border: 1px solid #60A5FA !important;
+}
+.tab:hover,
+.tab:focus-visible,
+.tab.bg-tertiary {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+}
+
+.publication-card,
+.card.publication-card {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+.publication-card .card-title,
+.publication-card h5 {
+  color: #BFDBFE !important;
+}
+.publication-card .card-text,
+.publication-card p {
+  color: #E2E8F0 !important;
+}
+
+#news-list .publication-card {
+  background: rgba(15, 23, 42, 0.92) !important;
+}
+#news-list .publication-card time,
+#news-list .publication-card .text-xs,
+#news-list .publication-card p {
+  color: #E2E8F0 !important;
+}
     

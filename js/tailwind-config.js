@@ -3,7 +3,7 @@
         theme: {
           extend: {
             colors: {
-              primary: '#DBEAFE',      // royal blue
+              primary: '#1E40AF',      // royal blue (readable on white text)
               primaryDark: '#1E3A8A',  // deep navy-blue
               tertiary: '#1E293B',    // slate
               dark: '#0B1220',        // rich dark bg
