@@ -284,7 +284,7 @@ function initializeNews() {
           <div class="w-full">
             ${(item.image || item.videoEmbed) ? `
               <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
-                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" /></div>` : ''}
+                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${item.image}" /></div>` : ''}
                 ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
               </div>
             ` : ''}
@@ -349,15 +349,72 @@ function initializeNews() {
 
 }
 
+
+
+function initializeImageModal() {
+  if (document.getElementById('image-viewer-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'image-viewer-modal';
+  modal.className = 'image-modal hidden';
+  modal.innerHTML = `
+    <div class="image-modal-backdrop" data-close-modal="true"></div>
+    <div class="image-modal-content" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button class="image-modal-close" type="button" aria-label="Close image viewer">&times;</button>
+      <div class="image-modal-controls">
+        <button type="button" data-zoom="in">+</button>
+        <button type="button" data-zoom="out">−</button>
+        <button type="button" data-zoom="reset">Reset</button>
+      </div>
+      <div class="image-modal-stage">
+        <img id="image-modal-target" alt="Expanded image" draggable="false" />
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  const img = modal.querySelector('#image-modal-target');
+  const stage = modal.querySelector('.image-modal-stage');
+  let scale = 1, x = 0, y = 0, dragging = false, startX = 0, startY = 0;
+
+  const apply = () => { img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`; };
+  const reset = () => { scale = 1; x = 0; y = 0; apply(); };
+  const close = () => { modal.classList.add('hidden'); document.body.style.overflow=''; reset(); };
+
+  modal.addEventListener('click', (e) => {
+    if (e.target.dataset.closeModal === 'true' || e.target.classList.contains('image-modal-close')) close();
+  });
+  modal.querySelector('[data-zoom="in"]').addEventListener('click', () => { scale = Math.min(5, scale + 0.2); apply(); });
+  modal.querySelector('[data-zoom="out"]').addEventListener('click', () => { scale = Math.max(1, scale - 0.2); apply(); });
+  modal.querySelector('[data-zoom="reset"]').addEventListener('click', reset);
+
+  stage.addEventListener('wheel', (e) => { e.preventDefault(); scale = Math.min(5, Math.max(1, scale + (e.deltaY < 0 ? 0.15 : -0.15))); apply(); }, { passive: false });
+  stage.addEventListener('mousedown', (e) => { dragging = true; startX = e.clientX - x; startY = e.clientY - y; stage.style.cursor='grabbing'; });
+  window.addEventListener('mousemove', (e) => { if (!dragging) return; x = e.clientX - startX; y = e.clientY - startY; apply(); });
+  window.addEventListener('mouseup', () => { dragging = false; stage.style.cursor='grab'; });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) close(); });
+
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('.news-image[data-modal-src]');
+    if (!trigger) return;
+    img.src = trigger.dataset.modalSrc || trigger.src;
+    img.alt = trigger.alt || 'Expanded image';
+    modal.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    reset();
+  });
+}
+
 // Run initialisation immediately or defer to DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
     try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+    try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
     try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
   });
 } else {
   try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
   try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
+  try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
   try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
 }
