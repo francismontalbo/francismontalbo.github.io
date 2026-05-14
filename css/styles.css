@@ -817,4 +817,68 @@ footer .ui-btn,
 #news p, #news .text-sm, #news .text-xs, #news #news-count {
   color: #E5E7EB !important;
 }
+
+/* ===== Minimal black/white theme with restrained blue accents ===== */
+body, .bg-dark, .bg-primaryDark, .bg-tertiary {
+  background: #FFFFFF !important;
+  color: #0B0B0B !important;
+}
+section[id], footer, nav {
+  color: #0B0B0B !important;
+}
+section[id] p, section[id] li, section[id] span, footer p, footer li {
+  color: #1F2937 !important;
+}
+section[id] h1, section[id] h2, section[id] h3, section[id] h4, nav a, footer h3, footer h4 {
+  color: #111827 !important;
+}
+
+/* keep imagery subtle but readable */
+#about, #socials, #experience, #skills, #works, #achievements {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), var(--section-bg, none) !important;
+  background-blend-mode: normal !important;
+}
+
+/* cards: white with neutral border, no heavy blue wash */
+.publication-card,
+#news-list .publication-card,
+.achievements-card,
+.contact-card,
+.experience-item,
+#socials .bg-primaryDark,
+#experience .p-6.bg-tertiary,
+#about .p-6.bg-tertiary {
+  background: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important;
+  color: #111827 !important;
+}
+.publication-card .card-title, #news-list .publication-card h3 {
+  color: #111827 !important;
+}
+.publication-card .card-text, .publication-card p, #news-list .publication-card p, #news-list .publication-card .text-xs {
+  color: #374151 !important;
+}
+
+/* minimal blue accents only for links/buttons/icons */
+a, .text-accent, .text-accent2, i.text-accent2, .iconify.text-accent2 {
+  color: #2563EB !important;
+}
+.ui-btn-primary, .tab, #chatbot-send, #chatbot-fab {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #1D4ED8 !important;
+}
+.ui-btn-primary:hover, .tab:hover, #chatbot-send:hover, #chatbot-fab:hover {
+  background: #1D4ED8 !important;
+}
+.ui-btn-outline {
+  color: #2563EB !important;
+  border-color: #2563EB !important;
+  background: transparent !important;
+}
+.ui-btn-outline:hover {
+  background: #EFF6FF !important;
+  color: #0B0B0B !important;
+}
     

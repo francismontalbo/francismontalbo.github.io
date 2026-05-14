@@ -3,12 +3,12 @@
         theme: {
           extend: {
             colors: {
-              primary: '#FFFFFF',      // white primary surface
-              primaryDark: '#F8FAFC',  // near-white secondary surface
-              tertiary: '#EFF6FF',    // pale blue surface
-              dark: '#FFFFFF',        // white base surface
-              accent: '#2563EB',      // primary accent blue
-              accent2: '#1D4ED8'      // deeper accent blue
+              primary: '#111827',      // neutral near-black
+              primaryDark: '#0B0B0B',  // deep black
+              tertiary: '#1F2937',    // charcoal
+              dark: '#000000',        // black
+              accent: '#2563EB',      // minimal blue accent
+              accent2: '#3B82F6'      // lighter blue accent
             }
           }
         }
