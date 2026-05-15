@@ -135,3 +135,16 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* Experience & Education readability fixes (Class of badges and card text) */
+#experience .p-6.bg-tertiary,
+#experience .p-6.bg-tertiary p,
+#experience .p-6.bg-tertiary h4 {
+  color: #111827 !important;
+}
+#experience .p-6.bg-tertiary .text-xs.bg-primary {
+  background: #2563eb !important; /* blue */
+  color: #ffffff !important;      /* white */
+  border: 1px solid #1d4ed8 !important;
+  font-weight: 600 !important;
+}
