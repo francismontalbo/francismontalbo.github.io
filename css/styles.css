@@ -98,3 +98,19 @@ p{margin-bottom:0}
 
 /* Footer */
 footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
+
+/* Socials: slightly larger logos + minimal hover feedback */
+#socials .ai,
+#socials .iconify,
+#socials .fa-brands,
+#socials .fa-solid {
+  font-size: 2rem !important;
+  transition: transform .16s ease, opacity .16s ease;
+}
+#socials li:hover .ai,
+#socials li:hover .iconify,
+#socials li:hover .fa-brands,
+#socials li:hover .fa-solid {
+  transform: scale(1.08);
+  opacity: .92;
+}
