@@ -819,6 +819,15 @@ footer .ui-btn,
 }
 
 /* ===== Minimal black/white theme with restrained blue accents ===== */
+/* Framework-first layer (Bootstrap tokens) to reduce custom color logic */
+:root {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #111827;
+  --bs-primary: #0d6efd;
+  --bs-primary-rgb: 13,110,253;
+  --bs-secondary: #6c757d;
+  --bs-border-color: #dee2e6;
+}
 body, .bg-dark, .bg-primaryDark, .bg-tertiary {
   background: #FFFFFF !important;
   color: #0B0B0B !important;
@@ -864,20 +873,20 @@ section[id] h1, section[id] h2, section[id] h3, section[id] h4, nav a, footer h3
 a, .text-accent, .text-accent2, i.text-accent2, .iconify.text-accent2 {
   color: #2563EB !important;
 }
-.ui-btn-primary, .tab, #chatbot-send, #chatbot-fab {
+.ui-btn-primary, .tab, #chatbot-send, #chatbot-fab, .btn-primary {
   background: #2563EB !important;
   color: #FFFFFF !important;
   border-color: #1D4ED8 !important;
 }
-.ui-btn-primary:hover, .tab:hover, #chatbot-send:hover, #chatbot-fab:hover {
+.ui-btn-primary:hover, .tab:hover, #chatbot-send:hover, #chatbot-fab:hover, .btn-primary:hover {
   background: #1D4ED8 !important;
 }
-.ui-btn-outline {
+.ui-btn-outline, .btn-outline-primary {
   color: #2563EB !important;
   border-color: #2563EB !important;
   background: transparent !important;
 }
-.ui-btn-outline:hover {
+.ui-btn-outline:hover, .btn-outline-primary:hover {
   background: #EFF6FF !important;
   color: #0B0B0B !important;
 }
