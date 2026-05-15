@@ -1,266 +1,137 @@
-/*
-  Custom stylesheet for francismontalbo.github.io remake.
-  Defines a simple color palette, consistent spacing, and reusable
-  component styles. Bootstrap 5 handles core layout and utilities.
-*/
-
-:root {
-  --primary-color: #0a3d62;
-  --highlight-color: #f79f1f;
-  --light-bg: #f8f9fa;
-  --text-color: #333;
-  --muted-color: #6c757d;
+:root{
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface-2:#eef2f7;
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#dbe2ea;
+  --accent:#2563eb;
+  --accent-2:#1d4ed8;
+  --radius:14px;
+  --space-1:8px;
+  --space-2:12px;
+  --space-3:16px;
+  --space-4:24px;
+  --space-5:32px;
+  --space-6:48px;
 }
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+html{scroll-behavior:smooth}
+body{overflow-y:auto}
+section[id]{scroll-margin-top:90px}
+section{position:relative}
+section::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.82);pointer-events:none}
+section>*{position:relative;z-index:1}
+#hero::before{background:linear-gradient(180deg,rgba(245,247,251,.92),rgba(245,247,251,.82))}
+nav{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--border)!important;color:var(--text)!important}
+nav a,nav span,nav i{color:var(--text)!important}
+nav a:hover{color:var(--accent)!important}
+nav .max-w-7xl{max-width:1200px}
+#mobile-menu{max-height:calc(100vh - 72px);overflow-y:auto}
 
-body {
-  /* Inter provides clean readability, while Poppins is used for headings */
-  font-family: 'Inter', sans-serif;
-  color: var(--text-color);
-  scroll-behavior: smooth;
-}
+.bg-primaryDark,.bg-dark,.bg-tertiary{background:var(--surface)!important;color:var(--text)!important}
+.text-gray-100,.text-gray-200,.text-gray-300,.text-gray-400{color:var(--muted)!important}
+.text-accent2,.text-accent{color:var(--accent)!important}
 
-.bg-light {
-  background-color: var(--light-bg) !important;
+.achievements-card,.contact-card,.experience-item,.publication-card,.card,.bg-primaryDark.p-6,.p-6.bg-tertiary{
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  border-radius:var(--radius)!important;
+  box-shadow:0 8px 24px rgba(2,6,23,.06)!important;
+  color:var(--text)!important;
 }
+.card-title,h1,h2,h3,h4,h5{color:var(--text)!important;line-height:1.25}
+.card-text,.publication-card p,.experience-item p,li,p{color:var(--muted)!important}
 
-/* Section padding helper */
-.section-padding {
-  padding: 80px 0;
+.ui-btn,.btn,.tab,#chatbot-send,#chatbot-fab{
+  border-radius:10px!important;
+  font-weight:600!important;
+  padding:.58rem 1rem!important;
 }
+.ui-btn-primary,.btn-primary,.tab,#chatbot-send,#chatbot-fab{
+  background:var(--accent)!important;border:1px solid var(--accent)!important;color:#fff!important;
+}
+.ui-btn-primary:hover,.btn-primary:hover,.tab:hover,#chatbot-send:hover,#chatbot-fab:hover{background:var(--accent-2)!important;border-color:var(--accent-2)!important}
+.ui-btn-outline,.btn-outline-primary{background:transparent!important;color:var(--accent)!important;border:1px solid var(--accent)!important}
+.ui-btn-outline:hover,.btn-outline-primary:hover{background:#e8efff!important;color:var(--text)!important}
 
-/* Section headings */
-.section-heading {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  color: var(--primary-color);
-  font-family: 'Poppins', sans-serif;
-}
+input,select,textarea{background:#fff!important;color:var(--text)!important;border:1px solid var(--border)!important;border-radius:10px!important}
+input::placeholder,textarea::placeholder{color:#64748b!important}
 
-/* Headings for hero and page titles */
-h1, h2, h3 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-}
+#chatbot-widget{background:#fff!important;border:1px solid var(--border)!important}
+#chatbot-widget .bg-primaryDark{background:var(--surface-2)!important}
+#chatbot-messages .bg-tertiary{background:#f1f5f9!important;color:var(--text)!important}
 
-.section-heading i {
-  font-size: 1.5rem;
-}
+footer{background:#fff!important;border-top:1px solid var(--border)!important}
+footer p,footer li,footer a{color:var(--muted)!important}
+footer h3,footer h4{color:var(--text)!important}
 
-.text-primary {
-  color: var(--primary-color) !important;
-}
+.news-media{border:1px solid var(--border)!important;background:#fff!important}
 
-.text-highlight {
-  color: var(--highlight-color);
-}
+/* Layout polish */
+.max-w-6xl{max-width:1140px!important}
+.max-w-4xl{max-width:960px!important}
+section.py-20{padding-top:72px!important;padding-bottom:72px!important}
+.pt-24{padding-top:104px!important}
+.pb-32{padding-bottom:96px!important}
 
-/* Social icons styling */
-.social-icon {
-  font-size: 1.75rem;
-  color: var(--primary-color);
-  transition: transform 0.3s ease, color 0.3s ease;
-}
+/* Consistent content rhythm */
+h2.text-3xl{font-size:2rem!important;margin-bottom:var(--space-5)!important}
+h3.text-xl{font-size:1.65rem!important}
+p{margin-bottom:0}
+.space-y-6 > * + *{margin-top:var(--space-4)!important}
+.space-y-3 > * + *{margin-top:var(--space-3)!important}
 
-.social-icon:hover {
-  transform: scale(1.15);
-  color: var(--highlight-color);
-}
+/* Cards and tiles */
+.p-6{padding:1.4rem!important}
+.grid.gap-8{gap:1.4rem!important}
+.grid.gap-12{gap:2rem!important}
+.publication-card{padding:1.25rem!important}
+.experience-item{padding:1rem 1.1rem!important;align-items:flex-start!important}
+.experience-item .icon{margin-top:2px}
 
-/* Timeline for experience */
-.timeline {
-  position: relative;
-  padding-left: 20px;
-  margin-left: 20px;
-  border-left: 2px solid var(--highlight-color);
-}
-
-.timeline-item {
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 0.35rem;
-  width: 12px;
-  height: 12px;
-  background-color: var(--highlight-color);
-  border-radius: 50%;
-}
-
-.timeline-content {
-  padding-left: 10px;
-}
-
-/* Card customization */
-.card {
-  border-radius: 0.5rem;
-}
-
-.card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-.card-subtitle {
-  font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
-}
-
-.fa-ul > li {
-  line-height: 1.6;
-}
-
-/* Publication cards */
-.publication-card {
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-bottom: 1.5rem;
-}
-
-.publication-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.publication-card .card-body {
-  padding: 1rem 1.25rem;
-}
-
-.publication-card .card-title {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
-.publication-card .card-text {
-  font-size: 0.875rem;
-  color: var(--text-color);
-  line-height: 1.4;
-}
-
-.badge.bg-primary {
-  background-color: var(--primary-color) !important;
-}
+/* Works/search controls */
+.tabs{margin-bottom:1.1rem!important}
+.tab-content .flex.flex-col.lg\\:flex-row{align-items:center}
+.tab-content input,.tab-content select,.tab-content button{min-height:42px}
 
 /* Footer */
-footer {
-  font-size: 0.85rem;
+footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
+
+/* Socials: slightly larger logos + minimal hover feedback */
+#socials .ai,
+#socials .iconify,
+#socials .fa-brands,
+#socials .fa-solid {
+  font-size: 2rem !important;
+  transition: transform .16s ease, opacity .16s ease;
+}
+#socials li:hover .ai,
+#socials li:hover .iconify,
+#socials li:hover .fa-brands,
+#socials li:hover .fa-solid {
+  transform: scale(1.08);
+  opacity: .92;
 }
 
-/* Utility classes */
-.fw-semibold {
-  font-weight: 600;
+/* Socials consistency: match Research Profiles icon/link style */
+#socials .bg-accent2 {
+  background: transparent !important;
+  border: 0 !important;
 }
-
-/* Additional text color helper */
-.text-purple {
-  color: purple;
+#socials span.rounded-full.bg-accent2,
+#socials i.iconify.text-accent2 {
+  color: #2563eb !important;
 }
-
-/* Back-to-top button styling */
-.back-to-top {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 9999;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+#socials li a {
+  color: #1f2937 !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .16s ease, text-decoration-color .16s ease;
 }
-
-.back-to-top.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+#socials li a:hover {
+  color: #2563eb !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
-
-/* ----------------------------------- */
-/* Modern enhancements and micro-effects */
-
-/* Hero section subtle gradient to add depth without overwhelming */
-#about {
-  background: linear-gradient(135deg, #fdfdfd 0%, #f0f4f8 100%);
-}
-
-/* Nav link icons sizing removed to revert to text-only navigation */
-.navbar-nav .nav-link i {
-  /* intentionally left blank; icons removed */
-}
-
-/* Global card hover effect removed to maintain original feel */
-.card {
-  /* no additional transition beyond default */
-}
-.card:hover {
-  /* no scale or shadow; let publication cards handle their own hover */
-}
-
-/* Timeline dot hover interaction removed to keep clean timeline */
-.timeline-item:hover::before {
-  /* intentionally blank */
-}
-
-/* Capabilities list hover color removed to retain default coloring */
-.fa-ul > li:hover i {
-  /* intentionally blank */
-}
-
-/* Restore original publication card hover effect */
-.publication-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-
-.news-media-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-}
-
-.news-media-row.has-video {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.news-media {
-  height: 220px;
-  border: 1px solid var(--color-primary);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  background: #162311;
-}
-
-.news-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.news-video-wrap > div {
-  height: 100% !important;
-  padding-bottom: 0 !important;
-}
-
-.news-video-wrap iframe {
-  width: 100% !important;
-  height: 100% !important;
-}
-
