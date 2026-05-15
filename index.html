@@ -6,297 +6,18 @@
     <title>Dr. Francis Jesmar P. Montalbo | Research Scientist & AI Specialist</title>
 
     <!-- Tailwind CSS via CDN with custom palette -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
-    <script>
-      // Extend Tailwind with our custom colour palette. These names can be used as classes
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '#397234',      // dark green
-              primaryDark: '#283F23',  // forest green
-              tertiary: '#3F2617',    // dark brown
-              dark: '#0B0F08',        // near black
-              accent: '#ACBD5E',      // light green
-              accent2: '#B78449'      // bronze
-            }
-          }
-        }
-      };
-    </script>
-
     <!-- Font Awesome icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- AOS (Animate on Scroll) library for subtle fade animations -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <!-- Academicons for research profile icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
 
     <!-- Iconify for additional icons (e.g., custom social icons) -->
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
     <!-- Google Fonts for better typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Academicons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <!-- Iconify for additional icons (if needed) -->
-    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-
-
-    <style>
-      /* Base typography adjustments */
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      h1, h2, h3, h4 {
-        font-weight: 600;
-      }
-      /* Badge colour definitions for publishers and code buttons */
-      .badge-code {
-        /* Code badge: use accent colour for better contrast */
-        background-color: #ACBD5E;
-        color: #0B0F08;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-      }
-      .badge-elsevier {
-        background-color: #B78449;
-        color: #0B0F08;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-springer {
-        background-color: #ACBD5E;
-        color: #0B0F08;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-sage {
-        background-color: #397234;
-        color: #f5f5f5;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-degruyter {
-        background-color: #283F23;
-        color: #f5f5f5;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-ksii {
-        background-color: #3F2617;
-        color: #f5f5f5;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-ijain {
-        background-color: #ACBD5E;
-        color: #0B0F08;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-iop {
-        background-color: #ACBD5E;
-        color: #0B0F08;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-acm {
-        background-color: #283F23;
-        color: #f5f5f5;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-ieee {
-        background-color: #397234;
-        color: #f5f5f5;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      /* Note: .badge-default is defined below for dynamic works */
-
-      /* Custom definitions for dynamic publication cards and bootstrap-like classes */
-      .card {
-        background-color: #283F23; /* dark green background for cards */
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        color: #F5F5F5;
-        margin-bottom: 1rem;
-      }
-      .card-body {
-        padding: 1rem;
-      }
-      .publication-card {
-        background-color: #3F2617; /* dark brown card background for works */
-        border-radius: 0.5rem;
-        padding: 1.25rem;
-        color: #F5F5F5;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      }
-      .card-title {
-        font-weight: 600;
-        font-size: 1rem;
-        color: #B78449; /* bronze accent for titles */
-        margin-bottom: 0.25rem;
-      }
-      .card-text {
-        font-size: 0.875rem;
-        color: #D1D5DB; /* light gray for text */
-      }
-
-      /* Style links inside publication cards (e.g., DOIs) to stand out */
-      .publication-card a {
-        color: #ACBD5E;
-        text-decoration: underline;
-      }
-
-      .news-media-row {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-      .news-media-row.has-video {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .news-media {
-        height: 220px;
-        border: 1px solid #397234;
-        border-radius: 0.5rem;
-        overflow: hidden;
-        background: #162311;
-      }
-      .news-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .news-video-wrap > div {
-        height: 100% !important;
-        padding-bottom: 0 !important;
-      }
-      .news-video-wrap iframe {
-        width: 100% !important;
-        height: 100% !important;
-      }
-
-      .news-image {
-        cursor: zoom-in;
-      }
-      .image-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .image-modal.hidden { display: none; }
-      .image-modal-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.8);
-      }
-      .image-modal-content {
-        position: relative;
-        width: min(95vw, 1100px);
-        height: min(90vh, 800px);
-        background: #0B0F08;
-        border: 1px solid #397234;
-        border-radius: 0.75rem;
-        overflow: hidden;
-      }
-      .image-modal-close { position:absolute; top:10px; right:12px; z-index:2; color:white; font-size:2rem; }
-      .image-modal-controls { position:absolute; top:12px; left:12px; z-index:2; display:flex; gap:0.5rem; }
-      .image-modal-controls button { background:#ACBD5E; color:#0B0F08; padding:0.3rem 0.6rem; border-radius:0.375rem; }
-      .image-modal-stage { width:100%; height:100%; display:flex; align-items:center; justify-content:center; cursor:grab; overflow:hidden; }
-      #image-modal-target { max-width:100%; max-height:100%; transform-origin:center center; user-select:none; }
-
-      .d-flex {
-        display: flex;
-      }
-      .flex-wrap {
-        flex-wrap: wrap;
-      }
-      .gap-2 {
-        gap: 0.5rem;
-      }
-      .me-1 {
-        margin-right: 0.25rem;
-      }
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-      }
-      .badge-default {
-        background-color: #264E70; /* muted blue as default */
-        color: #F5F5F5;
-      }
-      /* Override second .badge-code definition for consistency */
-      .badge-code {
-        background-color: #ACBD5E;
-        color: #0B0F08;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        text-decoration: none !important;
-      }
-      .badge-code, .badge-code i, .publication-card a.badge-code {
-        color: #0B0F08 !important;
-      }
-      .badge-code:hover {
-        background-color: #B7C970;
-        color: #0B0F08 !important;
-        text-decoration: none !important;
-      }
-
-      /* Additional custom classes for card and timeline styling */
-      .card-shadow {
-        @apply shadow-lg rounded-lg overflow-hidden;
-      }
-      .experience-item {
-        @apply flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-lg bg-primaryDark text-white;
-      }
-      .experience-item .icon {
-        @apply text-accent text-3xl;
-      }
-      /* Achievements and contact cards */
-      .achievements-card {
-        @apply bg-primaryDark p-6 rounded-lg text-white;
-      }
-      .contact-card {
-        @apply bg-primaryDark p-6 rounded-lg text-white;
-      }
-    </style>
-  </head>
+          </head>
   <body class="bg-dark text-gray-100 scroll-smooth">
     <!-- Navigation bar -->
     <nav class="fixed top-0 inset-x-0 z-50 bg-primaryDark/90 backdrop-blur-sm border-b border-accent text-gray-100">
@@ -348,14 +69,14 @@
           I design and develop advanced AI and deep learning solutions that bridge academia and industry. Explore my work and discover how my research impacts real-world applications.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#works" class="bg-accent2 text-dark py-3 px-6 rounded-md font-semibold shadow-md hover:bg-accent hover:text-dark transition-colors">View Works</a>
-          <a href="#contact" class="border-2 border-accent2 text-accent2 py-3 px-6 rounded-md font-semibold hover:bg-accent2 hover:text-dark transition-colors">Get in Touch</a>
+          <a href="#works" class="ui-btn ui-btn-primary py-3 px-6">View Works</a>
+          <a href="#contact" class="ui-btn ui-btn-outline py-3 px-6">Get in Touch</a>
         </div>
       </div>
     </section>
 
     <!-- About Section -->
-<section id="about" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(40,63,35,0.85), rgba(40,63,35,0.85)), url('assets/img/about.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="about" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.72), rgba(15,23,42,0.72)), url('assets/img/about.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-semibold mb-10 text-accent2">About</h2>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -381,7 +102,7 @@
               <p>
                 Included in Elsevier &amp; Stanford’s Top 2% Most‑Cited Scientists (2019–2024), highlighting my global impact in AI research.
               </p>
-              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="text-accent2 hover:underline font-medium">View Profile</a>
+              <a href="https://topresearcherslist.com/Home/Profile/922022" target="_blank" class="ui-btn ui-btn-primary ui-btn-sm w-fit">View Profile</a>
             </div>
             <div class="p-6 bg-tertiary text-gray-200 rounded-lg shadow-lg flex flex-col gap-3" data-aos="fade-left" data-aos-delay="100">
               <div class="flex items-center gap-3">
@@ -391,7 +112,7 @@
               <p>
                 Explore my latest research ranking at Batangas State University and see how my work advances the field.
               </p>
-              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="text-accent2 hover:underline font-medium">View Ranking</a>
+              <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=batangas+state+university&btnG=" target="_blank" class="ui-btn ui-btn-primary ui-btn-sm w-fit">View Ranking</a>
             </div>
           </div>
         </div>
@@ -399,7 +120,7 @@
     </section>
 
     <!-- Socials Section -->
-<section id="socials" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(11,15,8,0.85), rgba(11,15,8,0.85)), url('assets/img/skills.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="socials" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.78), rgba(15,23,42,0.78)), url('assets/img/skills.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-semibold mb-10 text-accent2">Socials</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -411,19 +132,19 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="ai ai-scopus-square text-accent2 text-2xl"></i>
-                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="hover:text-accent">Scopus</a>
+                <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" class="ui-btn ui-btn-sm">Scopus</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-google-scholar-square text-accent2 text-2xl"></i>
-                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="hover:text-accent">Google Scholar</a>
+                <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="ui-btn ui-btn-sm">Google Scholar</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-orcid-square text-accent2 text-2xl"></i>
-                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="hover:text-accent">ORCID</a>
+                <a href="https://orcid.org/0000-0002-1493-5080" target="_blank" class="ui-btn ui-btn-sm">ORCID</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="ai ai-clarivate-square text-accent2 text-2xl"></i>
-                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="hover:text-accent">Web of Science</a>
+                <a href="https://www.webofscience.com/wos/author/record/2163797" target="_blank" class="ui-btn ui-btn-sm">Web of Science</a>
               </li>
             </ul>
           </div>
@@ -435,39 +156,39 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="mdi:github"></span>
+                  <span class="iconify text-primaryDark" data-icon="mdi:github"></span>
                 </span>
-                <a href="https://github.com/francismontalbo" target="_blank" class="hover:text-accent">GitHub</a>
+                <a href="https://www.github.com/francismontalbo" rel="noopener noreferrer" target="_blank" class="ui-btn ui-btn-sm">GitHub</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="simple-icons:kaggle"></span>
+                  <span class="iconify text-primaryDark" data-icon="simple-icons:kaggle"></span>
                 </span>
-                <a href="https://www.kaggle.com/francismon" target="_blank" class="hover:text-accent">Kaggle</a>
+                <a href="https://www.kaggle.com/francismon" target="_blank" class="ui-btn ui-btn-sm">Kaggle</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="mdi:linkedin"></span>
+                  <span class="iconify text-primaryDark" data-icon="mdi:linkedin"></span>
                 </span>
-                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="hover:text-accent">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" class="ui-btn ui-btn-sm">LinkedIn</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="simple-icons:researchgate"></span>
+                  <span class="iconify text-primaryDark" data-icon="simple-icons:researchgate"></span>
                 </span>
-                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="hover:text-accent">ResearchGate</a>
+                <a href="https://www.researchgate.net/profile/Francis_Jesmar_Montalbo" target="_blank" class="ui-btn ui-btn-sm">ResearchGate</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="mdi:facebook"></span>
+                  <span class="iconify text-primaryDark" data-icon="mdi:facebook"></span>
                 </span>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
+                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="ui-btn ui-btn-sm">Facebook</a>
               </li>
               <li class="flex items-center gap-3">
                 <span class="flex items-center justify-center w-8 h-8 rounded-full bg-accent2">
-                  <span class="iconify text-dark" data-icon="mdi:twitter"></span>
+                  <span class="iconify text-primaryDark" data-icon="mdi:twitter"></span>
                 </span>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
+                <a href="https://x.com/francismontalbo" target="_blank" class="ui-btn ui-btn-sm">X (Twitter)</a>
               </li>
             </ul>
           </div>
@@ -479,15 +200,15 @@
             <ul class="space-y-3">
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="vs:butterfly"></i>
-                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="hover:text-accent">Kudos</a>
+                <a href="https://www.growkudos.com/profile/francis_montalbo" target="_blank" class="ui-btn ui-btn-sm">Kudos</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="mdi:checkbox-blank"></i>
-                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="hover:text-accent">ScienceOpen</a>
+                <a href="https://www.scienceopen.com/user/francismontalbo" target="_blank" class="ui-btn ui-btn-sm">ScienceOpen</a>
               </li>
               <li class="flex items-center gap-3">
                 <i class="iconify text-accent2 text-2xl" data-icon="simple-icons:loop"></i>
-                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="hover:text-accent">Loop Frontier</a>
+                <a href="https://loop.frontiersin.org/people/1267355/overview" target="_blank" class="ui-btn ui-btn-sm">Loop Frontier</a>
               </li>
             </ul>
           </div>
@@ -496,7 +217,7 @@
     </section>
 
     <!-- Experience and Education Section -->
-<section id="experience" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(40,63,35,0.85), rgba(40,63,35,0.85)), url('assets/img/experience.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="experience" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.72), rgba(15,23,42,0.72)), url('assets/img/experience.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-semibold mb-10 text-accent2">Experience &amp; Education</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -572,7 +293,7 @@
     </section>
 
     <!-- Skills Section -->
-<section id="skills" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(11,15,8,0.85), rgba(11,15,8,0.85)), url('assets/img/skills.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="skills" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.78), rgba(15,23,42,0.78)), url('assets/img/skills.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-semibold mb-10 text-accent2">Skills</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -653,17 +374,17 @@
     </section>
 
     <!-- Works Section -->
-<section id="works" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(40,63,35,0.85), rgba(40,63,35,0.85)), url('assets/img/publications.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="works" class="py-20 bg-primaryDark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.72), rgba(15,23,42,0.72)), url('assets/img/publications.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
           <h2 class="text-3xl font-semibold mb-4 text-accent2">Works</h2>
           <p class="text-sm text-gray-300 mb-6">Publications are arranged by type and sorted by latest year/date for easier browsing. For the most updated and more accurate research profile (including citation metrics), view Google Scholar: <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="text-accent2 hover:text-accent underline">PV8dJDkAAAAJ</a> and Scopus: <a href="https://www.scopus.com/authid/detail.uri?authorId=57221928564" target="_blank" class="text-accent2 hover:text-accent underline">Author ID 57221928564</a>.</p>
           <!-- Removed static Top Works section to rely on dynamic publications -->
           <!-- Tabs -->
           <div class="tabs flex flex-col sm:flex-row gap-4 mb-8">
-            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="all-tab">All</button>
-            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="journal-tab">Journals</button>
-            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="conference-tab">Conferences</button>
-            <button class="tab px-4 py-2 rounded-md text-sm font-medium bg-primary text-gray-100 hover:bg-tertiary focus:outline-none" data-target="chapters-tab">Chapters</button>
+            <button class="tab btn btn-primary btn-sm" data-target="all-tab">All</button>
+            <button class="tab btn btn-primary btn-sm" data-target="journal-tab">Journals</button>
+            <button class="tab btn btn-primary btn-sm" data-target="conference-tab">Conferences</button>
+            <button class="tab btn btn-primary btn-sm" data-target="chapters-tab">Chapters</button>
           </div>
           <!-- All -->
           <div id="all-tab" class="tab-content">
@@ -680,7 +401,7 @@
                 <option value="oldest">Sort: Oldest</option>
                 <option value="title">Sort: Title A–Z</option>
               </select>
-              <button id="all-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+              <button id="all-clear-filters" class="btn btn-outline-primary btn-sm">Clear</button>
             </div>
             <p id="all-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="all-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -700,7 +421,7 @@
                 <option value="oldest">Sort: Oldest</option>
                 <option value="title">Sort: Title A–Z</option>
               </select>
-              <button id="journal-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+              <button id="journal-clear-filters" class="btn btn-outline-primary btn-sm">Clear</button>
             </div>
             <p id="journal-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="journal-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -720,7 +441,7 @@
                 <option value="oldest">Sort: Oldest</option>
                 <option value="title">Sort: Title A–Z</option>
               </select>
-              <button id="conf-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+              <button id="conf-clear-filters" class="btn btn-outline-primary btn-sm">Clear</button>
             </div>
             <p id="conf-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="conference-publications" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -740,7 +461,7 @@
                 <option value="oldest">Sort: Oldest</option>
                 <option value="title">Sort: Title A–Z</option>
               </select>
-              <button id="chapters-clear-filters" class="px-4 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Clear</button>
+              <button id="chapters-clear-filters" class="btn btn-outline-primary btn-sm">Clear</button>
             </div>
             <p id="chapters-results-count" class="text-xs text-gray-300 mb-4">Showing 0 results</p>
             <div id="book-chapters" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -763,11 +484,10 @@
     </section>
 
     <!-- Achievements & Contact Section -->
-<section id="achievements" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(11,15,8,0.85), rgba(11,15,8,0.85)), url('assets/img/achievements.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" data-aos="fade-up">
+<section id="achievements" class="py-20 bg-dark text-gray-100 relative" style="background-image: linear-gradient(rgba(15,23,42,0.78), rgba(15,23,42,0.78)), url('assets/img/achievements.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: luminosity;" data-aos="fade-up">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements &amp; Contact</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Achievements Card -->
+        <h2 class="text-3xl font-semibold mb-10 text-accent2">Achievements</h2>
+        <div class="grid grid-cols-1 gap-8">
           <div class="achievements-card" data-aos="fade-right">
             <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
               <i class="fa-solid fa-medal text-accent2"></i> Certifications &amp; Memberships
@@ -782,38 +502,71 @@
               <li class="flex items-start gap-2"><i class="fa-solid fa-certificate text-accent2"></i> Computer Systems Servicing NC II</li>
             </ul>
           </div>
-          <!-- Contact Card -->
-          <div id="contact" class="contact-card" data-aos="fade-left">
-            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-paper-plane text-accent2"></i> Contact Me
-            </h3>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="py-20 bg-primaryDark text-gray-100" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold mb-3 text-accent2">Contact</h2>
+        <p class="text-sm text-gray-300 mb-8 max-w-3xl">I’m open to collaborations in AI research, consulting, invited talks, and academic or industry partnerships. Send a quick message below and I’ll get back to you through the most appropriate email.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="contact-card" data-aos="fade-right">
+            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fa-solid fa-address-card text-accent2"></i> Direct Channels</h3>
             <ul class="space-y-3 text-sm">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-envelope text-accent2"></i>
-                <a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-facebook-f text-accent2"></i>
-                <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a>
-              </li>
-              <li class="flex items-center gap-3">
-                <i class="fa-brands fa-x-twitter text-accent2"></i>
-                <a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a>
-              </li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a></li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent2"></i><a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-facebook-f text-accent2"></i><a href="https://www.facebook.com/docfrancismontalbo" target="_blank" class="hover:text-accent">Facebook</a></li>
+              <li class="flex items-center gap-3"><i class="fa-brands fa-x-twitter text-accent2"></i><a href="https://x.com/francismontalbo" target="_blank" class="hover:text-accent">X (Twitter)</a></li>
             </ul>
           </div>
+          <form id="contact-form" class="contact-card space-y-4" data-aos="fade-left">
+            <h3 class="text-xl font-semibold flex items-center gap-2"><i class="fa-solid fa-paper-plane text-accent2"></i> Send a Professional Inquiry</h3>
+            <input id="contact-name" required type="text" placeholder="Your full name" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-email" required type="email" placeholder="Your email address" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <input id="contact-subject" required type="text" placeholder="Subject (e.g., Collaboration, Speaking, Consultancy)" class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
+            <textarea id="contact-message" required rows="5" placeholder="Write your message..." class="w-full px-4 py-3 rounded-md bg-primaryDark border border-primary focus:ring-2 focus:ring-accent focus:outline-none"></textarea>
+            <div>
+              <p class="text-xs text-gray-300 mb-2">Send this inquiry to:</p>
+              <label class="text-sm mr-4"><input type="radio" name="contact-destination" value="francismontalbo@ieee.org" checked class="mr-1">IEEE Email</label>
+              <label class="text-sm"><input type="radio" name="contact-destination" value="francisjesmar.montalbo@g.batstate-u.edu.ph" class="mr-1">University Email</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Compose Email Message</button>
+            <p id="contact-form-note" class="text-xs text-gray-400">This will open your email app with your message pre-filled.</p>
+          </form>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-primaryDark py-6 text-center text-gray-300">
+    <footer class="bg-gradient-to-r from-primaryDark via-tertiary to-primaryDark border-t border-accent/40 py-10 text-gray-200">
       <div class="max-w-6xl mx-auto px-4">
-        <p>&copy; <span id="year"></span> Francis Jesmar P. Montalbo. All rights reserved.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div>
+            <h3 class="text-lg font-semibold text-accent2 mb-2">Dr. Francis Jesmar P. Montalbo</h3>
+            <p class="text-sm text-gray-300">Research Scientist • Associate Professor • AI &amp; Deep Learning Specialist</p>
+            <p class="text-xs text-gray-400 mt-3">Bridging academia and industry through impactful AI research and innovation.</p>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold uppercase tracking-wide text-accent mb-3">Quick Links</h4>
+            <div class="flex flex-wrap gap-2">
+              <a href="#works" class="ui-btn ui-btn-sm">Works</a>
+              <a href="#news" class="ui-btn ui-btn-sm">News</a>
+              <a href="#achievements" class="ui-btn ui-btn-sm">Achievements</a>
+              <a href="#contact" class="ui-btn ui-btn-sm ui-btn-primary">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold uppercase tracking-wide text-accent mb-3">Professional Contact</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="mailto:francismontalbo@ieee.org" class="hover:text-accent">francismontalbo@ieee.org</a></li>
+              <li><a href="mailto:francisjesmar.montalbo@g.batstate-u.edu.ph" class="hover:text-accent">francisjesmar.montalbo@g.batstate-u.edu.ph</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-8 pt-4 border-t border-accent/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
+          <p>&copy; <span id="year"></span> Francis Jesmar P. Montalbo. All rights reserved.</p>
+          <p>Designed for academic collaboration, research excellence, and AI innovation.</p>
+        </div>
       </div>
     </footer>
 
@@ -823,11 +576,11 @@
       ⬆️
     </div>
 
-    <button id="chatbot-fab" class="fixed bottom-6 left-6 z-50 bg-accent2 text-dark px-4 py-3 rounded-full shadow-xl hover:bg-accent transition-colors font-semibold">
-      <i class="fa-solid fa-comments mr-2"></i> Chat with Francis AI
+    <button id="chatbot-fab" class="chatbot-drag-handle chatbot-agentic fixed bottom-6 left-6 z-50 text-white px-4 py-3 rounded-full shadow-xl font-semibold" aria-label="Open Francis AI assistant">
+      <i class="fa-solid fa-robot mr-2"></i> Francis AI Agent
     </button>
-    <div id="chatbot-widget" class="hidden fixed bottom-24 left-6 z-50 w-[360px] max-w-[92vw] rounded-2xl border border-primary bg-[#10180f] shadow-2xl overflow-hidden">
-      <div class="px-4 py-3 bg-primaryDark border-b border-primary flex items-center justify-between">
+    <div id="chatbot-widget" class="hidden fixed bottom-24 left-6 z-50 w-[360px] max-w-[92vw] rounded-2xl border border-primary bg-[#FFFFFF] shadow-2xl overflow-hidden">
+      <div class="chatbot-drag-handle px-4 py-3 bg-primaryDark border-b border-primary flex items-center justify-between">
         <p class="text-sm font-semibold text-accent2">Francis AI • Live</p>
         <button id="chatbot-close" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -840,109 +593,15 @@
         </div>
         <div class="flex gap-2">
           <input id="chatbot-input" type="text" placeholder="Ask anything..." class="flex-grow px-3 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
-          <button id="chatbot-send" class="px-3 py-2 rounded-md bg-accent2 text-dark font-medium hover:bg-accent transition-colors">Send</button>
+          <button id="chatbot-send" class="px-3 py-2 rounded-md bg-accent2 text-primaryDark font-medium hover:bg-accent transition-colors">Send</button>
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      // Initialize AOS animations
-      AOS.init({ once: true });
+    <script src="js/main.js"></script>
 
-      // Mobile navigation toggle
-      const navToggle = document.getElementById('nav-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      navToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-
-      // Back to top button
-      const backToTopBtn = document.getElementById('backToTop');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          backToTopBtn.classList.remove('hidden');
-        } else {
-          backToTopBtn.classList.add('hidden');
-        }
-      });
-      backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // Set current year in footer
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // Tab switching logic for works section
-      const tabs = document.querySelectorAll('.tab');
-      const tabContents = document.querySelectorAll('.tab-content');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove active state from all tabs and hide all contents
-          tabs.forEach(t => t.classList.remove('bg-tertiary'));
-          tabContents.forEach(c => c.classList.add('hidden'));
-          // Add active state to clicked tab and show corresponding content
-          tab.classList.add('bg-tertiary');
-          const target = tab.getAttribute('data-target');
-          document.getElementById(target).classList.remove('hidden');
-        });
-      });
-
-      // Fallback chatbot toggle wiring (kept minimal so widget can always open even if external script errors)
-      const chatbotFab = document.getElementById('chatbot-fab');
-      const chatbotWidget = document.getElementById('chatbot-widget');
-      const chatbotClose = document.getElementById('chatbot-close');
-      if (chatbotFab && chatbotWidget) {
-        const openWidget = () => {
-          chatbotWidget.classList.remove('hidden');
-          chatbotWidget.style.display = 'block';
-          chatbotFab.classList.add('hidden');
-        };
-        const closeWidget = () => {
-          chatbotWidget.classList.add('hidden');
-          chatbotWidget.style.display = '';
-          chatbotFab.classList.remove('hidden');
-        };
-        chatbotFab.addEventListener('click', openWidget);
-        chatbotFab.addEventListener('touchstart', openWidget, { passive: true });
-        if (chatbotClose) chatbotClose.addEventListener('click', closeWidget);
-      }
-
-      // Fallback message handler (guarantees basic replies if external chatbot script fails to bind)
-      const chatbotMessages = document.getElementById('chatbot-messages');
-      const chatbotInput = document.getElementById('chatbot-input');
-      const chatbotSend = document.getElementById('chatbot-send');
-      if (chatbotMessages && chatbotInput && chatbotSend && !chatbotSend.dataset.boundFallback) {
-        const addFallbackBubble = (text, role = 'assistant') => {
-          const row = document.createElement('div');
-          row.className = `flex items-start gap-2 ${role === 'user' ? 'justify-end' : ''}`;
-          row.innerHTML = role === 'user'
-            ? `<div class="w-8 h-8 rounded-full bg-accent2 text-dark flex items-center justify-center font-bold order-2">You</div><div class="max-w-[80%] rounded-2xl rounded-tr-sm px-4 py-3 bg-accent2 text-dark shadow">${text}</div>`
-            : `<div class="w-8 h-8 rounded-full bg-accent text-dark flex items-center justify-center font-bold">AI</div><div class="max-w-[80%] rounded-2xl rounded-tl-sm px-4 py-3 bg-tertiary text-gray-100 shadow">${text}</div>`;
-          chatbotMessages.appendChild(row);
-          chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-        };
-        const fallbackAnswer = (q) => {
-          const query = q.toLowerCase();
-          if (query.includes('contact') || query.includes('email')) return 'Contact Dr. Francis Jesmar P. Montalbo at francismontalbo@ieee.org or francisjesmar.montalbo@g.batstate-u.edu.ph.';
-          if (query.includes('scholar') || query.includes('scopus') || query.includes('h-index')) return 'Profiles: Google Scholar (user=PV8dJDkAAAAJ) and Scopus (authorId=57221928564).';
-          return 'Thanks for your question. The assistant is in fallback mode right now; please try again in a few seconds for full live responses.';
-        };
-        const sendFallbackMessage = () => {
-          const q = chatbotInput.value.trim();
-          if (!q) return;
-          addFallbackBubble(q, 'user');
-          chatbotInput.value = '';
-          addFallbackBubble(fallbackAnswer(q), 'assistant');
-        };
-        chatbotSend.addEventListener('click', sendFallbackMessage);
-        chatbotInput.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter') sendFallbackMessage();
-        });
-        chatbotSend.dataset.boundFallback = '1';
-      }
-    </script>
     <!-- Modular scripts -->
     <script src="js/data.js" defer></script>
     <script src="js/script.js" defer></script>
