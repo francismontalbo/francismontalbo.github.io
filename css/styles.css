@@ -890,4 +890,115 @@ a, .text-accent, .text-accent2, i.text-accent2, .iconify.text-accent2 {
   background: #EFF6FF !important;
   color: #0B0B0B !important;
 }
+
+/* =========================================================
+   CLEAN-SLATE COLOR SYSTEM (single source of truth)
+   Neutral-first, minimal blue accents
+   ========================================================= */
+:root {
+  --c-bg: #f7f8fa;
+  --c-surface: #ffffff;
+  --c-surface-alt: #f1f3f6;
+  --c-text: #111827;
+  --c-text-muted: #4b5563;
+  --c-border: #d1d5db;
+  --c-accent: #1d4ed8;
+  --c-accent-hover: #1e40af;
+  --c-on-accent: #ffffff;
+}
+
+html, body {
+  background: var(--c-bg) !important;
+  color: var(--c-text) !important;
+}
+
+/* Section foundations */
+section,
+footer,
+nav {
+  color: var(--c-text) !important;
+}
+
+/* Remove noisy blends and force readable surfaces */
+#about, #socials, #experience, #skills, #works, #news, #achievements, #contact {
+  background-image: none !important;
+  background-color: var(--c-bg) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5 {
+  color: var(--c-text) !important;
+}
+p, li, span, .text-gray-100, .text-gray-200, .text-gray-300, .text-gray-400 {
+  color: var(--c-text-muted) !important;
+}
+
+/* Cards/panels */
+.publication-card,
+#news-list .publication-card,
+.achievements-card,
+.contact-card,
+.experience-item,
+#socials .bg-primaryDark,
+#experience .p-6.bg-tertiary,
+#about .p-6.bg-tertiary,
+#chatbot-widget {
+  background: var(--c-surface) !important;
+  color: var(--c-text) !important;
+  border: 1px solid var(--c-border) !important;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06) !important;
+}
+
+.publication-card .card-title,
+#news-list .publication-card h3,
+.card-title {
+  color: var(--c-text) !important;
+}
+.publication-card .card-text,
+.publication-card p,
+#news-list .publication-card p,
+#news-list .publication-card .text-xs,
+#news-list .publication-card time {
+  color: var(--c-text-muted) !important;
+}
+
+/* Buttons/links: accent is only blue usage */
+a,
+.text-accent,
+.text-accent2,
+i.text-accent2,
+.iconify.text-accent2 {
+  color: var(--c-accent) !important;
+}
+
+.btn-primary,
+.ui-btn-primary,
+.tab,
+#chatbot-send,
+#chatbot-fab {
+  background: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+  color: var(--c-on-accent) !important;
+}
+.btn-primary:hover,
+.ui-btn-primary:hover,
+.tab:hover,
+#chatbot-send:hover,
+#chatbot-fab:hover {
+  background: var(--c-accent-hover) !important;
+  border-color: var(--c-accent-hover) !important;
+  color: var(--c-on-accent) !important;
+}
+
+.btn-outline-primary,
+.ui-btn-outline {
+  color: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+  background: transparent !important;
+}
+.btn-outline-primary:hover,
+.ui-btn-outline:hover {
+  background: #e8eefc !important;
+  color: var(--c-text) !important;
+}
     
