@@ -1,1 +1,57 @@
-/* Styling intentionally removed to restart design from scratch. */
+:root{
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface-2:#eef2f7;
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#dbe2ea;
+  --accent:#2563eb;
+  --accent-2:#1d4ed8;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+section{position:relative}
+section::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.82);pointer-events:none}
+section>*{position:relative;z-index:1}
+#hero::before{background:linear-gradient(180deg,rgba(245,247,251,.92),rgba(245,247,251,.82))}
+nav{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--border)!important;color:var(--text)!important}
+nav a,nav span,nav i{color:var(--text)!important}
+nav a:hover{color:var(--accent)!important}
+
+.bg-primaryDark,.bg-dark,.bg-tertiary{background:var(--surface)!important;color:var(--text)!important}
+.text-gray-100,.text-gray-200,.text-gray-300,.text-gray-400{color:var(--muted)!important}
+.text-accent2,.text-accent{color:var(--accent)!important}
+
+.achievements-card,.contact-card,.experience-item,.publication-card,.card,.bg-primaryDark.p-6,.p-6.bg-tertiary{
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  box-shadow:0 8px 24px rgba(2,6,23,.06)!important;
+  color:var(--text)!important;
+}
+.card-title,h1,h2,h3,h4,h5{color:var(--text)!important}
+.card-text,.publication-card p,.experience-item p,li,p{color:var(--muted)!important}
+
+.ui-btn,.btn,.tab,#chatbot-send,#chatbot-fab{
+  border-radius:10px!important;
+  font-weight:600!important;
+}
+.ui-btn-primary,.btn-primary,.tab,#chatbot-send,#chatbot-fab{
+  background:var(--accent)!important;border:1px solid var(--accent)!important;color:#fff!important;
+}
+.ui-btn-primary:hover,.btn-primary:hover,.tab:hover,#chatbot-send:hover,#chatbot-fab:hover{background:var(--accent-2)!important;border-color:var(--accent-2)!important}
+.ui-btn-outline,.btn-outline-primary{background:transparent!important;color:var(--accent)!important;border:1px solid var(--accent)!important}
+.ui-btn-outline:hover,.btn-outline-primary:hover{background:#e8efff!important;color:var(--text)!important}
+
+input,select,textarea{background:#fff!important;color:var(--text)!important;border:1px solid var(--border)!important;border-radius:10px!important}
+input::placeholder,textarea::placeholder{color:#64748b!important}
+
+#chatbot-widget{background:#fff!important;border:1px solid var(--border)!important}
+#chatbot-widget .bg-primaryDark{background:var(--surface-2)!important}
+#chatbot-messages .bg-tertiary{background:#f1f5f9!important;color:var(--text)!important}
+
+footer{background:#fff!important;border-top:1px solid var(--border)!important}
+footer p,footer li,footer a{color:var(--muted)!important}
+footer h3,footer h4{color:var(--text)!important}
+
+.news-media{border:1px solid var(--border)!important;background:#fff!important}
