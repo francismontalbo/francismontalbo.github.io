@@ -114,3 +114,14 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   transform: scale(1.08);
   opacity: .92;
 }
+
+/* Social brand pills: blue background with white icons */
+#socials span.rounded-full.bg-accent2 {
+  background: #2563eb !important;
+  border: 1px solid #93c5fd !important;
+}
+#socials span.rounded-full.bg-accent2 .iconify,
+#socials span.rounded-full.bg-accent2 .fa-brands,
+#socials span.rounded-full.bg-accent2 .fa-solid {
+  color: #ffffff !important;
+}
