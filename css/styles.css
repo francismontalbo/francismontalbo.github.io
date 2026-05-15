@@ -115,13 +115,23 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   opacity: .92;
 }
 
-/* Social brand pills: blue background with white icons */
-#socials span.rounded-full.bg-accent2 {
-  background: #2563eb !important;
-  border: 1px solid #93c5fd !important;
+/* Socials consistency: match Research Profiles icon/link style */
+#socials .bg-accent2 {
+  background: transparent !important;
+  border: 0 !important;
 }
-#socials span.rounded-full.bg-accent2 .iconify,
-#socials span.rounded-full.bg-accent2 .fa-brands,
-#socials span.rounded-full.bg-accent2 .fa-solid {
-  color: #ffffff !important;
+#socials span.rounded-full.bg-accent2,
+#socials i.iconify.text-accent2 {
+  color: #2563eb !important;
+}
+#socials li a {
+  color: #1f2937 !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .16s ease, text-decoration-color .16s ease;
+}
+#socials li a:hover {
+  color: #2563eb !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
