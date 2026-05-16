@@ -52,6 +52,17 @@ const pubmedIconClass = 'ai ai-pubmed';
 const openAccessIconClass = 'fa-solid fa-unlock-keyhole';
 const closedAccessIconClass = 'fa-solid fa-lock';
 
+const scimagoByJournal = {
+  'Applied Soft Computing': { id: '18136' },
+  'Neurocomputing': { id: '24807' },
+  'Multimedia Tools and Applications': { id: '25627' },
+  'Smart Agricultural Technology': { id: '21101111783' },
+  'Biomedical Signal Processing and Control': { id: '4700152237' },
+  'MethodsX': { id: '21100317906' },
+  'Machine Vision and Applications': { id: '12984' },
+  'Environmental Science and Pollution Research': { id: '23918' }
+};
+
 
 function escapeHtml(text) {
   return String(text || '')
@@ -176,8 +187,11 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
-      if (entry.scimagoUrl && entry.scimagoImg) {
-        html += `<div class="work-widget"><a href="${entry.scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${entry.scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`;
+      const scimagoMeta = scimagoByJournal[entry.journal] || null;
+      const scimagoUrl = entry.scimagoUrl || (scimagoMeta ? `https://www.scimagojr.com/journalsearch.php?q=${scimagoMeta.id}&tip=sid` : '');
+      const scimagoImg = entry.scimagoImg || (scimagoMeta ? `https://www.scimagojr.com/journal_img.php?id=${scimagoMeta.id}` : '');
+      if (scimagoUrl && scimagoImg) {
+        html += `<div class="work-widget"><a href="${scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`;
       }
       html += '</div>';
       const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
