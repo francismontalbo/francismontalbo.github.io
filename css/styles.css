@@ -184,3 +184,8 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 
 #works .work-badges .badge-access-open{background:#dcfce7 !important;color:#166534 !important;border-color:#86efac !important}
 #works .work-badges .badge-access-closed{background:#fee2e2 !important;color:#991b1b !important;border-color:#fca5a5 !important}
+
+#works .work-badges .badge-static{cursor:default;opacity:.92}
+#works .work-badges .badge-action{cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+#works .work-badges .badge-action:hover{filter:brightness(.96)}
+#works .work-badges .badge-static::after{content:""}
