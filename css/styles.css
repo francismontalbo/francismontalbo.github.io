@@ -204,7 +204,8 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-badges .badge-cite:hover{background:#0d9488 !important;transform:translateY(-1px);box-shadow:0 2px 8px rgba(13,148,136,.25)}
 #works .work-badges .badge-cite:focus-visible{outline:2px solid #14b8a6;outline-offset:2px}
 
-#works .publication-card .card-text{
+
+#works .publication-card .card-title{
   font-family:"Times New Roman", Times, serif !important;
   font-weight:700 !important;
   text-align:center !important;
