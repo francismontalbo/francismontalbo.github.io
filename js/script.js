@@ -60,7 +60,8 @@ const scimagoByJournal = {
   'Biomedical Signal Processing and Control': { id: '4700152237' },
   'MethodsX': { id: '21100317906' },
   'Machine Vision and Applications': { id: '12984' },
-  'Environmental Science and Pollution Research': { id: '23918' }
+  'Environmental Science and Pollution Research': { id: '23918' },
+  'Journal of Process Mechanical Engineering': { id: '20408' }
 };
 
 
@@ -190,9 +191,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       const scimagoMeta = scimagoByJournal[entry.journal] || null;
       const scimagoUrl = entry.scimagoUrl || (scimagoMeta ? `https://www.scimagojr.com/journalsearch.php?q=${scimagoMeta.id}&tip=sid` : '');
       const scimagoImg = entry.scimagoImg || (scimagoMeta ? `https://www.scimagojr.com/journal_img.php?id=${scimagoMeta.id}` : '');
-      if (scimagoUrl && scimagoImg) {
-        html += `<div class="work-widget"><a href="${scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`;
-      }
+      const scimagoWidgetHtml = (scimagoUrl && scimagoImg)
+        ? `<div class="work-widget"><a href="${scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`
+        : '';
       html += '</div>';
       const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
       const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');
@@ -218,6 +219,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       html += '</div>';
       html += '<div class="work-badges-section-label">Details</div>';
       html += '<div class="work-badges-group work-badges-group-static d-flex flex-wrap gap-2">';
+      if (scimagoWidgetHtml) html += scimagoWidgetHtml;
       // Publication type badge
       if (entry.workType) {
         html += `<span class="badge badge-default badge-static"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
