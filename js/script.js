@@ -386,6 +386,43 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   applyFilter();
 }
 
+
+function renderWorksAnalytics(journalData, conferenceData, chapterData) {
+  const chart = document.getElementById('works-analytics-chart');
+  const legend = document.getElementById('works-analytics-legend');
+  const summary = document.getElementById('works-analytics-summary');
+  if (!chart || !legend || !summary) return;
+
+  const bucket = new Map();
+  const add = (arr, key) => arr.forEach((x) => {
+    const y = Number(x.year || 0);
+    if (!y) return;
+    if (!bucket.has(y)) bucket.set(y, { journal: 0, conference: 0, chapter: 0, total: 0 });
+    bucket.get(y)[key] += 1;
+    bucket.get(y).total += 1;
+  });
+  add(journalData, 'journal');
+  add(conferenceData, 'conference');
+  add(chapterData, 'chapter');
+
+  const years = Array.from(bucket.keys()).sort((a,b)=>a-b);
+  const maxTotal = Math.max(1, ...years.map((y) => bucket.get(y).total));
+  const colors = { journal: '#2563eb', conference: '#0ea5e9', chapter: '#7c3aed' };
+
+  chart.innerHTML = years.map((y) => {
+    const d = bucket.get(y);
+    const j = (d.journal / maxTotal) * 100;
+    const c = (d.conference / maxTotal) * 100;
+    const b = (d.chapter / maxTotal) * 100;
+    return `<div class="works-year-row"><div class="works-year-label">${y}</div><div class="works-year-stack"><span class="seg seg-j" style="width:${j}%" title="${d.journal} journal"></span><span class="seg seg-c" style="width:${c}%" title="${d.conference} conference"></span><span class="seg seg-b" style="width:${b}%" title="${d.chapter} chapter"></span></div><div class="works-year-total">${d.total}</div></div>`;
+  }).join('');
+
+  const total = years.reduce((n,y)=>n+bucket.get(y).total,0);
+  const topYear = years.slice().sort((a,b)=>bucket.get(b).total-bucket.get(a).total)[0];
+  summary.textContent = `${total} total works across ${years.length} years • Peak year: ${topYear} (${bucket.get(topYear).total})`;
+  legend.innerHTML = `<span class="dot j"></span> Journals (${journalData.length}) <span class="dot c"></span> Conferences (${conferenceData.length}) <span class="dot b"></span> Chapters (${chapterData.length})`;
+}
+
 // Initialise publications once DOM is ready
 
 function closeOtherCitationMenus(activeMenu) {
@@ -405,6 +442,7 @@ function setupCitationMenuDismissal(scopeElement) {
 
 function initializePublications() {
   const { journalData, conferenceData, chapterData } = getSiteData();
+  renderWorksAnalytics(journalData, conferenceData, chapterData);
   const typedJournals = journalData.map((item) => ({ ...item, workType: item.workType || 'Journal Article' }));
   const typedConferences = conferenceData.map((item) => ({ ...item, workType: item.workType || 'Conference Paper' }));
   const typedChapters = chapterData.map((item) => ({ ...item, journal: item.book, workType: item.workType || 'Book Chapter' }));
