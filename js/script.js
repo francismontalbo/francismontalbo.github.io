@@ -287,8 +287,11 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     }
     const shownCount = Math.min(items.length, visibleCount);
     const hiddenCount = items.length - shownCount;
-    loadMoreBtn.style.display = hiddenCount > 0 ? 'inline-flex' : 'none';
+    loadMoreBtn.style.display = hiddenCount > 0 ? 'flex' : 'none';
     if (hiddenCount > 0) {
+      loadMoreBtn.classList.remove('load-more-animate');
+      void loadMoreBtn.offsetWidth;
+      loadMoreBtn.classList.add('load-more-animate');
       const nextBatch = Math.min(INITIAL_VISIBLE, hiddenCount);
       loadMoreBtn.innerHTML = `<i class="fa-solid fa-angles-down me-2" aria-hidden="true"></i>Load ${nextBatch} more works <span class="load-more-meta">(${shownCount} of ${items.length} shown)</span>`;
       loadMoreBtn.setAttribute('aria-label', `Load ${nextBatch} more works. ${hiddenCount} remaining.`);
