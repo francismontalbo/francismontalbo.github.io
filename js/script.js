@@ -149,6 +149,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       html += '</div>';
       // Build badges
       html += '<div class="work-badges d-flex flex-wrap gap-2 mt-3 pt-1 mt-auto">';
+      // Publication type badge
+      if (entry.workType) {
+        html += `<span class="badge badge-default"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
+      }
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
         html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
@@ -247,15 +251,19 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 // Initialise publications once DOM is ready
 function initializePublications() {
   const { journalData, conferenceData, chapterData } = getSiteData();
+  const typedJournals = journalData.map((item) => ({ ...item, workType: item.workType || 'Journal Article' }));
+  const typedConferences = conferenceData.map((item) => ({ ...item, workType: item.workType || 'Conference Paper' }));
+  const typedChapters = chapterData.map((item) => ({ ...item, journal: item.book, workType: item.workType || 'Book Chapter' }));
+
   const allData = [
-    ...journalData.map((item) => ({ ...item })),
-    ...conferenceData.map((item) => ({ ...item })),
-    ...chapterData.map((item) => ({ ...item, journal: item.book }))
+    ...typedJournals,
+    ...typedConferences,
+    ...typedChapters
   ];
   initSection(allData, 'all-publications', 'all-search', 'all-year-filter', 'all-count', 'all-publisher-filter', 'all-sort', 'all-clear-filters', 'all-results-count');
-  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
-  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
-  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
+  initSection(typedJournals, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
+  initSection(typedConferences, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
+  initSection(typedChapters, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
 
   // AOS animations
   if (typeof AOS !== 'undefined') {
