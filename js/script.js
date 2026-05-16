@@ -187,13 +187,14 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
         citation += `, doi: <a href="${entry.doiUrl}" target="_blank">${entry.doi}</a>`;
       }
       citation += '.';
-      html += `<p class="card-text">${citation}</p>`;
       const scimagoMeta = scimagoByJournal[entry.journal] || null;
       const scimagoUrl = entry.scimagoUrl || (scimagoMeta ? `https://www.scimagojr.com/journalsearch.php?q=${scimagoMeta.id}&tip=sid` : '');
       const scimagoImg = entry.scimagoImg || (scimagoMeta ? `https://www.scimagojr.com/journal_img.php?id=${scimagoMeta.id}` : '');
-      const scimagoWidgetHtml = (scimagoUrl && scimagoImg)
-        ? `<div class="work-widget"><a href="${scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`
-        : '';
+      if (scimagoUrl && scimagoImg) {
+        html += `<div class="work-citation-layout"><div class="work-widget"><a href="${scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div><p class="card-text">${citation}</p></div>`;
+      } else {
+        html += `<p class="card-text">${citation}</p>`;
+      }
       html += '</div>';
       const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
       const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');
@@ -219,7 +220,6 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       html += '</div>';
       html += '<div class="work-badges-section-label">Details</div>';
       html += '<div class="work-badges-group work-badges-group-static d-flex flex-wrap gap-2">';
-      if (scimagoWidgetHtml) html += scimagoWidgetHtml;
       // Publication type badge
       if (entry.workType) {
         html += `<span class="badge badge-default badge-static"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
