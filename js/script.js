@@ -238,6 +238,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
       col.innerHTML = html;
       container.appendChild(col);
+      setupCitationMenuDismissal(col);
       col.querySelectorAll('.cite-copy').forEach((btn) => {
         btn.addEventListener('click', async () => {
           const citationText = btn.getAttribute('data-citation') || '';
@@ -303,10 +304,40 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       applyFilter();
     });
   }
+
+
+  if (!container.dataset.citeOutsideBound) {
+    document.addEventListener('click', (event) => {
+      const openMenus = document.querySelectorAll('#works .cite-menu[open]');
+      openMenus.forEach((menu) => {
+        if (!menu.contains(event.target)) {
+          menu.removeAttribute('open');
+        }
+      });
+    });
+    container.dataset.citeOutsideBound = 'true';
+  }
+
   applyFilter();
 }
 
 // Initialise publications once DOM is ready
+
+function closeOtherCitationMenus(activeMenu) {
+  document.querySelectorAll('#works .cite-menu[open]').forEach((menu) => {
+    if (menu !== activeMenu) menu.removeAttribute('open');
+  });
+}
+
+function setupCitationMenuDismissal(scopeElement) {
+  const menus = scopeElement.querySelectorAll('.cite-menu');
+  menus.forEach((menu) => {
+    menu.addEventListener('toggle', () => {
+      if (menu.open) closeOtherCitationMenus(menu);
+    });
+  });
+}
+
 function initializePublications() {
   const { journalData, conferenceData, chapterData } = getSiteData();
   const typedJournals = journalData.map((item) => ({ ...item, workType: item.workType || 'Journal Article' }));

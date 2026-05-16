@@ -200,3 +200,6 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-badges-group-actions{padding-bottom:.35rem;border-bottom:1px dashed #cbd5e1}
 #works .work-badges-group-static{padding-top:.2rem}
 #works .work-badges-divider{display:none}
+
+#works .work-badges .badge-cite:hover{background:#0d9488 !important;transform:translateY(-1px);box-shadow:0 2px 8px rgba(13,148,136,.25)}
+#works .work-badges .badge-cite:focus-visible{outline:2px solid #14b8a6;outline-offset:2px}
