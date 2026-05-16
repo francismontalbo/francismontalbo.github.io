@@ -8,6 +8,9 @@ const journalData = [
     title:
       "MHADFormer: A Cost-Efficient Multiscale Hybrid Transformer Mixer Model for Automating Alzheimer’s Disease Diagnosis from MRI Scans",
     journal: "Applied Soft Computing",
+    access: "closed",
+    scimagoUrl: "https://www.scimagojr.com/journalsearch.php?q=18136&tip=sid&exact=no",
+    scimagoImg: "https://www.scimagojr.com/journal_img.php?id=18136",
     volume: "114624",
     date: "2026",
     doi: "10.1016/j.asoc.2026.114624",
@@ -21,6 +24,7 @@ const journalData = [
     title:
       "TUMbRAIN: A transformer with a unified mobile residual attention inverted network for diagnosing brain tumors from magnetic resonance scans",
     journal: "Neurocomputing",
+    access: "closed",
     volume: "611",
     date: "January 1, 2025",
     doi: "10.1016/j.neucom.2024.128583",
@@ -34,6 +38,7 @@ const journalData = [
     title:
       "DySARNet: a lightweight self‑attention deep learning model for diagnosing dysarthria from speech recordings",
     journal: "Multimedia Tools and Applications",
+    access: "closed",
     date: "August 31, 2024",
     doi: "10.1007/s11042-024-20053-w",
     doiUrl: "https://doi.org/10.1007/s11042-024-20053-w",
@@ -45,6 +50,7 @@ const journalData = [
     title:
       "A Multi‑Vision Monitoring Framework for Simultaneous Real‑Time Unmanned Aerial Monitoring of Farmer Activity and Crop Health",
     journal: "Smart Agricultural Technology",
+    access: "open",
     date: "May 16, 2024",
     doi: "10.1016/j.atech.2024.100466",
     doiUrl: "https://doi.org/10.1016/j.atech.2024.100466",
@@ -78,6 +84,7 @@ const journalData = [
     title:
       "Automating Mosquito Taxonomy by Compressing and Enhancing a Feature Fused EfficientNet with Knowledge Distillation and a Novel Residual Skip Block",
     journal: "MethodsX",
+    access: "open",
     date: "February 14, 2023",
     doi: "10.1016/j.mex.2023.102072",
     doiUrl: "https://doi.org/10.1016/j.mex.2023.102072",
@@ -90,6 +97,9 @@ const journalData = [
     title:
       "Machine‑based Mosquito Taxonomy with a Lightweight Network‑fused Efficient Dual ConvNet with Residual Learning and Knowledge Distillation",
     journal: "Applied Soft Computing",
+    access: "closed",
+    scimagoUrl: "https://www.scimagojr.com/journalsearch.php?q=18136&tip=sid&exact=no",
+    scimagoImg: "https://www.scimagojr.com/journal_img.php?id=18136",
     date: "December 16, 2022",
     doi: "10.1016/j.asoc.2022.109913",
     doiUrl: "https://doi.org/10.1016/j.asoc.2022.109913",
@@ -101,6 +111,7 @@ const journalData = [
     title:
       "Fusing Compressed Deep ConvNets with a Self‑Normalizing Residual Block and Alpha Dropout for a Cost‑Efficient Classification and Diagnosis of Gastrointestinal Tract Diseases",
     journal: "MethodsX",
+    access: "open",
     date: "November 2022",
     doi: "10.1016/j.mex.2022.101925",
     doiUrl: "https://doi.org/10.1016/j.mex.2022.101925",
@@ -159,6 +170,7 @@ const journalData = [
     title:
       "Truncating Fined‑Tuned Vision‑Based Models to Lightweight Deployable Diagnostic Tools for SARS‑CoV‑2 Infected Chest X‑Rays and CT‑Scans",
     journal: "Multimedia Tools and Applications",
+    access: "closed",
     date: "2022",
     doi: "10.1007/s11042-022-12484-0",
     doiUrl: "https://doi.org/10.1007/s11042-022-12484-0",
@@ -183,6 +195,7 @@ const journalData = [
     title:
       "Truncating a Densely Connected Convolutional Neural Network with Partial Layer Freezing and Feature Fusion for Diagnosing COVID‑19 from Chest X‑Rays",
     journal: "MethodsX",
+    access: "open",
     volume: "8, 101408",
     date: "2021",
     doi: "10.1016/j.mex.2021.101408",
@@ -251,7 +264,8 @@ const conferenceData = [
     pages: "pp. 35–40",
     doi: "10.1109/ICSPC63060.2024.10862188",
     doiUrl: "https://doi.org/10.1109/ICSPC63060.2024.10862188",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2024,
@@ -264,7 +278,8 @@ const conferenceData = [
     pages: "pp. 273–278",
     doi: "10.1109/ICICoS62600.2024.10636920",
     doiUrl: "https://doi.org/10.1109/ICICoS62600.2024.10636920",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2023,
@@ -275,7 +290,8 @@ const conferenceData = [
       "Proceedings of the 2023 8th International Conference on Biomedical Imaging, Signal Processing",
     doi: "10.1145/3634875.3634878",
     doiUrl: "https://doi.org/10.1145/3634875.3634878",
-    publisher: "ACM"
+    publisher: "ACM",
+    access: "closed"
   },
   {
     year: 2021,
@@ -287,7 +303,8 @@ const conferenceData = [
     pages: "",
     doi: "",
     doiUrl: "",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2020,
@@ -298,7 +315,8 @@ const conferenceData = [
     pages: "pp. 3–7",
     doi: "10.1109/ISET49818.2020.00011",
     doiUrl: "https://doi.org/10.1109/ISET49818.2020.00011",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2020,
@@ -311,7 +329,8 @@ const conferenceData = [
     pages: "pp. 213–218",
     doi: "10.1109/CSPA48992.2020.9068683",
     doiUrl: "https://doi.org/10.1109/CSPA48992.2020.9068683",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2019,
@@ -324,7 +343,8 @@ const conferenceData = [
     pages: "pp. 305–310",
     doi: "10.1109/ICCIKE47802.2019.9004359",
     doiUrl: "https://doi.org/10.1109/ICCIKE47802.2019.9004359",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2019,
@@ -336,7 +356,8 @@ const conferenceData = [
     pages: "pp. 396–401",
     doi: "10.1109/ICSEngT.2019.8906433",
     doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906433",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   },
   {
     year: 2019,
@@ -348,7 +369,8 @@ const conferenceData = [
     pages: "pp. 431–436",
     doi: "10.1109/ICSEngT.2019.8906310",
     doiUrl: "https://doi.org/10.1109/ICSEngT.2019.8906310",
-    publisher: "IEEE"
+    publisher: "IEEE",
+    access: "closed"
   }
 ];
 
