@@ -212,9 +212,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       // Access badge (open or closed; default closed)
       if (entry.access === 'open') {
-        html += `<span class="badge badge-default"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
+        html += `<span class="badge badge-access-open"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
       } else if (entry.access === 'closed') {
-        html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Subscription</span>`;
+        html += `<span class="badge badge-access-closed"><i class="${closedAccessIconClass} me-1"></i>Subscription</span>`;
       } else {
         html += `<span class="badge badge-default"><i class="fa-solid fa-circle-question me-1"></i>Access: Check publisher</span>`;
       }

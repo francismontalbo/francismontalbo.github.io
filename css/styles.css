@@ -181,3 +181,6 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-badges .cite-menu[open] .cite-options{display:flex}
 #works .work-badges .cite-options{display:none;position:absolute;z-index:20;top:110%;left:0;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.35rem;gap:.35rem;box-shadow:0 8px 20px rgba(0,0,0,.12)}
 #works .work-badges .cite-options .badge{white-space:nowrap}
+
+#works .work-badges .badge-access-open{background:#dcfce7 !important;color:#166534 !important;border-color:#86efac !important}
+#works .work-badges .badge-access-closed{background:#fee2e2 !important;color:#991b1b !important;border-color:#fca5a5 !important}
