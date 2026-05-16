@@ -405,22 +405,47 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
   add(conferenceData, 'conference');
   add(chapterData, 'chapter');
 
-  const years = Array.from(bucket.keys()).sort((a,b)=>a-b);
-  const maxTotal = Math.max(1, ...years.map((y) => bucket.get(y).total));
-  const colors = { journal: '#2563eb', conference: '#0ea5e9', chapter: '#7c3aed' };
+  const years = Array.from(bucket.keys()).sort((a, b) => a - b);
+  const totals = years.map((y) => bucket.get(y).total);
+  const maxTotal = Math.max(1, ...totals);
+  const w = 860; const h = 280; const px = 48; const py = 24;
+  const cw = w - px * 2; const ch = h - py * 2;
+  const stepX = years.length > 1 ? cw / (years.length - 1) : cw;
 
-  chart.innerHTML = years.map((y) => {
+  const points = years.map((y, i) => {
+    const x = px + i * stepX;
+    const yPos = py + (1 - (bucket.get(y).total / maxTotal)) * ch;
+    return `${x},${yPos}`;
+  }).join(' ');
+  const areaPoints = `${px},${py + ch} ${points} ${px + cw},${py + ch}`;
+
+  const yearBars = years.map((y, i) => {
     const d = bucket.get(y);
-    const j = (d.journal / maxTotal) * 100;
-    const c = (d.conference / maxTotal) * 100;
-    const b = (d.chapter / maxTotal) * 100;
-    return `<div class="works-year-row"><div class="works-year-label">${y}</div><div class="works-year-stack"><span class="seg seg-j" style="width:${j}%" title="${d.journal} journal"></span><span class="seg seg-c" style="width:${c}%" title="${d.conference} conference"></span><span class="seg seg-b" style="width:${b}%" title="${d.chapter} chapter"></span></div><div class="works-year-total">${d.total}</div></div>`;
+    const x = px + i * stepX - 14;
+    const baseY = py + ch;
+    const unit = ch / maxTotal;
+    const hJ = d.journal * unit;
+    const hC = d.conference * unit;
+    const hB = d.chapter * unit;
+    const yJ = baseY - hJ;
+    const yC = yJ - hC;
+    const yB = yC - hB;
+    return `<g class="bar" transform="translate(${x},0)"><rect x="0" y="${yJ}" width="28" height="${hJ}" class="seg-j"/><rect x="0" y="${yC}" width="28" height="${hC}" class="seg-c"/><rect x="0" y="${yB}" width="28" height="${hB}" class="seg-b"/><title>${y}: ${d.total} total (J:${d.journal}, C:${d.conference}, B:${d.chapter})</title></g>`;
   }).join('');
 
-  const total = years.reduce((n,y)=>n+bucket.get(y).total,0);
-  const topYear = years.slice().sort((a,b)=>bucket.get(b).total-bucket.get(a).total)[0];
+  const xLabels = years.map((y, i) => `<text x="${px + i * stepX}" y="${h - 6}" text-anchor="middle" class="axis-label">${y}</text>`).join('');
+  const yGuides = Array.from({ length: Math.min(maxTotal, 5) + 1 }, (_, i) => {
+    const val = Math.round((maxTotal / Math.min(maxTotal, 5)) * i);
+    const y = py + ch - (val / maxTotal) * ch;
+    return `<line x1="${px}" y1="${y}" x2="${px + cw}" y2="${y}" class="grid-line"/><text x="${px - 8}" y="${y + 4}" text-anchor="end" class="axis-label">${val}</text>`;
+  }).join('');
+
+  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg>`;
+
+  const total = totals.reduce((a, b) => a + b, 0);
+  const topYear = years.slice().sort((a, b) => bucket.get(b).total - bucket.get(a).total)[0];
   summary.textContent = `${total} total works across ${years.length} years • Peak year: ${topYear} (${bucket.get(topYear).total})`;
-  legend.innerHTML = `<span class="dot j"></span> Journals (${journalData.length}) <span class="dot c"></span> Conferences (${conferenceData.length}) <span class="dot b"></span> Chapters (${chapterData.length})`;
+  legend.innerHTML = `<span class="dot j"></span> Journals (${journalData.length}) <span class="dot c"></span> Conferences (${conferenceData.length}) <span class="dot b"></span> Chapters (${chapterData.length}) <span class="dot t"></span> Trend line (total/year)`;
 }
 
 // Initialise publications once DOM is ready

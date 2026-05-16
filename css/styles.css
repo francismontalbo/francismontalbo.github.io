@@ -392,3 +392,12 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .works-analytics-legend{font-size:.78rem;color:#334155;display:flex;gap:.75rem;flex-wrap:wrap}
 #works .works-analytics-legend .dot{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:.35rem;vertical-align:middle}
 #works .works-analytics-legend .dot.j{background:#2563eb}#works .works-analytics-legend .dot.c{background:#0ea5e9}#works .works-analytics-legend .dot.b{background:#7c3aed}
+
+#works .works-ds-plot{width:100%;height:auto;background:radial-gradient(circle at 20% 0%,rgba(59,130,246,.08),transparent 40%),#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:.25rem}
+#works .works-ds-plot .grid-line{stroke:#cbd5e1;stroke-dasharray:3 4;stroke-width:1}
+#works .works-ds-plot .axis-label{fill:#64748b;font-size:11px;font-weight:600}
+#works .works-ds-plot .trend-area{fill:url(#areaGrad)}
+#works .works-ds-plot .trend-line{fill:none;stroke:#1d4ed8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 4px rgba(29,78,216,.25))}
+#works .works-ds-plot .bar rect{rx:4}
+#works .works-ds-plot .bar .seg-j{fill:#2563eb}#works .works-ds-plot .bar .seg-c{fill:#06b6d4}#works .works-ds-plot .bar .seg-b{fill:#7c3aed}
+#works .works-analytics-legend .dot.t{background:#1d4ed8}
