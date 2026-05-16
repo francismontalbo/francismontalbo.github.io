@@ -49,8 +49,38 @@ const conferenceIconMap = {
 
 // Academicons icons for PubMed and access type
 const pubmedIconClass = 'ai ai-pubmed';
-const openAccessIconClass = 'ai ai-open-access';
-const closedAccessIconClass = 'ai ai-closed-access';
+const openAccessIconClass = 'fa-solid fa-unlock-keyhole';
+const closedAccessIconClass = 'fa-solid fa-lock';
+
+
+function escapeHtml(text) {
+  return String(text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildCitation(entry, format = 'IEEE') {
+  const authors = entry.authors || 'Unknown Author';
+  const title = entry.title || 'Untitled';
+  const year = entry.year || 'n.d.';
+  const source = entry.journal || entry.venue || entry.book || '';
+  const pages = entry.pages ? `, ${entry.pages}` : '';
+  const volume = entry.volume ? `, vol. ${entry.volume}` : '';
+  const doi = entry.doi ? ` doi:${entry.doi}` : '';
+  const link = entry.doiUrl || entry.publicationUrl || entry.pubmedUrl || '';
+
+  if (format === 'APA') {
+    return `${authors} (${year}). ${title}. ${source}${doi ? `. ${doi}` : ''}${link ? ` ${link}` : ''}`.trim();
+  }
+  if (format === 'MLA') {
+    return `${authors}. "${title}." ${source}, ${year}${volume}${pages}${doi ? `, ${doi}` : ''}${link ? `, ${link}` : ''}.`;
+  }
+  // IEEE default
+  return `${authors}, "${title}," ${source}${volume}${pages}, ${year}${doi ? `, ${doi}` : ''}${link ? `, ${link}` : ''}.`;
+}
 
 /**
  * Populate a publications section with data, search box and year filter.
@@ -123,12 +153,13 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     lastFiltered = items;
     container.innerHTML = '';
     items.slice(0, visibleCount).forEach((entry) => {
-      const col = document.createElement('div');
-      col.className = 'col-md-6';
+      const col = document.createElement('article');
+      col.className = 'work-item';
       let html = '<div class="publication-card card h-100">';
-      html += '<div class="card-body">';
+      html += '<div class="card-body d-flex flex-column">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
       html += `<p class="text-sm text-accent2 mb-2"><i class="fa-regular fa-calendar me-1"></i>${entry.year}</p>`;
+      html += '<div class="work-meta mb-2">';
       // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
@@ -145,8 +176,22 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
+      html += '</div>';
+      const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
+      const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');
       // Build badges
-      html += '<div class="d-flex flex-wrap gap-2 mt-3 pt-1">';
+      html += '<div class="work-badges d-flex flex-wrap gap-2 mt-3 pt-1 mt-auto">';
+      if (publicationUrl) {
+        html += `<a href="${publicationUrl}" target="_blank" rel="noopener noreferrer" class="badge badge-read-publication" aria-label="Open publication"><i class="fa-solid fa-book-open-reader me-1"></i>${publicationLabel}</a>`;
+      }
+      const ieeeCite = escapeHtml(buildCitation(entry, 'IEEE'));
+      const apaCite = escapeHtml(buildCitation(entry, 'APA'));
+      const mlaCite = escapeHtml(buildCitation(entry, 'MLA'));
+      html += `<details class="cite-menu"><summary class="badge badge-cite"><i class="fa-solid fa-quote-left me-1"></i>Cite</summary><div class="cite-options"><button type="button" class="badge badge-default cite-copy" data-citation="${ieeeCite}">Copy IEEE</button><button type="button" class="badge badge-default cite-copy" data-citation="${apaCite}">Copy APA</button><button type="button" class="badge badge-default cite-copy" data-citation="${mlaCite}">Copy MLA</button></div></details>`;
+      // Publication type badge
+      if (entry.workType) {
+        html += `<span class="badge badge-default"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
+      }
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
         html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
@@ -167,9 +212,11 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       // Access badge (open or closed; default closed)
       if (entry.access === 'open') {
-        html += `<span class="badge badge-default"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
+        html += `<span class="badge badge-access-open"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
+      } else if (entry.access === 'closed') {
+        html += `<span class="badge badge-access-closed"><i class="${closedAccessIconClass} me-1"></i>Subscription</span>`;
       } else {
-        html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Closed Access</span>`;
+        html += `<span class="badge badge-default"><i class="fa-solid fa-circle-question me-1"></i>Access: Check publisher</span>`;
       }
       // Conference venue icons (if venue contains keywords)
       if (entry.venue) {
@@ -182,8 +229,22 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       html += '</div>';
       html += '</div></div>';
+
       col.innerHTML = html;
       container.appendChild(col);
+      col.querySelectorAll('.cite-copy').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const citationText = btn.getAttribute('data-citation') || '';
+          try {
+            await navigator.clipboard.writeText(citationText);
+            const old = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = old; }, 1200);
+          } catch (e) {
+            btn.textContent = 'Copy failed';
+          }
+        });
+      });
     });
 
     let loadMoreBtn = container.parentElement.querySelector(`[data-load-more-for="${containerId}"]`);
@@ -242,15 +303,19 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 // Initialise publications once DOM is ready
 function initializePublications() {
   const { journalData, conferenceData, chapterData } = getSiteData();
+  const typedJournals = journalData.map((item) => ({ ...item, workType: item.workType || 'Journal Article' }));
+  const typedConferences = conferenceData.map((item) => ({ ...item, workType: item.workType || 'Conference Paper' }));
+  const typedChapters = chapterData.map((item) => ({ ...item, journal: item.book, workType: item.workType || 'Book Chapter' }));
+
   const allData = [
-    ...journalData.map((item) => ({ ...item })),
-    ...conferenceData.map((item) => ({ ...item })),
-    ...chapterData.map((item) => ({ ...item, journal: item.book }))
+    ...typedJournals,
+    ...typedConferences,
+    ...typedChapters
   ];
   initSection(allData, 'all-publications', 'all-search', 'all-year-filter', 'all-count', 'all-publisher-filter', 'all-sort', 'all-clear-filters', 'all-results-count');
-  initSection(journalData, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
-  initSection(conferenceData, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
-  initSection(chapterData, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
+  initSection(typedJournals, 'journal-publications', 'journal-search', 'journal-year-filter', 'journal-count', 'journal-publisher-filter', 'journal-sort', 'journal-clear-filters', 'journal-results-count');
+  initSection(typedConferences, 'conference-publications', 'conf-search', 'conf-year-filter', 'conf-count', 'conf-publisher-filter', 'conf-sort', 'conf-clear-filters', 'conf-results-count');
+  initSection(typedChapters, 'book-chapters', 'chapters-search', 'chapters-year-filter', 'chapters-count', 'chapters-publisher-filter', 'chapters-sort', 'chapters-clear-filters', 'chapters-results-count');
 
   // AOS animations
   if (typeof AOS !== 'undefined') {
