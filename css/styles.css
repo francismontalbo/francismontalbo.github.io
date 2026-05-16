@@ -148,3 +148,14 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   border: 1px solid #1d4ed8 !important;
   font-weight: 600 !important;
 }
+
+
+/* Works cards: even heights + better space usage */
+#works .tab-content .grid{align-items:stretch}
+#works .work-item{display:flex}
+#works .publication-card{height:100%;display:flex;width:100%}
+#works .publication-card .card-body{height:100%;display:flex;flex-direction:column;gap:.35rem}
+#works .publication-card .card-title{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:4.1em}
+#works .publication-card .card-text{font-size:.93rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+#works .work-badges{border-top:1px solid var(--border);padding-top:.65rem}
+#works .work-badges .badge{display:inline-flex;align-items:center;padding:.45rem .6rem;font-weight:600}
