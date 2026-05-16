@@ -194,3 +194,9 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-badges-group{align-items:center}
 #works .work-badges-divider{height:1px;background:linear-gradient(90deg,rgba(148,163,184,.15),rgba(148,163,184,.75),rgba(148,163,184,.15));margin:.1rem 0 .05rem}
 #works .work-badges-group-actions .badge-action{box-shadow:0 1px 3px rgba(2,6,23,.12)}
+
+#works .work-badges{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.6rem}
+#works .work-badges-section-label{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;margin:.05rem 0}
+#works .work-badges-group-actions{padding-bottom:.35rem;border-bottom:1px dashed #cbd5e1}
+#works .work-badges-group-static{padding-top:.2rem}
+#works .work-badges-divider{display:none}

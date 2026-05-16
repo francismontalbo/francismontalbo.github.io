@@ -181,6 +181,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');
       // Build badges (grouped by interaction type)
       html += '<div class="work-badges mt-3 pt-1 mt-auto">';
+      html += '<div class="work-badges-section-label">Actions</div>';
       html += '<div class="work-badges-group work-badges-group-actions d-flex flex-wrap gap-2">';
       if (publicationUrl) {
         html += `<a href="${publicationUrl}" target="_blank" rel="noopener noreferrer" class="badge badge-read-publication badge-action" aria-label="Open publication"><i class="fa-solid fa-book-open-reader me-1"></i>${publicationLabel}</a>`;
@@ -189,16 +190,20 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       const apaCite = escapeHtml(buildCitation(entry, 'APA'));
       const mlaCite = escapeHtml(buildCitation(entry, 'MLA'));
       html += `<details class="cite-menu"><summary class="badge badge-cite"><i class="fa-solid fa-quote-left me-1"></i>Cite</summary><div class="cite-options"><button type="button" class="badge badge-default cite-copy badge-action" data-citation="${ieeeCite}">Copy IEEE</button><button type="button" class="badge badge-default cite-copy badge-action" data-citation="${apaCite}">Copy APA</button><button type="button" class="badge badge-default cite-copy badge-action" data-citation="${mlaCite}">Copy MLA</button></div></details>`;
+      // Code badge with Font Awesome GitHub icon and custom colour
+      if (entry.codeUrl) {
+        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code badge-action" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
+      }
+      // PubMed badge if provided
+      if (entry.pubmedUrl) {
+        html += `<a href="${entry.pubmedUrl}" target="_blank" class="badge badge-default badge-action"><i class="${pubmedIconClass} me-1"></i>PubMed</a>`;
+      }
       html += '</div>';
-      html += '<div class="work-badges-divider" role="separator" aria-label="Publication metadata"></div>';
+      html += '<div class="work-badges-section-label">Details</div>';
       html += '<div class="work-badges-group work-badges-group-static d-flex flex-wrap gap-2">';
       // Publication type badge
       if (entry.workType) {
         html += `<span class="badge badge-default badge-static"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
-      }
-      // Code badge with Font Awesome GitHub icon and custom colour
-      if (entry.codeUrl) {
-        html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code badge-action" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
       }
       // Publisher badge with Academicon icon if available
       if (entry.publisher) {
@@ -209,10 +214,6 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
         } else {
           html += `<span class="badge ${pubClass} badge-static">${entry.publisher}</span>`;
         }
-      }
-      // PubMed badge if provided
-      if (entry.pubmedUrl) {
-        html += `<a href="${entry.pubmedUrl}" target="_blank" class="badge badge-default badge-action"><i class="${pubmedIconClass} me-1"></i>PubMed</a>`;
       }
       // Access badge (open or closed; default closed)
       if (entry.access === 'open') {
