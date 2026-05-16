@@ -189,3 +189,8 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-badges .badge-action{cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 #works .work-badges .badge-action:hover{filter:brightness(.96)}
 #works .work-badges .badge-static::after{content:""}
+
+#works .work-badges{display:flex;flex-direction:column;gap:.55rem}
+#works .work-badges-group{align-items:center}
+#works .work-badges-divider{height:1px;background:linear-gradient(90deg,rgba(148,163,184,.15),rgba(148,163,184,.75),rgba(148,163,184,.15));margin:.1rem 0 .05rem}
+#works .work-badges-group-actions .badge-action{box-shadow:0 1px 3px rgba(2,6,23,.12)}
