@@ -347,3 +347,8 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works [data-load-more-for].load-more-animate{animation:loadMoreFloatIn .45s ease both, loadMoreGlow 2.8s ease-in-out infinite}
 @keyframes loadMoreGlow{0%,100%{box-shadow:0 4px 10px rgba(37,99,235,.12)}50%{box-shadow:0 8px 18px rgba(37,99,235,.25)}}
 @media (prefers-reduced-motion: reduce){#works [data-load-more-for].load-more-animate{animation:none !important}}
+
+#works [data-load-more-for][hidden]{display:none !important}
+#works [data-load-more-for]:not([hidden]){animation:loadMoreIdle 3.2s ease-in-out infinite}
+@keyframes loadMoreIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+@media (prefers-reduced-motion: reduce){#works [data-load-more-for]:not([hidden]){animation:none !important}}

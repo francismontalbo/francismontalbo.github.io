@@ -287,6 +287,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     }
     const shownCount = Math.min(items.length, visibleCount);
     const hiddenCount = items.length - shownCount;
+    loadMoreBtn.hidden = hiddenCount <= 0;
     loadMoreBtn.style.display = hiddenCount > 0 ? 'flex' : 'none';
     if (hiddenCount > 0) {
       loadMoreBtn.classList.remove('load-more-animate');
@@ -297,8 +298,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       loadMoreBtn.setAttribute('aria-label', `Load ${nextBatch} more works. ${hiddenCount} remaining.`);
       loadMoreBtn.title = `${hiddenCount} works remaining`;
     } else {
-      loadMoreBtn.textContent = '';
+      loadMoreBtn.classList.remove('load-more-animate');
+      loadMoreBtn.innerHTML = '';
       loadMoreBtn.removeAttribute('title');
+      loadMoreBtn.setAttribute('aria-label', '');
     }
   }
 
