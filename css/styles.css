@@ -352,3 +352,31 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works [data-load-more-for]:not([hidden]){animation:loadMoreIdle 3.2s ease-in-out infinite}
 @keyframes loadMoreIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
 @media (prefers-reduced-motion: reduce){#works [data-load-more-for]:not([hidden]){animation:none !important}}
+
+
+/* Works category tabs: clearer arrangement + active state */
+#works .works-tabs{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:.7rem !important;
+  max-width:760px;
+  margin:0 auto 1.2rem auto !important;
+}
+#works .works-tabs .tab{
+  width:100%;
+  justify-content:center;
+  text-align:center;
+  border:1px solid #bfdbfe !important;
+  background:#eaf1ff !important;
+  color:#1e3a8a !important;
+}
+#works .works-tabs .tab.is-active{
+  background:#1d4ed8 !important;
+  border-color:#1e40af !important;
+  color:#ffffff !important;
+  box-shadow:0 6px 16px rgba(29,78,216,.28);
+}
+#works .works-tabs .tab:not(.is-active):hover{background:#dbeafe !important}
+@media (max-width: 767.98px){
+  #works .works-tabs{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}
+}
