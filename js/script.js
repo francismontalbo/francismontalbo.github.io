@@ -147,8 +147,13 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
       html += '</div>';
+      const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
+      const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');
       // Build badges
       html += '<div class="work-badges d-flex flex-wrap gap-2 mt-3 pt-1 mt-auto">';
+      if (publicationUrl) {
+        html += `<a href="${publicationUrl}" target="_blank" rel="noopener noreferrer" class="badge badge-read-publication" aria-label="Open publication"><i class="fa-solid fa-book-open-reader me-1"></i>${publicationLabel}</a>`;
+      }
       // Publication type badge
       if (entry.workType) {
         html += `<span class="badge badge-default"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
