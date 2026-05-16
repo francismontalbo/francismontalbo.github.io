@@ -161,6 +161,26 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     publisherSelect.appendChild(opt);
   });
 
+  function repopulateYearOptions(items) {
+    if (!yearSelect) return;
+    const current = yearSelect.value || 'all';
+    yearSelect.innerHTML = '';
+    const allOpt = document.createElement('option');
+    allOpt.value = 'all';
+    allOpt.textContent = 'All Years';
+    yearSelect.appendChild(allOpt);
+
+    const dynamicYears = Array.from(new Set(items.map((d) => d.year).filter(Boolean))).sort((a, b) => b - a);
+    dynamicYears.forEach((y) => {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      yearSelect.appendChild(opt);
+    });
+
+    yearSelect.value = dynamicYears.some((y) => String(y) === current) ? current : 'all';
+  }
+
   // Show total count if applicable
   if (countSpan) {
     countSpan.textContent = normalizedData.length;
@@ -315,10 +335,14 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
   // Search and filter logic
   function applyFilter() {
     const term = (searchInput?.value || '').trim().toLowerCase();
-    const year = yearSelect?.value || 'all';
     const publisher = publisherSelect?.value || 'all';
     const sortMode = sortSelect?.value || 'latest';
-    const filtered = normalizedData.filter((entry) => {
+
+    const scopedByPublisher = normalizedData.filter((entry) => (publisher === 'all' || (entry.publisher || '') === publisher));
+    repopulateYearOptions(scopedByPublisher);
+
+    const year = yearSelect?.value || 'all';
+    const filtered = scopedByPublisher.filter((entry) => {
       const haystack = `${entry.title || ''} ${entry.authors || ''} ${entry.journal || ''} ${entry.venue || ''} ${entry.publisher || ''}`.toLowerCase();
       const matchesText = haystack.includes(term);
       const matchesYear = year === 'all' || String(entry.year) === year;
