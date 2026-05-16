@@ -159,3 +159,16 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .publication-card .card-text{font-size:.93rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
 #works .work-badges{border-top:1px solid var(--border);padding-top:.65rem}
 #works .work-badges .badge{display:inline-flex;align-items:center;padding:.45rem .6rem;font-weight:600}
+
+/* Works badge contrast/readability fixes */
+#works .work-badges .badge{
+  color:#0f172a !important;
+  background:#e2e8f0 !important;
+  border:1px solid #cbd5e1 !important;
+}
+#works .work-badges .badge i{color:inherit !important}
+#works .work-badges .badge-elsevier{background:#fff3e6 !important;color:#9a3412 !important;border-color:#fdba74 !important}
+#works .work-badges .badge-springer{background:#e0f2fe !important;color:#0c4a6e !important;border-color:#7dd3fc !important}
+#works .work-badges .badge-ieee{background:#dbeafe !important;color:#1e3a8a !important;border-color:#93c5fd !important}
+#works .work-badges .badge-acm{background:#ede9fe !important;color:#4c1d95 !important;border-color:#c4b5fd !important}
+#works .work-badges .badge-code{background:#dcfce7 !important;color:#14532d !important;border-color:#86efac !important}
