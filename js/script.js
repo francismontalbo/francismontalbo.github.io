@@ -51,6 +51,12 @@ const conferenceIconMap = {
 const pubmedIconClass = 'ai ai-pubmed';
 const openAccessIconClass = 'fa-solid fa-unlock-keyhole';
 const closedAccessIconClass = 'fa-solid fa-lock';
+const workTypeIconMap = {
+  'Journal Article': 'fa-regular fa-newspaper',
+  'Conference Paper': 'fa-solid fa-users-rectangle',
+  'Book Chapter': 'fa-solid fa-book-open'
+};
+
 
 const scimagoByJournal = {
   'Applied Soft Computing': { id: '18136' },
@@ -222,7 +228,8 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       html += '<div class="work-badges-group work-badges-group-static d-flex flex-wrap gap-2">';
       // Publication type badge
       if (entry.workType) {
-        html += `<span class="badge badge-default badge-static"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
+        const workTypeIcon = workTypeIconMap[entry.workType] || 'fa-regular fa-file-lines';
+        html += `<span class="badge badge-default badge-static"><i class="${workTypeIcon} me-1"></i>${entry.workType}</span>`;
       }
       // Publisher badge with Academicon icon if available
       if (entry.publisher) {
