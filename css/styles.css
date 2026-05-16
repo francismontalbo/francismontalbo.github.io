@@ -175,3 +175,9 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 
 #works .work-badges .badge-read-publication{background:#2563eb !important;color:#fff !important;border-color:#1d4ed8 !important;font-weight:700;box-shadow:0 2px 8px rgba(37,99,235,.28)}
 #works .work-badges .badge-read-publication:hover{background:#1d4ed8 !important;color:#fff !important;transform:translateY(-1px)}
+
+#works .work-badges .cite-menu{position:relative;display:inline-block}
+#works .work-badges .badge-cite{list-style:none;cursor:pointer;background:#0f766e !important;color:#fff !important;border-color:#0d9488 !important}
+#works .work-badges .cite-menu[open] .cite-options{display:flex}
+#works .work-badges .cite-options{display:none;position:absolute;z-index:20;top:110%;left:0;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.35rem;gap:.35rem;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+#works .work-badges .cite-options .badge{white-space:nowrap}

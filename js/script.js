@@ -52,6 +52,36 @@ const pubmedIconClass = 'ai ai-pubmed';
 const openAccessIconClass = 'fa-solid fa-unlock-keyhole';
 const closedAccessIconClass = 'fa-solid fa-lock';
 
+
+function escapeHtml(text) {
+  return String(text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildCitation(entry, format = 'IEEE') {
+  const authors = entry.authors || 'Unknown Author';
+  const title = entry.title || 'Untitled';
+  const year = entry.year || 'n.d.';
+  const source = entry.journal || entry.venue || entry.book || '';
+  const pages = entry.pages ? `, ${entry.pages}` : '';
+  const volume = entry.volume ? `, vol. ${entry.volume}` : '';
+  const doi = entry.doi ? ` doi:${entry.doi}` : '';
+  const link = entry.doiUrl || entry.publicationUrl || entry.pubmedUrl || '';
+
+  if (format === 'APA') {
+    return `${authors} (${year}). ${title}. ${source}${doi ? `. ${doi}` : ''}${link ? ` ${link}` : ''}`.trim();
+  }
+  if (format === 'MLA') {
+    return `${authors}. "${title}." ${source}, ${year}${volume}${pages}${doi ? `, ${doi}` : ''}${link ? `, ${link}` : ''}.`;
+  }
+  // IEEE default
+  return `${authors}, "${title}," ${source}${volume}${pages}, ${year}${doi ? `, ${doi}` : ''}${link ? `, ${link}` : ''}.`;
+}
+
 /**
  * Populate a publications section with data, search box and year filter.
  * @param {Array} data - array of publication objects
@@ -154,6 +184,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       if (publicationUrl) {
         html += `<a href="${publicationUrl}" target="_blank" rel="noopener noreferrer" class="badge badge-read-publication" aria-label="Open publication"><i class="fa-solid fa-book-open-reader me-1"></i>${publicationLabel}</a>`;
       }
+      const ieeeCite = escapeHtml(buildCitation(entry, 'IEEE'));
+      const apaCite = escapeHtml(buildCitation(entry, 'APA'));
+      const mlaCite = escapeHtml(buildCitation(entry, 'MLA'));
+      html += `<details class="cite-menu"><summary class="badge badge-cite"><i class="fa-solid fa-quote-left me-1"></i>Cite</summary><div class="cite-options"><button type="button" class="badge badge-default cite-copy" data-citation="${ieeeCite}">Copy IEEE</button><button type="button" class="badge badge-default cite-copy" data-citation="${apaCite}">Copy APA</button><button type="button" class="badge badge-default cite-copy" data-citation="${mlaCite}">Copy MLA</button></div></details>`;
       // Publication type badge
       if (entry.workType) {
         html += `<span class="badge badge-default"><i class="fa-regular fa-file-lines me-1"></i>${entry.workType}</span>`;
@@ -198,6 +232,19 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
 
       col.innerHTML = html;
       container.appendChild(col);
+      col.querySelectorAll('.cite-copy').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const citationText = btn.getAttribute('data-citation') || '';
+          try {
+            await navigator.clipboard.writeText(citationText);
+            const old = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = old; }, 1200);
+          } catch (e) {
+            btn.textContent = 'Copy failed';
+          }
+        });
+      });
     });
 
     let loadMoreBtn = container.parentElement.querySelector(`[data-load-more-for="${containerId}"]`);
