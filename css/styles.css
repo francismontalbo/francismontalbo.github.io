@@ -238,20 +238,28 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 }
 
 @media (max-width: 767.98px){
-  #works .publication-card .card-title{font-size:1.04rem !important;line-height:1.3}
+  #works .publication-card .card-title{
+    font-size:1.04rem !important;
+    line-height:1.3;
+    display:block !important;
+    -webkit-line-clamp:unset !important;
+    -webkit-box-orient:unset !important;
+    overflow:visible !important;
+    min-height:0 !important;
+  }
   #works .publication-card .card-text{font-size:.9rem;line-height:1.5}
-  #works .work-citation-layout{grid-template-columns:72px minmax(0,1fr);gap:.55rem}
+  #works .work-citation-layout{grid-template-columns:72px minmax(0,1fr);gap:.55rem;align-items:start}
   #works .work-widget a{width:72px;height:72px}
   #works .work-badges-section-label{font-size:.64rem}
 }
 
 @media (max-width: 479.98px){
-  #works .work-citation-layout{grid-template-columns:1fr}
-  #works .work-widget{order:-1;margin-bottom:.35rem}
+  #works .work-citation-layout{grid-template-columns:64px minmax(0,1fr);gap:.5rem;align-items:start}
+  #works .work-widget{order:0;margin:0}
   #works .work-widget a{width:64px;height:64px}
   #works .work-badges{padding:.45rem}
   #works .work-badges-group-actions,
   #works .work-badges-group-static{gap:.35rem !important}
   #works .work-badges .badge{font-size:.72rem;padding:.38rem .5rem}
-  #works .work-badges .cite-options{position:static;box-shadow:none;border-style:dashed;margin-top:.35rem}
+  #works .work-badges .cite-options{position:absolute;box-shadow:0 8px 20px rgba(0,0,0,.12);border-style:solid;margin-top:0}
 }
