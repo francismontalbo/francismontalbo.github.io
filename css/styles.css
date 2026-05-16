@@ -263,3 +263,41 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   #works .work-badges .badge{font-size:.72rem;padding:.38rem .5rem}
   #works .work-badges .cite-options{position:absolute;box-shadow:0 8px 20px rgba(0,0,0,.12);border-style:solid;margin-top:0}
 }
+
+
+/* Make Cite action more noticeable */
+#works .work-badges .badge-cite{
+  position:relative;
+  animation:citePulse 2.2s ease-in-out infinite;
+}
+#works .work-badges .badge-cite::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:12px;
+  border:2px solid rgba(13,148,136,.35);
+  animation:citeRing 2.2s ease-out infinite;
+  pointer-events:none;
+}
+#works .work-badges .cite-menu:hover .badge-cite,
+#works .work-badges .cite-menu[open] .badge-cite{
+  animation:none;
+}
+#works .work-badges .cite-menu:hover .badge-cite::after,
+#works .work-badges .cite-menu[open] .badge-cite::after{
+  animation:none;
+  opacity:.5;
+}
+@keyframes citePulse{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-1px) scale(1.03)}
+}
+@keyframes citeRing{
+  0%{transform:scale(.92);opacity:.55}
+  70%{transform:scale(1.1);opacity:0}
+  100%{transform:scale(1.1);opacity:0}
+}
+@media (prefers-reduced-motion: reduce){
+  #works .work-badges .badge-cite,
+  #works .work-badges .badge-cite::after{animation:none !important}
+}
