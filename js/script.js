@@ -285,9 +285,18 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       });
       container.parentElement.appendChild(loadMoreBtn);
     }
-    const hiddenCount = items.length - Math.min(items.length, visibleCount);
+    const shownCount = Math.min(items.length, visibleCount);
+    const hiddenCount = items.length - shownCount;
     loadMoreBtn.style.display = hiddenCount > 0 ? 'inline-flex' : 'none';
-    loadMoreBtn.textContent = hiddenCount > 0 ? `Load more works (${hiddenCount} remaining)` : '';
+    if (hiddenCount > 0) {
+      const nextBatch = Math.min(INITIAL_VISIBLE, hiddenCount);
+      loadMoreBtn.innerHTML = `<i class="fa-solid fa-angles-down me-2" aria-hidden="true"></i>Load ${nextBatch} more works <span class="load-more-meta">(${shownCount} of ${items.length} shown)</span>`;
+      loadMoreBtn.setAttribute('aria-label', `Load ${nextBatch} more works. ${hiddenCount} remaining.`);
+      loadMoreBtn.title = `${hiddenCount} works remaining`;
+    } else {
+      loadMoreBtn.textContent = '';
+      loadMoreBtn.removeAttribute('title');
+    }
   }
 
   // Search and filter logic

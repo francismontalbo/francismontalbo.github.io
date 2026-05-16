@@ -301,3 +301,20 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   #works .work-badges .badge-cite,
   #works .work-badges .badge-cite::after{animation:none !important}
 }
+
+
+/* Load more button clarity */
+#works [data-load-more-for]{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  border-radius:999px !important;
+}
+#works [data-load-more-for] .load-more-meta{
+  font-weight:500;
+  opacity:.88;
+}
+@media (max-width: 575.98px){
+  #works [data-load-more-for]{font-size:.82rem !important;padding:.52rem .82rem !important}
+  #works [data-load-more-for] .load-more-meta{display:none}
+}
