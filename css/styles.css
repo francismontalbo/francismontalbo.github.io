@@ -219,3 +219,39 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-citation-layout{display:grid;grid-template-columns:84px minmax(0,1fr);gap:.65rem;align-items:start}
 #works .work-citation-layout .card-text{text-align:left !important;margin:0}
 
+
+
+/* Works responsive polish across devices/browsers */
+#works .publication-card .card-title,
+#works .publication-card .card-text{
+  overflow-wrap:anywhere;
+}
+#works .work-badges{gap:.5rem}
+#works .work-badges-group{row-gap:.4rem}
+#works .work-badges .badge{max-width:100%}
+#works .work-badges .cite-options{max-width:min(92vw,420px);flex-wrap:wrap}
+#works .work-citation-layout{grid-template-columns:84px minmax(0,1fr)}
+
+@media (max-width: 991.98px){
+  #works .publication-card{padding:1rem !important}
+  #works .work-badges{padding:.5rem}
+}
+
+@media (max-width: 767.98px){
+  #works .publication-card .card-title{font-size:1.04rem !important;line-height:1.3}
+  #works .publication-card .card-text{font-size:.9rem;line-height:1.5}
+  #works .work-citation-layout{grid-template-columns:72px minmax(0,1fr);gap:.55rem}
+  #works .work-widget a{width:72px;height:72px}
+  #works .work-badges-section-label{font-size:.64rem}
+}
+
+@media (max-width: 479.98px){
+  #works .work-citation-layout{grid-template-columns:1fr}
+  #works .work-widget{order:-1;margin-bottom:.35rem}
+  #works .work-widget a{width:64px;height:64px}
+  #works .work-badges{padding:.45rem}
+  #works .work-badges-group-actions,
+  #works .work-badges-group-static{gap:.35rem !important}
+  #works .work-badges .badge{font-size:.72rem;padding:.38rem .5rem}
+  #works .work-badges .cite-options{position:static;box-shadow:none;border-style:dashed;margin-top:.35rem}
+}
