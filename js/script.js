@@ -49,8 +49,8 @@ const conferenceIconMap = {
 
 // Academicons icons for PubMed and access type
 const pubmedIconClass = 'ai ai-pubmed';
-const openAccessIconClass = 'ai ai-open-access';
-const closedAccessIconClass = 'ai ai-closed-access';
+const openAccessIconClass = 'fa-solid fa-unlock-keyhole';
+const closedAccessIconClass = 'fa-solid fa-lock';
 
 /**
  * Populate a publications section with data, search box and year filter.
@@ -123,12 +123,13 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
     lastFiltered = items;
     container.innerHTML = '';
     items.slice(0, visibleCount).forEach((entry) => {
-      const col = document.createElement('div');
-      col.className = 'col-md-6';
+      const col = document.createElement('article');
+      col.className = 'work-item';
       let html = '<div class="publication-card card h-100">';
-      html += '<div class="card-body">';
+      html += '<div class="card-body d-flex flex-column">';
       html += `<h5 class="card-title">${entry.title}</h5>`;
       html += `<p class="text-sm text-accent2 mb-2"><i class="fa-regular fa-calendar me-1"></i>${entry.year}</p>`;
+      html += '<div class="work-meta mb-2">';
       // Build citation text
       let citation = `${entry.authors}, “${entry.title},” `;
       if (entry.journal) {
@@ -145,8 +146,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
+      html += '</div>';
       // Build badges
-      html += '<div class="d-flex flex-wrap gap-2 mt-3 pt-1">';
+      html += '<div class="work-badges d-flex flex-wrap gap-2 mt-3 pt-1 mt-auto">';
       // Code badge with Font Awesome GitHub icon and custom colour
       if (entry.codeUrl) {
         html += `<a href="${entry.codeUrl}" target="_blank" class="badge badge-code" aria-label="Code repository"><i class="fab fa-github fa-github me-1" style="color:#0B0F08;"></i>Code</a>`;
@@ -168,8 +170,10 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       // Access badge (open or closed; default closed)
       if (entry.access === 'open') {
         html += `<span class="badge badge-default"><i class="${openAccessIconClass} me-1"></i>Open Access</span>`;
+      } else if (entry.access === 'closed') {
+        html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Subscription</span>`;
       } else {
-        html += `<span class="badge badge-default"><i class="${closedAccessIconClass} me-1"></i>Closed Access</span>`;
+        html += `<span class="badge badge-default"><i class="fa-solid fa-circle-question me-1"></i>Access: Check publisher</span>`;
       }
       // Conference venue icons (if venue contains keywords)
       if (entry.venue) {
@@ -182,6 +186,7 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       html += '</div>';
       html += '</div></div>';
+
       col.innerHTML = html;
       container.appendChild(col);
     });
