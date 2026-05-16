@@ -176,6 +176,9 @@ function initSection(data, containerId, searchId, filterId, countId, publisherFi
       }
       citation += '.';
       html += `<p class="card-text">${citation}</p>`;
+      if (entry.scimagoUrl && entry.scimagoImg) {
+        html += `<div class="work-widget"><a href="${entry.scimagoUrl}" target="_blank" rel="noopener noreferrer" title="SCImago Journal & Country Rank"><img src="${entry.scimagoImg}" alt="SCImago Journal & Country Rank" loading="lazy" /></a></div>`;
+      }
       html += '</div>';
       const publicationUrl = entry.publicationUrl || entry.doiUrl || entry.pubmedUrl || '';
       const publicationLabel = entry.doiUrl ? 'Read Publication' : (entry.pubmedUrl ? 'View on PubMed' : 'View Publication');

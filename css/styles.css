@@ -210,3 +210,7 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   font-weight:700 !important;
   text-align:center !important;
 }
+
+#works .work-widget{display:flex;justify-content:center;margin:.45rem 0 .15rem}
+#works .work-widget img{max-width:172px;height:auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(2,6,23,.08)}
+#works .work-widget a:hover img{transform:translateY(-1px);transition:transform .15s ease}
