@@ -216,7 +216,6 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .work-widget img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
 #works .work-widget a:hover{transform:translateY(-1px);transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 4px 10px rgba(2,6,23,.12)}
 
-#works .work-citation-layout{display:grid;grid-template-columns:84px minmax(0,1fr);gap:.65rem;align-items:stretch;min-height:84px}
-#works .work-citation-layout .card-text{text-align:justify !important;text-justify:inter-word !important;margin:0;min-height:84px;display:flex;align-items:center}
+#works .work-citation-layout{display:grid;grid-template-columns:84px minmax(0,1fr);gap:.65rem;align-items:start}
+#works .work-citation-layout .card-text{text-align:left !important;margin:0}
 
-#works .publication-card .card-text{text-align:justify !important;text-justify:inter-word !important}
