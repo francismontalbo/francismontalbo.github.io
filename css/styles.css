@@ -318,3 +318,27 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   #works [data-load-more-for]{font-size:.82rem !important;padding:.52rem .82rem !important}
   #works [data-load-more-for] .load-more-meta{display:none}
 }
+
+
+/* Centered load-more with clean animation */
+#works [data-load-more-for]{
+  margin-left:auto;
+  margin-right:auto;
+  justify-content:center;
+  transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  animation:loadMoreFloatIn .45s ease both;
+}
+#works [data-load-more-for]:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(37,99,235,.22);
+}
+#works [data-load-more-for]:active{
+  transform:translateY(0);
+}
+@keyframes loadMoreFloatIn{
+  from{opacity:0;transform:translateY(6px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media (prefers-reduced-motion: reduce){
+  #works [data-load-more-for]{animation:none;transition:none}
+}
