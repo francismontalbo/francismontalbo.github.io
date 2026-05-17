@@ -29,11 +29,13 @@
       const tabContents = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          // Remove active state from all tabs and hide all contents
-          tabs.forEach(t => t.classList.remove('bg-tertiary'));
+          tabs.forEach(t => {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
           tabContents.forEach(c => c.classList.add('hidden'));
-          // Add active state to clicked tab and show corresponding content
-          tab.classList.add('bg-tertiary');
+          tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
           const target = tab.getAttribute('data-target');
           document.getElementById(target).classList.remove('hidden');
         });
