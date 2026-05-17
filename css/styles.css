@@ -515,7 +515,7 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 #works .works-analytics-tooltip .callout-item{min-width:0}
 #works .works-analytics-tooltip .k{word-break:break-word;line-height:1.15}
 #works .works-analytics-tooltip .v{line-height:1.2}
-#works .works-analytics-note{opacity:.8;line-height:1.35;padding:.15rem .1rem 0 .1rem}
+#works .works-analytics-note{opacity:.72;line-height:1.3;padding:0 .15rem;text-align:right;font-style:italic}
 @media (max-width: 479.98px){
   #works .works-analytics-tooltip{grid-template-columns:repeat(2,minmax(0,1fr));gap:.35rem}
   #works .works-analytics-tooltip .callout-item{padding:.12rem .28rem}
