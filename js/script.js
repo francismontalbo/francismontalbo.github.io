@@ -445,7 +445,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
   const total = totals.reduce((a, b) => a + b, 0);
   const topYear = years.slice().sort((a, b) => bucket.get(b).total - bucket.get(a).total)[0];
   summary.innerHTML = `<span class="metric-panel"><span class="metric-value">${total}</span><span class="metric-label">total works</span></span><span class="metric-panel"><span class="metric-value">${years.length}</span><span class="metric-label">active years</span></span><span class="metric-panel"><span class="metric-label">Peak year</span><span class="metric-value">${topYear}</span><span class="metric-sub">(${bucket.get(topYear).total})</span></span>`;
-  legend.innerHTML = `<span class="dot j"></span> Journals (${journalData.length}) <span class="dot c"></span> Conferences (${conferenceData.length}) <span class="dot b"></span> Chapters (${chapterData.length}) <span class="dot t"></span> Trend line (total/year)`;
+  legend.innerHTML = `<span><span class="dot j"></span>Journals (${journalData.length})</span><span><span class="dot c"></span>Conferences (${conferenceData.length})</span><span><span class="dot b"></span>Chapters (${chapterData.length})</span><span><span class="dot t"></span>Trend line (total/year)</span>`;
 }
 
 // Initialise publications once DOM is ready
