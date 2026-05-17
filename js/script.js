@@ -430,7 +430,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     const yJ = baseY - hJ;
     const yC = yJ - hC;
     const yB = yC - hB;
-    return `<g class="bar" transform="translate(${x},0)"><rect x="0" y="${yJ}" width="28" height="${hJ}" class="seg-j"/><rect x="0" y="${yC}" width="28" height="${hC}" class="seg-c"/><rect x="0" y="${yB}" width="28" height="${hB}" class="seg-b"/><title>${y}: ${d.total} total (J:${d.journal}, C:${d.conference}, B:${d.chapter})</title></g>`;
+    return `<g class="bar" data-year="${y}" transform="translate(${x},0)"><rect x="0" y="${yJ}" width="28" height="${hJ}" class="seg-j"/><rect x="0" y="${yC}" width="28" height="${hC}" class="seg-c"/><rect x="0" y="${yB}" width="28" height="${hB}" class="seg-b"/><title>${y}: ${d.total} total works (J:${d.journal}, C:${d.conference}, B:${d.chapter})</title></g>`;
   }).join('');
 
   const xLabels = years.map((y, i) => `<text x="${px + i * stepX}" y="${h - 6}" text-anchor="middle" class="axis-label">${y}</text>`).join('');
@@ -440,12 +440,26 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     return `<line x1="${px}" y1="${y}" x2="${px + cw}" y2="${y}" class="grid-line"/><text x="${px - 8}" y="${y + 4}" text-anchor="end" class="axis-label">${val}</text>`;
   }).join('');
 
-  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg>`;
+  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg><div id="works-analytics-tooltip" class="works-analytics-tooltip" aria-live="polite">Tap/hover a year bar for details.</div>`;
 
   const total = totals.reduce((a, b) => a + b, 0);
   const topYear = years.slice().sort((a, b) => bucket.get(b).total - bucket.get(a).total)[0];
-  summary.innerHTML = `<span class="metric-panel"><span class="metric-value">${total}</span><span class="metric-label">total works</span></span><span class="metric-panel"><span class="metric-value">${years.length}</span><span class="metric-label">active years</span></span><span class="metric-panel"><span class="metric-label">Peak year</span><span class="metric-value">${topYear}</span><span class="metric-sub">(${bucket.get(topYear).total})</span></span>`;
-  legend.innerHTML = `<span><span class="dot j"></span>Journals (${journalData.length})</span><span><span class="dot c"></span>Conferences (${conferenceData.length})</span><span><span class="dot b"></span>Chapters (${chapterData.length})</span><span><span class="dot t"></span>Trend line (total/year)</span>`;
+  summary.innerHTML = `<span class="metric-panel"><span class="metric-value">${total}</span><span class="metric-label">total works</span></span><span class="metric-panel"><span class="metric-value">${years.length}</span><span class="metric-label">active years</span></span><span class="metric-panel"><span class="metric-label">Peak year</span><span class="metric-value">${topYear}</span><span class="metric-sub">(${bucket.get(topYear).total} works)</span></span>`;
+  legend.innerHTML = `<span><span class="dot j"></span>Journals (${journalData.length})</span><span><span class="dot c"></span>Conferences (${conferenceData.length})</span><span><span class="dot b"></span>Chapters (${chapterData.length})</span><span><span class="line t"></span>Trend line (total/year)</span>`;
+
+  const tooltip = document.getElementById('works-analytics-tooltip');
+  chart.querySelectorAll('.bar').forEach((bar) => {
+    const year = bar.getAttribute('data-year');
+    const d = bucket.get(Number(year));
+    const message = `${year}: ${d.total} total works • Journals ${d.journal}, Conferences ${d.conference}, Chapters ${d.chapter}`;
+    const activate = () => { if (tooltip) tooltip.textContent = message; bar.classList.add('active'); };
+    const deactivate = () => { bar.classList.remove('active'); };
+    bar.addEventListener('mouseenter', activate);
+    bar.addEventListener('focus', activate);
+    bar.addEventListener('click', activate);
+    bar.addEventListener('mouseleave', deactivate);
+    bar.addEventListener('blur', deactivate);
+  });
 }
 
 // Initialise publications once DOM is ready
