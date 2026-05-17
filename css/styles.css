@@ -449,3 +449,17 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   #works .work-citation-layout{gap:.58rem}
   #works .work-badges{padding:.52rem!important}
 }
+
+
+/* Analytics header + legend cleanup */
+#works #works-analytics-summary{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:flex-end}
+#works #works-analytics-summary .metric-chip{display:inline-flex;align-items:center;gap:.25rem;background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a;border-radius:999px;padding:.22rem .55rem;font-size:.72rem;line-height:1.2}
+#works #works-analytics-summary .metric-chip strong{font-weight:800}
+#works .works-analytics-legend{display:flex;flex-wrap:wrap;gap:.55rem .9rem;align-items:center;padding:.4rem .55rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px}
+#works .works-analytics-legend > span{display:inline-flex;align-items:center;white-space:nowrap}
+#works .works-analytics-legend .dot{margin-right:.32rem}
+@media (max-width: 767.98px){
+  #works #works-analytics-summary{justify-content:flex-start}
+  #works #works-analytics-summary .metric-chip{font-size:.69rem}
+  #works .works-analytics-legend{gap:.45rem .7rem;padding:.35rem .45rem}
+}
