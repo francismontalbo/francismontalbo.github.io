@@ -440,7 +440,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     return `<line x1="${px}" y1="${y}" x2="${px + cw}" y2="${y}" class="grid-line"/><text x="${px - 8}" y="${y + 4}" text-anchor="end" class="axis-label">${val}</text>`;
   }).join('');
 
-  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg><div id="works-analytics-tooltip" class="works-analytics-tooltip" aria-live="polite">Tap/hover a year bar for details.</div>`;
+  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg><div id="works-analytics-tooltip" class="works-analytics-tooltip" aria-live="polite"><span class="callout-item"><span class="k">Year</span><span id="wa-year" class="v">—</span></span><span class="callout-item"><span class="k">Total</span><span id="wa-total" class="v">—</span></span><span class="callout-item"><span class="k">Journals</span><span id="wa-j" class="v">—</span></span><span class="callout-item"><span class="k">Conferences</span><span id="wa-c" class="v">—</span></span><span class="callout-item"><span class="k">Chapters</span><span id="wa-b" class="v">—</span></span></div>`;
 
   const total = totals.reduce((a, b) => a + b, 0);
   const topYear = years.slice().sort((a, b) => bucket.get(b).total - bucket.get(a).total)[0];
@@ -448,11 +448,23 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
   legend.innerHTML = `<span><span class="dot j"></span>Journals (${journalData.length})</span><span><span class="dot c"></span>Conferences (${conferenceData.length})</span><span><span class="dot b"></span>Chapters (${chapterData.length})</span><span><span class="line t"></span>Trend line (total/year)</span>`;
 
   const tooltip = document.getElementById('works-analytics-tooltip');
+  const yearEl = document.getElementById('wa-year');
+  const totalEl = document.getElementById('wa-total');
+  const jEl = document.getElementById('wa-j');
+  const cEl = document.getElementById('wa-c');
+  const bEl = document.getElementById('wa-b');
   chart.querySelectorAll('.bar').forEach((bar) => {
     const year = bar.getAttribute('data-year');
     const d = bucket.get(Number(year));
-    const message = `${year}: ${d.total} total works • Journals ${d.journal}, Conferences ${d.conference}, Chapters ${d.chapter}`;
-    const activate = () => { if (tooltip) tooltip.textContent = message; bar.classList.add('active'); };
+    const activate = () => {
+      if (tooltip) tooltip.classList.add('active');
+      if (yearEl) yearEl.textContent = year;
+      if (totalEl) totalEl.textContent = `${d.total} works`;
+      if (jEl) jEl.textContent = String(d.journal);
+      if (cEl) cEl.textContent = String(d.conference);
+      if (bEl) bEl.textContent = String(d.chapter);
+      bar.classList.add('active');
+    };
     const deactivate = () => { bar.classList.remove('active'); };
     bar.addEventListener('mouseenter', activate);
     bar.addEventListener('focus', activate);
