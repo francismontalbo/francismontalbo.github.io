@@ -498,9 +498,13 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
 
 #works .works-ds-plot .trend-line{stroke:#ef4444 !important}
 #works .works-analytics-legend .line{display:inline-block;width:18px;height:0;border-top:3px solid #ef4444;border-radius:4px;margin-right:.35rem;vertical-align:middle}
-#works .works-analytics-tooltip{margin-top:.55rem;font-size:.8rem;line-height:1.45;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.52rem .75rem;min-height:44px;display:flex;align-items:center;justify-content:flex-start;letter-spacing:.01em}
+#works .works-analytics-tooltip{margin-top:.55rem;font-size:.8rem;line-height:1.45;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.52rem .75rem;height:46px;display:flex;align-items:center;justify-content:flex-start;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #works .works-ds-plot .bar{cursor:pointer;transition:opacity .2s ease, transform .2s ease}
 #works .works-ds-plot .bar:hover,#works .works-ds-plot .bar.active{opacity:1;filter:brightness(1.06)}
 #works .works-ds-plot .bar:not(.active){opacity:.9}
 
 #works .works-analytics-chart{max-width:100%}
+
+@media (max-width: 767.98px){
+  #works .works-analytics-tooltip{height:auto;min-height:46px;white-space:normal}
+}
