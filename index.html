@@ -374,12 +374,22 @@
           <h2 class="text-3xl font-semibold mb-4 text-accent2">Works</h2>
           <p class="text-sm text-gray-300 mb-6">Publications are arranged by type and sorted by latest year/date for easier browsing. For the most updated and more accurate research profile (including citation metrics), view Google Scholar: <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" class="text-accent2 hover:text-accent underline">PV8dJDkAAAAJ</a> and Scopus: <a href="https://www.scopus.com/authid/detail.uri?authorId=57221928564" target="_blank" class="text-accent2 hover:text-accent underline">Author ID 57221928564</a>.</p>
           <!-- Removed static Top Works section to rely on dynamic publications -->
+
+          <div class="works-analytics publication-card p-4 mb-6" aria-live="polite">
+            <div class="works-analytics-head flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-3">
+              <p id="works-analytics-summary" class="text-xs text-gray-300">Loading analytics…</p>
+              <h3 class="text-lg font-semibold works-analytics-title">Research Output Overview</h3>
+            </div>
+            <div id="works-analytics-chart" class="works-analytics-chart" role="img" aria-label="Publications by year and type"></div>
+            <div id="works-analytics-legend" class="works-analytics-legend mt-3"></div>
+          </div>
+
           <!-- Tabs -->
-          <div class="tabs flex flex-col sm:flex-row gap-4 mb-8">
-            <button class="tab btn btn-primary btn-sm" data-target="all-tab">All</button>
-            <button class="tab btn btn-primary btn-sm" data-target="journal-tab">Journals</button>
-            <button class="tab btn btn-primary btn-sm" data-target="conference-tab">Conferences</button>
-            <button class="tab btn btn-primary btn-sm" data-target="chapters-tab">Chapters</button>
+          <div class="tabs works-tabs" role="tablist" aria-label="Publication categories">
+            <button class="tab btn btn-primary btn-sm is-active" data-target="all-tab" role="tab" aria-selected="true">All</button>
+            <button class="tab btn btn-primary btn-sm" data-target="journal-tab" role="tab" aria-selected="false">Journals</button>
+            <button class="tab btn btn-primary btn-sm" data-target="conference-tab" role="tab" aria-selected="false">Conferences</button>
+            <button class="tab btn btn-primary btn-sm" data-target="chapters-tab" role="tab" aria-selected="false">Chapters</button>
           </div>
           <!-- All -->
           <div id="all-tab" class="tab-content">
