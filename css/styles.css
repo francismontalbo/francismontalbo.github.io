@@ -522,3 +522,26 @@ footer{padding-top:2.2rem!important;padding-bottom:2.2rem!important}
   #works .works-analytics-tooltip .k{font-size:.58rem;letter-spacing:.06em}
   #works .works-analytics-tooltip .v{font-size:.8rem}
 }
+
+
+/* Global mobile hardening: prevent side-scroll and overflow */
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,video,iframe,canvas{max-width:100%;height:auto}
+*{min-width:0}
+
+/* Fix mobile burger menu contrast */
+#mobile-menu{background:#0f172a !important;border-top:1px solid #334155}
+#mobile-menu a{color:#e2e8f0 !important;display:block;padding:.5rem .25rem;border-radius:8px}
+#mobile-menu a:hover,#mobile-menu a:focus{background:#1e293b !important;color:#93c5fd !important}
+#nav-toggle{color:#e2e8f0 !important}
+
+/* Mobile section spacing and fit */
+@media (max-width: 767.98px){
+  section.py-20{padding-top:56px!important;padding-bottom:56px!important}
+  .max-w-6xl,.max-w-4xl,.max-w-7xl{max-width:100%!important}
+  .grid{gap:1rem!important}
+  h1{font-size:2rem!important;line-height:1.15}
+  h2.text-3xl{font-size:1.65rem!important}
+  p{line-height:1.55}
+  #chatbot-widget{left:4vw !important;right:4vw !important;width:auto !important;max-width:none !important}
+}
