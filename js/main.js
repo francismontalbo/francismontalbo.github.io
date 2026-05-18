@@ -93,6 +93,7 @@
         const defaultVolume = 0.18;
         const collapseDelay = 5200;
         let collapseTimer = null;
+        let userPausedBgm = false;
         const getPreference = (key) => {
           try {
             return window.localStorage.getItem(key);
@@ -238,6 +239,10 @@
         };
 
         const startBgmFromGesture = () => {
+          if (userPausedBgm) {
+            updateBgmState();
+            return;
+          }
           if (bgmAudio.error) {
             updateBgmState('unavailable');
             return;
@@ -266,6 +271,7 @@
             return;
           }
           if (bgmAudio.paused) {
+            userPausedBgm = false;
             bgmAudio.muted = false;
             syncMutedAttribute();
             if (bgmAudio.volume === 0) setBgmVolume(defaultVolume);
@@ -273,6 +279,7 @@
             attemptBgmPlay({ mutedFallback: false });
             return;
           }
+          userPausedBgm = true;
           bgmAudio.pause();
           updateBgmState();
         });
@@ -284,6 +291,7 @@
             return;
           }
           if (bgmAudio.muted || bgmAudio.volume === 0) {
+            userPausedBgm = false;
             bgmAudio.muted = false;
             syncMutedAttribute();
             if (bgmAudio.volume === 0) setBgmVolume(defaultVolume);
@@ -300,7 +308,7 @@
         bgmVolume.addEventListener('input', (event) => {
           resetBgmCollapseTimer();
           setBgmVolume(event.target.value);
-          if (!bgmAudio.muted && bgmAudio.paused) attemptBgmPlay({ mutedFallback: false });
+          if (!userPausedBgm && !bgmAudio.muted && bgmAudio.paused) attemptBgmPlay({ mutedFallback: false });
         });
 
         bgmAudio.addEventListener('play', () => updateBgmState());
@@ -313,10 +321,14 @@
           updateBgmState('unavailable');
         });
         bgmAudio.addEventListener('canplay', () => {
-          attemptBgmPlay();
+          startBgmAutoplay();
         }, { once: true });
 
         const startBgmAutoplay = () => {
+          if (userPausedBgm) {
+            updateBgmState();
+            return;
+          }
           attemptBgmPlay();
         };
         if (document.readyState === 'complete') {
@@ -327,7 +339,7 @@
 
         const unlockBgmOnInteraction = (event) => {
           if (event.target?.closest?.('#bgm-control')) return;
-          if (bgmAudio.paused || bgmAudio.muted) startBgmFromGesture();
+          if (!userPausedBgm && (bgmAudio.paused || bgmAudio.muted)) startBgmFromGesture();
         };
         document.addEventListener('pointerdown', unlockBgmOnInteraction, { passive: true });
         document.addEventListener('keydown', unlockBgmOnInteraction);
@@ -336,7 +348,11 @@
           window.clearTimeout(collapseTimer);
           setBgmExpanded(false);
         }, { passive: true });
-        ['pointerenter', 'pointermove', 'focusin', 'keydown'].forEach((eventName) => {
+        const canHoverBgm = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const bgmActivityEvents = canHoverBgm
+          ? ['pointerenter', 'pointermove', 'focusin', 'keydown']
+          : ['focusin', 'keydown'];
+        bgmActivityEvents.forEach((eventName) => {
           bgmControl.addEventListener(eventName, resetBgmCollapseTimer, { passive: eventName !== 'keydown' });
         });
         bgmControl.addEventListener('focusout', () => {
@@ -715,7 +731,9 @@
         handle.addEventListener('mousedown', onStart);
         handle.addEventListener('touchstart', onStart, { passive: true });
       };
-      if (chatbotFab && chatbotWidget) {
+      const bindFallbackChatbotShell = () => {
+        if (!chatbotFab || !chatbotWidget) return;
+        if (chatbotFab.dataset.boundLiveToggle === '1' || chatbotWidget.dataset.boundLiveToggle === '1') return;
         const widgetHandle = chatbotWidget.querySelector('.chatbot-drag-handle');
         makeDraggable(chatbotWidget, widgetHandle);
         makeDraggable(chatbotFab, chatbotFab);
@@ -739,7 +757,8 @@
           chatbotWidget.addEventListener(evt, () => resetIdleTimer(chatbotWidget), { passive: true });
           chatbotFab.addEventListener(evt, () => resetIdleTimer(chatbotFab), { passive: true });
         });
-      }
+      };
+      window.setTimeout(bindFallbackChatbotShell, 900);
 
       // Fallback message handler (guarantees basic replies if external chatbot script fails to bind)
       const chatbotMessages = document.getElementById('chatbot-messages');

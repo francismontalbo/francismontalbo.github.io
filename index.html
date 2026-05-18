@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css?v=20260518-23" />
+    <link rel="stylesheet" href="css/styles.css?v=20260518-40" />
 
     <!-- Font Awesome icons -->
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
@@ -101,13 +101,26 @@
         </div>
 
         <figure class="hero-visual" aria-label="Portrait of Dr. Francis Jesmar P. Montalbo">
-          <div class="hero-portrait-frame">
-            <img src="assets/img/profile.png" alt="Dr. Francis Jesmar P. Montalbo" class="hero-portrait" fetchpriority="high" />
+          <div class="hero-portrait-frame hero-story-finale">
+            <div class="hero-story-reel">
+              <span class="hero-story-slide hero-story-slide-photo">
+                <img src="assets/img/profile-hero-cutout.png" alt="Dr. Francis Jesmar P. Montalbo" class="hero-portrait" fetchpriority="high" />
+              </span>
+              <span class="hero-story-slide hero-story-slide-1" aria-hidden="true">
+                <img src="assets/img/project_atlantis_francis_montalbo_inventor_scientist_engineer_inventor_ceo.png" alt="" loading="lazy" decoding="async" />
+              </span>
+              <span class="hero-story-slide hero-story-slide-2" aria-hidden="true">
+                <img src="assets/img/francismontalbo_publication_top_hindex_achievement_recognition_award_2026.jpg" alt="" loading="lazy" decoding="async" />
+              </span>
+              <span class="hero-story-slide hero-story-slide-3" aria-hidden="true">
+                <img src="assets/img/francis_montalb_best_research_paper_presented_2023_ICBSP2023BP2.jpg" alt="" loading="lazy" decoding="async" />
+              </span>
+              <span class="hero-story-slide hero-story-slide-4" aria-hidden="true">
+                <img src="assets/img/publications.JPG" alt="" loading="lazy" decoding="async" />
+              </span>
+            </div>
+            <span class="hero-portrait-sheen" aria-hidden="true"></span>
           </div>
-          <figcaption class="hero-caption">
-            <span>Research focus</span>
-            <strong>Efficient AI for high-impact applications</strong>
-          </figcaption>
         </figure>
 
         <nav class="hero-social-rail" aria-label="Featured research and professional profiles">
@@ -662,36 +675,92 @@
       ⬆️
     </div>
 
-    <button id="chatbot-fab" class="chatbot-drag-handle chatbot-agentic fixed bottom-6 left-6 z-50 text-white px-4 py-3 rounded-full shadow-xl font-semibold" aria-label="Open Francis AI assistant">
-      <i class="fa-solid fa-robot mr-2"></i> Francis AI Agent
+    <button id="chatbot-fab" class="chatbot-drag-handle chatbot-agentic" type="button" aria-label="Open Francis AI assistant" aria-expanded="false">
+      <span class="chatbot-bot" aria-hidden="true">
+        <svg class="chatbot-bot-hair" width="30" height="30" viewBox="0 0 30 30" focusable="false">
+          <path d="M29.9988 24.148L5.8512 0L-.00005 5.85133L24.1476 29.9993L29.9988 24.148Z" fill="currentColor" />
+          <path d="M24.1487 .00046L.0011 24.1484L5.85235 29.9998L30 5.8518L24.1487 .00046Z" fill="currentColor" />
+        </svg>
+        <svg class="chatbot-bot-head" width="56" height="54" viewBox="0 0 56 54" focusable="false">
+          <defs>
+            <linearGradient id="francis-ai-head" x1="28" y1="0" x2="28" y2="54" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#67e8f9" />
+              <stop offset="1" stop-color="#2563eb" />
+            </linearGradient>
+          </defs>
+          <path d="M28 1C49.4 1 55 7.1 55 29.1 55 52.7 43.2 53 28 53S1 52.7 1 29.1C1 7.1 6.6 1 28 1Z" fill="url(#francis-ai-head)" />
+        </svg>
+        <svg class="chatbot-bot-face" width="46" height="38" viewBox="0 0 46 38" focusable="false">
+          <defs>
+            <linearGradient id="francis-ai-face" x1="23" y1="0" x2="23" y2="38" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ffffff" />
+              <stop offset="1" stop-color="#eff6ff" />
+            </linearGradient>
+          </defs>
+          <path d="M23 37c15.9 0 21.5-.9 22.8-17.8C47.1 2.9 41.3 1 23 1S-1.1 4.6.2 19.2C1.5 36.1 7.1 37 23 37Z" fill="url(#francis-ai-face)" stroke="#bfdbfe" stroke-width="1.2" />
+        </svg>
+        <svg class="chatbot-bot-expression" width="32" height="16" viewBox="0 0 32 16" focusable="false">
+          <defs>
+            <linearGradient id="francis-ai-expression" x1="16" y1="0" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#38bdf8" />
+              <stop offset="1" stop-color="#2563eb" />
+            </linearGradient>
+          </defs>
+          <path class="chatbot-eye" d="M4.02 12.8c3.67 0 4.02-2.88 4.02-6.4S8.04 0 4.02 0 0 2.88 0 6.4s.35 6.4 4.02 6.4Z" fill="url(#francis-ai-expression)" />
+          <g class="chatbot-mouth">
+            <path class="chatbot-mouth-smile" d="M12.4 10.2C14.25 12.95 17.75 12.95 19.6 10.2" fill="none" stroke="url(#francis-ai-expression)" stroke-width="2.15" stroke-linecap="round" />
+            <path class="chatbot-mouth-open" d="M11.8 9.45C12.85 16.05 19.15 16.05 20.2 9.45C18.05 11.75 13.95 11.75 11.8 9.45Z" fill="url(#francis-ai-expression)" />
+          </g>
+          <path class="chatbot-eye" d="M27.98 12.8c3.67 0 4.02-2.88 4.02-6.4S32 0 27.98 0s-4.02 2.88-4.02 6.4.35 6.4 4.02 6.4Z" fill="url(#francis-ai-expression)" />
+        </svg>
+      </span>
+      <span class="chatbot-greeting" aria-hidden="true"><strong id="chatbot-greeting-title">Curious?</strong><br /><span id="chatbot-greeting-copy">Click for a quick research tour.</span></span>
+      <span class="sr-only">Open Francis AI assistant</span>
     </button>
-    <div id="chatbot-widget" class="hidden fixed bottom-24 left-6 z-50 w-[360px] max-w-[92vw] rounded-2xl border border-primary bg-[#FFFFFF] shadow-2xl overflow-hidden">
-      <div class="chatbot-drag-handle px-4 py-3 bg-primaryDark border-b border-primary flex items-center justify-between">
-        <p class="text-sm font-semibold text-accent2">Francis AI • Live</p>
-        <button id="chatbot-close" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <p id="chatbot-status" class="text-xs text-gray-400 px-4 py-2 border-b border-primary">Online mode enabled.</p>
-      <div id="chatbot-messages" class="p-4 text-sm text-gray-100 min-h-[300px] max-h-[420px] overflow-y-auto space-y-3"></div>
-      <div class="p-3 border-t border-primary bg-primaryDark/70">
-        <div class="flex flex-wrap gap-2 mb-3">
-          <button class="chatbot-chip px-3 py-1 rounded-full text-xs bg-primary text-gray-100 border border-primary hover:bg-tertiary" data-question="What are Francis' top research areas?">Research Areas</button>
-          <button class="chatbot-chip px-3 py-1 rounded-full text-xs bg-primary text-gray-100 border border-primary hover:bg-tertiary" data-question="What major recognitions has Francis received?">Recognitions</button>
+    <div id="chatbot-widget" class="hidden chatbot-widget">
+      <div class="chatbot-drag-handle chatbot-header">
+        <div class="chatbot-brand">
+          <span class="chatbot-brand-orb" aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
+          <div>
+            <p class="chatbot-title">Francis AI</p>
+            <p class="chatbot-subtitle">Research assistant</p>
+          </div>
         </div>
-        <div class="flex gap-2">
-          <input id="chatbot-input" type="text" placeholder="Ask anything..." class="flex-grow px-3 py-2 rounded-md bg-primaryDark text-gray-100 border border-primary focus:ring-2 focus:ring-accent focus:outline-none" />
-          <button id="chatbot-send" class="px-3 py-2 rounded-md bg-accent2 text-primaryDark font-medium hover:bg-accent transition-colors">Send</button>
+        <div class="chatbot-actions">
+          <button id="chatbot-expand" class="chatbot-icon-button" type="button" aria-label="Expand Francis AI assistant" aria-expanded="false">
+            <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i>
+          </button>
+          <button id="chatbot-close" class="chatbot-icon-button" type="button" aria-label="Close Francis AI assistant">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <p id="chatbot-status" class="chatbot-status">Online mode enabled.</p>
+      <div id="chatbot-messages" class="chatbot-messages"></div>
+      <div class="chatbot-composer">
+        <div class="chatbot-chip-row" aria-label="Suggested questions">
+          <button class="chatbot-chip" type="button" data-question="What are Francis' top research areas?">Research Areas</button>
+          <button class="chatbot-chip" type="button" data-question="What major recognitions has Francis received?">Recognitions</button>
+          <button class="chatbot-chip" type="button" data-question="How can I contact Francis?">Contact</button>
+        </div>
+        <div class="chatbot-input-shell">
+          <input id="chatbot-input" type="text" placeholder="Send a message..." autocomplete="off" />
+          <button id="chatbot-send" type="button" aria-label="Send message">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+            <span class="sr-only">Send</span>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/main.js?v=20260518-11"></script>
+    <script src="js/main.js?v=20260518-14"></script>
 
     <!-- Modular scripts -->
     <script src="js/data.js" defer></script>
     <script src="js/script.js?v=20260518" defer></script>
     <script src="js/rag.js" defer></script>
-    <script src="js/chatbot.js?v=20260518" defer></script>
+    <script src="js/chatbot.js?v=20260518-gemini-search-ui-mouth-smooth3" defer></script>
   </body>
 </html>
