@@ -393,6 +393,15 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
   const summary = document.getElementById('works-analytics-summary');
   if (!chart || !legend || !summary) return;
 
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const compactChart = viewportWidth < 480;
+  const narrowChart = viewportWidth >= 480 && viewportWidth < 768;
+  const chartSize = compactChart
+    ? { w: 430, h: 300, px: 34, py: 30, barWidth: 18 }
+    : narrowChart
+      ? { w: 640, h: 340, px: 44, py: 32, barWidth: 24 }
+      : { w: 900, h: 340, px: 54, py: 30, barWidth: 30 };
+
   const bucket = new Map();
   const add = (arr, key) => arr.forEach((x) => {
     const y = Number(x.year || 0);
@@ -408,7 +417,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
   const years = Array.from(bucket.keys()).sort((a, b) => a - b);
   const totals = years.map((y) => bucket.get(y).total);
   const maxTotal = Math.max(1, ...totals);
-  const w = 860; const h = 280; const px = 48; const py = 24;
+  const { w, h, px, py, barWidth } = chartSize;
   const cw = w - px * 2; const ch = h - py * 2;
   const stepX = years.length > 1 ? cw / (years.length - 1) : cw;
 
@@ -418,10 +427,17 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     return `${x},${yPos}`;
   }).join(' ');
   const areaPoints = `${px},${py + ch} ${points} ${px + cw},${py + ch}`;
+  const trendCaps = years.map((y, i) => {
+    const d = bucket.get(y);
+    const x = px + i * stepX;
+    const yPos = py + (1 - (d.total / maxTotal)) * ch;
+    const capWidth = compactChart ? 10 : 14;
+    return `<g class="trend-cap" aria-hidden="true"><line x1="${x - capWidth / 2}" y1="${yPos}" x2="${x + capWidth / 2}" y2="${yPos}"/><circle cx="${x}" cy="${yPos}" r="${compactChart ? 3.8 : 4.8}"/></g>`;
+  }).join('');
 
   const yearBars = years.map((y, i) => {
     const d = bucket.get(y);
-    const x = px + i * stepX - 14;
+    const x = px + i * stepX - (barWidth / 2);
     const baseY = py + ch;
     const unit = ch / maxTotal;
     const hJ = d.journal * unit;
@@ -430,7 +446,8 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     const yJ = baseY - hJ;
     const yC = yJ - hC;
     const yB = yC - hB;
-    return `<g class="bar" data-year="${y}" transform="translate(${x},0)"><rect x="0" y="${yJ}" width="28" height="${hJ}" class="seg-j"/><rect x="0" y="${yC}" width="28" height="${hC}" class="seg-c"/><rect x="0" y="${yB}" width="28" height="${hB}" class="seg-b"/><title>${y}: ${d.total} total works (J:${d.journal}, C:${d.conference}, B:${d.chapter})</title></g>`;
+    const label = `${y}: ${d.total} total works, ${d.journal} journals, ${d.conference} conferences, ${d.chapter} chapters`;
+    return `<g class="bar" data-year="${y}" tabindex="0" role="button" aria-label="${label}" transform="translate(${x},0)"><rect x="0" y="${yJ}" width="${barWidth}" height="${hJ}" class="seg-j"/><rect x="0" y="${yC}" width="${barWidth}" height="${hC}" class="seg-c"/><rect x="0" y="${yB}" width="${barWidth}" height="${hB}" class="seg-b"/><title>${label}</title></g>`;
   }).join('');
 
   const xLabels = years.map((y, i) => `<text x="${px + i * stepX}" y="${h - 6}" text-anchor="middle" class="axis-label">${y}</text>`).join('');
@@ -440,7 +457,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     return `<line x1="${px}" y1="${y}" x2="${px + cw}" y2="${y}" class="grid-line"/><text x="${px - 8}" y="${y + 4}" text-anchor="end" class="axis-label">${val}</text>`;
   }).join('');
 
-  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polyline points="${points}" class="trend-line"/><polygon points="${areaPoints}" class="trend-area"/>${yearBars}${xLabels}</svg><div id="works-analytics-tooltip" class="works-analytics-tooltip" aria-live="polite"><span class="callout-item"><span class="k">Year</span><span id="wa-year" class="v">—</span></span><span class="callout-item"><span class="k">Total</span><span id="wa-total" class="v">—</span></span><span class="callout-item"><span class="k">Journals</span><span id="wa-j" class="v">—</span></span><span class="callout-item"><span class="k">Conferences</span><span id="wa-c" class="v">—</span></span><span class="callout-item"><span class="k">Chapters</span><span id="wa-b" class="v">—</span></span></div>`;
+  chart.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="works-ds-plot" aria-label="Publication analytics by year"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0.04"/></linearGradient></defs>${yGuides}<polygon points="${areaPoints}" class="trend-area"/>${yearBars}<polyline points="${points}" class="trend-line"/>${trendCaps}${xLabels}</svg><div id="works-analytics-tooltip" class="works-analytics-tooltip" aria-live="polite"><span class="callout-item"><span class="k">Year</span><span id="wa-year" class="v">-</span></span><span class="callout-item"><span class="k">Total</span><span id="wa-total" class="v">-</span></span><span class="callout-item"><span class="k">Journals</span><span id="wa-j" class="v">-</span></span><span class="callout-item"><span class="k">Conferences</span><span id="wa-c" class="v">-</span></span><span class="callout-item"><span class="k">Chapters</span><span id="wa-b" class="v">-</span></span></div>`;
 
   const total = totals.reduce((a, b) => a + b, 0);
   const topYear = years.slice().sort((a, b) => bucket.get(b).total - bucket.get(a).total)[0];
@@ -459,7 +476,7 @@ function renderWorksAnalytics(journalData, conferenceData, chapterData) {
     const activate = () => {
       if (tooltip) tooltip.classList.add('active');
       if (yearEl) yearEl.textContent = year;
-      if (totalEl) totalEl.textContent = `${d.total} works`;
+      if (totalEl) totalEl.textContent = String(d.total);
       if (jEl) jEl.textContent = String(d.journal);
       if (cEl) cEl.textContent = String(d.conference);
       if (bEl) bEl.textContent = String(d.chapter);
@@ -494,6 +511,13 @@ function setupCitationMenuDismissal(scopeElement) {
 function initializePublications() {
   const { journalData, conferenceData, chapterData } = getSiteData();
   renderWorksAnalytics(journalData, conferenceData, chapterData);
+  let analyticsResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(analyticsResizeTimer);
+    analyticsResizeTimer = setTimeout(() => {
+      renderWorksAnalytics(journalData, conferenceData, chapterData);
+    }, 150);
+  }, { passive: true });
   const typedJournals = journalData.map((item) => ({ ...item, workType: item.workType || 'Journal Article' }));
   const typedConferences = conferenceData.map((item) => ({ ...item, workType: item.workType || 'Conference Paper' }));
   const typedChapters = chapterData.map((item) => ({ ...item, journal: item.book, workType: item.workType || 'Book Chapter' }));
@@ -510,7 +534,10 @@ function initializePublications() {
 
   // AOS animations
   if (typeof AOS !== 'undefined') {
-    AOS.init({ once: true });
+    AOS.init({
+      once: true,
+      disable: () => window.innerWidth < 768
+    });
   }
 
   // Back‑to‑top button
@@ -692,11 +719,9 @@ if (document.readyState === 'loading') {
     try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
     try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
     try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
-    try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
   });
 } else {
   try { initializePublications(); } catch (e) { console.error('Publications init failed:', e); }
   try { initializeNews(); } catch (e) { console.error('News init failed:', e); }
   try { initializeImageModal(); } catch (e) { console.error('Image modal init failed:', e); }
-  try { initializeChatbot(); } catch (e) { console.error('Chatbot init failed:', e); }
 }

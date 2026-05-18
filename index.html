@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css?v=20260518-23" />
 
     <!-- Font Awesome icons -->
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
@@ -33,10 +33,12 @@
           <i class="fa-solid fa-brain text-accent2"></i>
           <span>Dr. FJP Montalbo</span>
         </a>
-        <button id="nav-toggle" class="sm:hidden text-gray-100 focus:outline-none" aria-label="Toggle navigation">
-          <i class="fa-solid fa-bars"></i>
+        <button id="nav-toggle" class="lg:hidden text-gray-100 focus:outline-none" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="nav-toggle-line" aria-hidden="true"></span>
+          <span class="nav-toggle-line" aria-hidden="true"></span>
+          <span class="nav-toggle-line" aria-hidden="true"></span>
         </button>
-        <ul id="nav-menu" class="hidden sm:flex space-x-6 text-sm font-medium">
+        <ul id="nav-menu" class="hidden lg:flex space-x-6 text-sm font-medium">
           <li><a href="#about" class="hover:text-accent">About</a></li>
           <li><a href="#socials" class="hover:text-accent">Socials</a></li>
           <li><a href="#experience" class="hover:text-accent">Experience</a></li>
@@ -48,7 +50,7 @@
         </ul>
       </div>
       <!-- Mobile menu -->
-      <div id="mobile-menu" class="sm:hidden hidden bg-primaryDark/95 px-4 pt-2 pb-4 space-y-2 text-sm">
+      <div id="mobile-menu" class="lg:hidden hidden bg-primaryDark/95 px-4 pt-2 pb-4 space-y-2 text-sm" aria-hidden="true">
         <a href="#about" class="block py-1 hover:text-accent">About</a>
         <a href="#socials" class="block py-1 hover:text-accent">Socials</a>
         <a href="#experience" class="block py-1 hover:text-accent">Experience</a>
@@ -61,24 +63,70 @@
     </nav>
 
     <!-- Hero Section -->
-    <!-- Use a subtle profile photo below the heading to add personality -->
-    <section id="hero" class="pt-24 pb-32 bg-gradient-to-br from-primary via-primaryDark to-tertiary text-center text-gray-100" data-aos="fade-in">
-      <div class="max-w-4xl mx-auto px-4">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-          Dr. Francis Jesmar P. Montalbo
-        </h1>
-        <!-- Profile image: references your existing assets/img/profile.png; adjust the path when hosting -->
-        <img src="assets/img/profile.png" alt="Dr. Francis Jesmar P. Montalbo" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 object-cover border-4 border-accent" loading="lazy" />
-        <p class="text-lg sm:text-xl mb-8 font-medium">
-          Associate Professor · Research Scientist · AI &amp; Deep Learning Specialist · Software Engineer
-        </p>
-        <p class="mb-8 max-w-3xl mx-auto text-sm sm:text-base text-gray-200">
-          I design and develop advanced AI and deep learning solutions that bridge academia and industry. Explore my work and discover how my research impacts real-world applications.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#works" class="ui-btn ui-btn-primary py-3 px-6">View Works</a>
-          <a href="#contact" class="ui-btn ui-btn-outline py-3 px-6">Get in Touch</a>
+    <section id="hero" class="hero-section text-gray-100" data-aos="fade-in">
+      <div class="hero-particles" aria-hidden="true"></div>
+      <canvas id="hero-particle-canvas" class="hero-particle-canvas" aria-hidden="true"></canvas>
+      <div class="hero-shell">
+        <div class="hero-copy-block">
+          <p class="hero-eyebrow">
+            <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+            AI Research · Deep Learning · Health Informatics
+          </p>
+          <h1 class="hero-title">Dr. Francis Jesmar P. Montalbo</h1>
+          <p class="hero-role">
+            Associate Professor · Research Scientist · Software Engineer
+          </p>
+          <p class="hero-copy">
+            I build compact, deployable AI systems that bridge academic research with real-world implementation.
+          </p>
+          <div class="hero-actions" aria-label="Primary hero actions">
+            <a href="#works" class="ui-btn ui-btn-primary hero-action">
+              View Works <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            <a href="#contact" class="ui-btn ui-btn-outline hero-action">
+              Get in Touch
+            </a>
+          </div>
+          <div class="hero-proof" aria-label="Research highlights">
+            <span><strong>Top 2%</strong> cited scientist</span>
+            <span><strong>31</strong> total works</span>
+            <span><strong>2019-2026</strong> active research window</span>
+          </div>
+          <p class="hero-proof-source">
+            <span>Source:</span>
+            <a href="https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/8" target="_blank" rel="noopener noreferrer">Elsevier/Stanford Top 2% list</a>
+            <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://www.scopus.com/authid/detail.uri?authorId=57221928564" target="_blank" rel="noopener noreferrer">Scopus</a>
+          </p>
         </div>
+
+        <figure class="hero-visual" aria-label="Portrait of Dr. Francis Jesmar P. Montalbo">
+          <div class="hero-portrait-frame">
+            <img src="assets/img/profile.png" alt="Dr. Francis Jesmar P. Montalbo" class="hero-portrait" fetchpriority="high" />
+          </div>
+          <figcaption class="hero-caption">
+            <span>Research focus</span>
+            <strong>Efficient AI for high-impact applications</strong>
+          </figcaption>
+        </figure>
+
+        <nav class="hero-social-rail" aria-label="Featured research and professional profiles">
+          <a href="https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar">
+            <i class="ai ai-google-scholar-square" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.scopus.com/authid/detail.uri?authorId=57212309186" target="_blank" rel="noopener noreferrer" aria-label="Scopus">
+            <i class="ai ai-scopus-square" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.github.com/francismontalbo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="iconify" data-icon="simple-icons:github" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/sirjmmontalbo/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="iconify" data-icon="simple-icons:linkedin" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.facebook.com/docfrancismontalbo" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <i class="iconify" data-icon="simple-icons:facebook" aria-hidden="true"></i>
+          </a>
+        </nav>
       </div>
     </section>
 
@@ -576,6 +624,38 @@
       </div>
     </footer>
 
+    <div id="bgm-control" class="bgm-control" data-audio-state="loading" data-expanded="false" aria-label="Background music controls">
+      <audio id="bgm-audio" preload="auto" loop autoplay muted playsinline data-src="assets/bgm/Ragnarok_Piano_streamside.mp3"></audio>
+      <button id="bgm-shell" class="bgm-shell" type="button" aria-label="Open background music controls" aria-expanded="false" title="Open background music controls">
+        <span class="bgm-orb" aria-hidden="true">
+          <span class="bgm-meter">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </span>
+        <span class="bgm-title-mask" aria-hidden="true">
+          <span class="bgm-title-track">
+            <span>Ragnarok Piano Streamside</span>
+            <span>Ragnarok Piano Streamside</span>
+          </span>
+        </span>
+      </button>
+      <div class="bgm-panel" aria-hidden="true">
+        <button id="bgm-play-toggle" class="bgm-icon-button bgm-play-toggle" type="button" aria-label="Play background music" title="Play background music">
+          <i class="fa-solid fa-play" aria-hidden="true"></i>
+        </button>
+        <button id="bgm-mute-toggle" class="bgm-icon-button bgm-mute-toggle" type="button" aria-label="Mute background music" aria-pressed="false" title="Mute background music">
+          <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+        </button>
+        <label class="bgm-volume-wrap">
+          <span class="sr-only">Background music volume</span>
+          <input id="bgm-volume" type="range" min="0" max="1" step="0.01" value="0.18" aria-label="Background music volume" />
+        </label>
+      </div>
+    </div>
+
     <!-- Back to Top Button -->
     <div id="backToTop" class="fixed bottom-5 right-5 hidden text-4xl text-accent2 bg-transparent cursor-pointer transform transition-transform duration-200 hover:text-accent hover:scale-125" role="button" aria-label="Back to top">
       <!-- Use a stand-alone arrow emoji for the return-home button with a hover effect -->
@@ -606,12 +686,12 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=20260518-11"></script>
 
     <!-- Modular scripts -->
     <script src="js/data.js" defer></script>
-    <script src="js/script.js" defer></script>
+    <script src="js/script.js?v=20260518" defer></script>
     <script src="js/rag.js" defer></script>
-    <script src="js/chatbot.js" defer></script>
+    <script src="js/chatbot.js?v=20260518" defer></script>
   </body>
 </html>

@@ -4,14 +4,25 @@ const { journalData = [], conferenceData = [], chapterData = [], newsData = [], 
 
 function initializeChatbot() {
   const messages = document.getElementById('chatbot-messages');
-  const input = document.getElementById('chatbot-input');
-  const send = document.getElementById('chatbot-send');
+  let input = document.getElementById('chatbot-input');
+  let send = document.getElementById('chatbot-send');
   const chips = document.querySelectorAll('.chatbot-chip');
   const fab = document.getElementById('chatbot-fab');
   const widget = document.getElementById('chatbot-widget');
   const closeBtn = document.getElementById('chatbot-close');
   const status = document.getElementById('chatbot-status');
   if (!messages || !input || !send || !fab || !widget) return;
+  if (send.dataset.boundLive === '1') return;
+  if (send.dataset.boundFallback === '1') {
+    const freshSend = send.cloneNode(true);
+    const freshInput = input.cloneNode(true);
+    send.replaceWith(freshSend);
+    input.replaceWith(freshInput);
+    send = freshSend;
+    input = freshInput;
+    delete send.dataset.boundFallback;
+  }
+  send.dataset.boundLive = '1';
   const statusEl = status || { textContent: '' };
 
   const allWorks = [
