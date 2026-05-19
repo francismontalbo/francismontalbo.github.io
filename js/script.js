@@ -569,6 +569,28 @@ function initializeNews() {
 
   if (!list || !count) return;
 
+  const canonicalUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'https://francismontalbo.github.io/'
+    : new URL('/', window.location.origin).href;
+  const personId = `${canonicalUrl}#dr-francis-jesmar-montalbo`;
+  const profilePageId = `${canonicalUrl}#profile-page`;
+  const formatDate = (date) => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  const toIsoDateTime = (date) => `${date}T00:00:00+08:00`;
+  const toAbsoluteUrl = (url) => {
+    if (!url) return undefined;
+    try {
+      return new URL(url, canonicalUrl).href;
+    } catch (e) {
+      return undefined;
+    }
+  };
+  const slugify = (text) => String(text || '')
+    .toLowerCase()
+    .replace(/&amp;/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 72);
+
   const sorted = [...newsData].sort((a, b) => {
     if (Boolean(b.pinned) !== Boolean(a.pinned)) return b.pinned ? 1 : -1;
     return new Date(b.date) - new Date(a.date);
@@ -577,69 +599,193 @@ function initializeNews() {
   function render(items) {
     list.innerHTML = '';
     items.forEach((item, index) => {
-      const tags = (item.tags || []).map((tag) => `<span class="badge badge-default">#${tag}</span>`).join(' ');
+      const isFeatured = index === 0;
+      const safeTitle = escapeHtml(item.title);
+      const safeSummary = escapeHtml(item.summary);
+      const safeExpanded = escapeHtml(item.expandedSummary || '');
+      const safeSource = escapeHtml(item.sourceName || 'Verified source');
+      const safeImpact = escapeHtml(item.impact || 'Research visibility');
+      const safeProof = escapeHtml(item.proof || 'Source-backed update');
+      const safeLinkLabel = escapeHtml(item.linkLabel || 'Open source');
+      const safeImage = escapeHtml(item.image || '');
+      const safeImageAlt = escapeHtml(item.imageAlt || item.title);
+      const articleId = `news-${item.date}-${slugify(item.title)}`;
+      const tags = (item.tags || []).map((tag) => `<span class="news-tag">#${escapeHtml(tag)}</span>`).join('');
+      const media = (item.image || item.videoEmbed) ? `
+        <div class="news-media-row ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
+          ${item.image ? `<button class="news-media news-image-wrap" type="button" aria-label="Open image for ${safeTitle}"><img src="${safeImage}" alt="${safeImageAlt}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${safeImage}" /></button>` : ''}
+          ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
+        </div>
+      ` : '';
       const article = document.createElement('article');
       const summaryId = `news-expanded-${index}-${item.date}`.replace(/[^a-zA-Z0-9-_]/g, '');
-      article.className = 'publication-card';
+      article.id = articleId;
+      article.className = `news-card${isFeatured ? ' news-card-featured' : ''}`;
       article.setAttribute('itemscope', '');
       article.setAttribute('itemtype', 'https://schema.org/NewsArticle');
       article.innerHTML = `
-        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-          <div class="w-full">
-            ${(item.image || item.videoEmbed) ? `
-              <div class="news-media-row mb-3 ${(item.videoEmbed && item.image && item.mediaLayout === 'side-by-side') ? 'has-video' : ''}">
-                ${item.image ? `<div class="news-media news-image-wrap"><img src="${item.image}" alt="${item.imageAlt || item.title}" class="news-image" loading="lazy" itemprop="image" data-modal-src="${item.image}" onclick="window.openImageModal && window.openImageModal(this)" /></div>` : ''}
-                ${item.videoEmbed ? `<div class="news-media news-video-wrap">${item.videoEmbed}</div>` : ''}
-              </div>
-            ` : ''}
-            <p class="text-xs text-accent2"><time datetime="${item.date}" itemprop="datePublished">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>${item.pinned ? ' · <strong>Featured</strong>' : ''}</p>
-            <h3 class="text-lg font-semibold mt-1" itemprop="headline">${item.title}</h3>
-            <p class="text-sm text-gray-200 mt-2" itemprop="description">${item.summary}</p>
-            ${item.expandedSummary && item.expandedSummary !== item.summary && !item.videoEmbed ? `
-              <details class="mt-3">
-                <summary class="cursor-pointer text-sm text-accent">Read More: detailed summary</summary>
-                <p id="${summaryId}" class="text-sm text-gray-300 mt-2">${item.expandedSummary}</p>
+        <div class="news-card-inner">
+          <div class="news-card-body">
+            <div class="news-meta">
+              <span class="news-source">${safeSource}</span>
+              <time datetime="${item.date}" itemprop="datePublished">${formatDate(item.date)}</time>
+              ${item.pinned ? '<span>Featured</span>' : ''}
+            </div>
+            <h3 itemprop="headline">${safeTitle}</h3>
+            <p class="news-summary" itemprop="description">${safeSummary}</p>
+            <div class="news-evidence" aria-label="Why this update matters">
+              <span><strong>Impact</strong>${safeImpact}</span>
+              <span><strong>Proof</strong>${safeProof}</span>
+            </div>
+            ${safeExpanded && safeExpanded !== safeSummary ? `
+              <details class="news-details">
+                <summary>Read context</summary>
+                <p id="${summaryId}">${safeExpanded}</p>
               </details>
             ` : ''}
-            <div class="flex flex-wrap gap-2 mt-3">${tags}</div>
+            <div class="news-tags" aria-label="News topics">${tags}</div>
           </div>
-          ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="ui-btn ui-btn-sm ui-btn-primary whitespace-nowrap mt-1">${item.linkLabel || 'Read more'}</a>` : ''}
+          ${media}
+          ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="news-source-link">${safeLinkLabel}<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : ''}
+          <meta itemprop="author" content="Dr. Francis Jesmar P. Montalbo" />
+          <meta itemprop="dateModified" content="${item.date}" />
+          <meta itemprop="mainEntityOfPage" content="${canonicalUrl}#news" />
         </div>`;
       list.appendChild(article);
-      const button = article.querySelector('button[data-summary-target]');
-      if (button) {
-        button.addEventListener('click', async () => {
-          const target = article.querySelector(`#${button.dataset.summaryTarget}`);
-          button.disabled = true;
-          await generateNewsSummary(item, target);
-          button.disabled = false;
-        });
-      }
     });
-    count.textContent = `${items.length} post${items.length === 1 ? '' : 's'}`;
+    count.textContent = `${items.length} verified update${items.length === 1 ? '' : 's'}`;
   }
   render(sorted);
 
-  const newsJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": sorted.map((item) => ({
+  const personNode = {
+    "@id": personId,
+    "@type": "Person",
+    name: "Francis Jesmar P. Montalbo",
+    honorificPrefix: "Dr.",
+    alternateName: [
+      "Dr. Francis Jesmar P. Montalbo",
+      "FJP Montalbo",
+      "Francis Montalbo"
+    ],
+    jobTitle: [
+      "Associate Professor",
+      "Research Scientist",
+      "Software Engineer",
+      "AI and Deep Learning Specialist"
+    ],
+    affiliation: {
+      "@type": "CollegeOrUniversity",
+      name: "Batangas State University"
+    },
+    memberOf: [
+      {
+        "@type": "Organization",
+        name: "IEEE"
+      },
+      {
+        "@type": "Organization",
+        name: "National Research Council of the Philippines"
+      }
+    ],
+    award: [
+      "ICBSP 2023 Best Presenter",
+      "Batangas State University Scopus h-index research impact recognition",
+      "OneNews feature connected to Stanford-listed scientists"
+    ],
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Huawei Certified Network Associate, Routing & Switching"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Huawei Certified Academy Instructor, Routing & Switching"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Certified Cisco Networking Academy Instructor"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "IT Passport, Japan IT Standards Examination"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Computer Systems Servicing NC II"
+      }
+    ],
+    description: "AI research scientist, associate professor, and software engineer focused on deep learning, biomedical signal processing, medical imaging AI, computer vision, and applied intelligent systems.",
+    image: `${canonicalUrl}assets/img/profile-hero-cutout.png`,
+    url: canonicalUrl,
+    sameAs: [
+      "https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en",
+      "https://www.scopus.com/authid/detail.uri?authorId=57221928564",
+      "https://orcid.org/0000-0002-1493-5080",
+      "https://www.linkedin.com/in/sirjmmontalbo/",
+      "https://www.github.com/francismontalbo",
+      "https://www.researchgate.net/profile/Francis_Jesmar_Montalbo"
+    ],
+    knowsAbout: [
+      "Artificial intelligence",
+      "Deep learning",
+      "Biomedical signal processing",
+      "Medical imaging",
+      "Computer vision",
+      "Smart agriculture",
+      "Software engineering"
+    ]
+  };
+
+  const articleNodes = sorted.map((item) => {
+    const articleId = `${canonicalUrl}#news-${item.date}-${slugify(item.title)}`;
+    return {
+      "@id": articleId,
       "@type": "NewsArticle",
       headline: item.title,
       description: item.summary,
-      datePublished: item.date,
-      dateModified: item.date,
-      image: item.image ? new URL(item.image, window.location.origin).href : undefined,
-      url: item.link || window.location.href,
-      keywords: (item.tags || []).join(', '),
-      author: {
-        "@type": "Person",
-        name: "Dr. Francis Jesmar P. Montalbo"
+      datePublished: toIsoDateTime(item.date),
+      dateModified: toIsoDateTime(item.date),
+      image: item.image ? [toAbsoluteUrl(item.image)] : undefined,
+      url: item.link || `${canonicalUrl}#news`,
+      mainEntityOfPage: `${canonicalUrl}#news`,
+      keywords: [
+        "Dr. Francis Jesmar P. Montalbo",
+        "Francis Jesmar Montalbo",
+        ...(item.tags || [])
+      ].join(', '),
+      author: { "@id": personId },
+      publisher: { "@id": personId },
+      about: [
+        { "@id": personId },
+        "AI research",
+        "deep learning",
+        "biomedical signal processing",
+        "research impact"
+      ],
+      mentions: [
+        item.sourceName ? { "@type": "Organization", name: item.sourceName } : undefined,
+        item.impact ? { "@type": "Thing", name: item.impact } : undefined
+      ].filter(Boolean),
+      isPartOf: { "@id": profilePageId }
+    };
+  });
+
+  const newsJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@id": profilePageId,
+        "@type": "ProfilePage",
+        name: "Dr. Francis Jesmar P. Montalbo official research profile",
+        url: canonicalUrl,
+        dateModified: toIsoDateTime(sorted[0]?.date || new Date().toISOString().slice(0, 10)),
+        description: "Official profile and news updates for Dr. Francis Jesmar P. Montalbo, highlighting AI research impact, recognitions, publications, and applied innovation.",
+        mainEntity: { "@id": personId },
+        hasPart: articleNodes.map((article) => ({ "@id": article["@id"] }))
       },
-      publisher: {
-        "@type": "Person",
-        name: "Dr. Francis Jesmar P. Montalbo"
-      }
-    }))
+      personNode,
+      ...articleNodes
+    ]
   };
 
   let newsStructuredData = document.getElementById('news-structured-data');

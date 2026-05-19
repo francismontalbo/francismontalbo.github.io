@@ -646,16 +646,175 @@
       // Contact form mailto composer
       const contactForm = document.getElementById('contact-form');
       if (contactForm) {
+        const contactPresets = {
+          collaboration: {
+            intent: 'Research collaboration',
+            subject: 'Research collaboration inquiry for Dr. Francis Jesmar P. Montalbo',
+            message: 'Hello Dr. Montalbo,\n\nI would like to collaborate.\n\nTopic:\nOrganization:\nTimeline:\n\nThank you.'
+          },
+          consulting: {
+            intent: 'AI consulting',
+            subject: 'AI consulting inquiry for Dr. Francis Jesmar P. Montalbo',
+            message: 'Hello Dr. Montalbo,\n\nI would like to ask about AI consulting support.\n\nProject:\nGoal:\nTimeline:\n\nThank you.'
+          },
+          speaking: {
+            intent: 'Invited talk or workshop',
+            subject: 'Speaking or workshop invitation for Dr. Francis Jesmar P. Montalbo',
+            message: 'Hello Dr. Montalbo,\n\nI would like to invite you for a talk or workshop.\n\nEvent:\nAudience:\nDate or timeline:\n\nThank you.'
+          },
+          partnership: {
+            intent: 'Academic or industry partnership',
+            subject: 'Partnership inquiry for Dr. Francis Jesmar P. Montalbo',
+            message: 'Hello Dr. Montalbo,\n\nI would like to explore a possible partnership.\n\nOrganization:\nPartnership idea:\nTimeline:\n\nThank you.'
+          }
+        };
+        const contactIntent = document.getElementById('contact-intent');
+        const contactName = document.getElementById('contact-name');
+        const contactOrganization = document.getElementById('contact-organization');
+        const contactSubject = document.getElementById('contact-subject');
+        const contactMessage = document.getElementById('contact-message');
+        const contactDestinationInput = document.getElementById('contact-destination-value');
+        const contactDestinationButtons = document.querySelectorAll('[data-contact-destination]');
+        const contactReviewTo = document.getElementById('contact-review-to');
+        const contactReviewService = document.getElementById('contact-review-service');
+        const contactReviewSubject = document.getElementById('contact-review-subject');
+        const contactReviewMessage = document.getElementById('contact-review-message');
+        const contactNote = document.getElementById('contact-form-note');
+        const contactTemplateButtons = document.querySelectorAll('[data-contact-preset]');
+        const previousPresetMessages = new Set(Object.values(contactPresets).map((preset) => preset.message));
+        const contactDestinations = {
+          professional: {
+            label: 'Professional email',
+            address: 'francismontalbo@ieee.org'
+          },
+          university: {
+            label: 'University email',
+            address: 'francisjesmar.montalbo@g.batstate-u.edu.ph'
+          }
+        };
+        let activeContactPreset = 'collaboration';
+        let activeContactDestination = 'professional';
+
+        const setContactNote = (text) => {
+          if (contactNote) contactNote.textContent = text;
+        };
+
+        const getActiveContactDestination = () => contactDestinations[activeContactDestination] || contactDestinations.professional;
+
+        const buildMailtoHref = ({ destination, subject, body }) => (
+          `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+        );
+
+        const updateContactReview = () => {
+          const destination = getActiveContactDestination();
+          const preset = contactPresets[activeContactPreset] || contactPresets.collaboration;
+          const subject = contactSubject?.value.trim() || preset.subject;
+          const intent = contactIntent?.value.trim() || preset.intent;
+          const message = contactMessage?.value.trim() || preset.message;
+          const compactMessage = message.replace(/\s+/g, ' ').trim();
+          if (contactReviewTo) contactReviewTo.textContent = `${destination.label}: ${destination.address}`;
+          if (contactReviewService) contactReviewService.textContent = intent;
+          if (contactReviewSubject) contactReviewSubject.textContent = subject;
+          if (contactReviewMessage) contactReviewMessage.textContent = compactMessage.length > 180 ? `${compactMessage.slice(0, 177)}...` : compactMessage;
+        };
+
+        const setContactDestination = (key, { announce = true } = {}) => {
+          activeContactDestination = contactDestinations[key] ? key : 'professional';
+          const destination = getActiveContactDestination();
+          if (contactDestinationInput) contactDestinationInput.value = destination.address;
+          contactDestinationButtons.forEach((button) => {
+            const isSelected = button.dataset.contactDestination === activeContactDestination;
+            button.classList.toggle('is-active', isSelected);
+            button.setAttribute('aria-checked', String(isSelected));
+          });
+          updateContactReview();
+          if (announce) setContactNote(`${destination.label} selected.`);
+        };
+
+        const setContactPreset = (key, { overwriteMessage = true } = {}) => {
+          const preset = contactPresets[key] || contactPresets.collaboration;
+          const destination = getActiveContactDestination();
+          activeContactPreset = contactPresets[key] ? key : 'collaboration';
+          if (contactIntent) contactIntent.value = preset.intent;
+          if (contactSubject) contactSubject.value = preset.subject;
+          if (contactMessage && (overwriteMessage || !contactMessage.value.trim() || previousPresetMessages.has(contactMessage.value))) {
+            contactMessage.value = preset.message;
+          }
+          contactTemplateButtons.forEach((button) => {
+            button.classList.toggle('is-active', button.dataset.contactPreset === activeContactPreset);
+          });
+          updateContactReview();
+          setContactNote(`${preset.intent} template selected for ${destination.label.toLowerCase()}.`);
+          return preset;
+        };
+
+        const getContactDraft = () => {
+          const preset = contactPresets[activeContactPreset] || contactPresets.collaboration;
+          const name = contactName?.value.trim();
+          const organization = contactOrganization?.value.trim();
+          const subject = contactSubject?.value.trim() || preset.subject;
+          const message = contactMessage?.value.trim() || preset.message;
+          const intent = contactIntent?.value.trim() || preset.intent;
+          const destination = contactDestinationInput?.value || getActiveContactDestination().address;
+          const details = [
+            name ? `Name: ${name}` : '',
+            organization ? `Organization: ${organization}` : '',
+            `Inquiry type: ${intent}`
+          ].filter(Boolean).join('\n');
+          const body = `${details}\n\nMessage:\n${message}`;
+          return { destination, subject, body };
+        };
+
+        const openContactDraft = () => {
+          const draft = getContactDraft();
+          window.location.href = buildMailtoHref(draft);
+        };
+
+        const copyText = (text) => {
+          if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          textarea.remove();
+          return Promise.resolve();
+        };
+
+        contactTemplateButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            setContactPreset(button.dataset.contactPreset, { overwriteMessage: true });
+            if (button.dataset.contactOpen === 'true') openContactDraft();
+          });
+        });
+
+        contactDestinationButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            setContactDestination(button.dataset.contactDestination);
+          });
+        });
+
+        [contactName, contactOrganization, contactMessage].forEach((field) => {
+          field?.addEventListener('input', updateContactReview);
+        });
+
+        document.getElementById('contact-copy-draft')?.addEventListener('click', () => {
+          const draft = getContactDraft();
+          copyText(`To: ${draft.destination}\nSubject: ${draft.subject}\n\n${draft.body}`)
+            .then(() => setContactNote('Email draft copied.'))
+            .catch(() => setContactNote('Copy failed. You can still open the email draft.'));
+        });
+
         contactForm.addEventListener('submit', (event) => {
           event.preventDefault();
-          const name = document.getElementById('contact-name')?.value.trim();
-          const email = document.getElementById('contact-email')?.value.trim();
-          const subject = document.getElementById('contact-subject')?.value.trim();
-          const message = document.getElementById('contact-message')?.value.trim();
-          const destination = contactForm.querySelector('input[name="contact-destination"]:checked')?.value || 'francismontalbo@ieee.org';
-          const bodyText = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-          window.location.href = `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+          openContactDraft();
         });
+
+        setContactDestination(activeContactDestination, { announce: false });
+        setContactPreset(activeContactPreset, { overwriteMessage: false });
       }
 
       // Fallback chatbot toggle wiring (kept minimal so widget can always open even if external script errors)
