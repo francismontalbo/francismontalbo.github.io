@@ -936,7 +936,7 @@
         const fallbackAnswer = (q) => {
           const query = q.toLowerCase();
           if (query.includes('contact') || query.includes('email')) return 'Contact Dr. Francis Jesmar P. Montalbo at francismontalbo@ieee.org or francisjesmar.montalbo@g.batstate-u.edu.ph.';
-          if (query.includes('scholar') || query.includes('scopus') || query.includes('h-index')) return 'Profiles: Google Scholar (user=PV8dJDkAAAAJ) and Scopus (authorId=57221928564).';
+          if (query.includes('scholar') || query.includes('scopus') || query.includes('h-index')) return 'Profiles: Google Scholar (user=PV8dJDkAAAAJ) and Scopus (authorId=57212309186).';
           return 'Thanks for your question. The assistant is in fallback mode right now; please try again in a few seconds for full live responses.';
         };
         const sendFallbackMessage = () => {

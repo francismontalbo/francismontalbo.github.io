@@ -133,7 +133,7 @@ test('extractGeminiResponse includes grounded web sources', () => {
         webSearchQueries: ['Francis Montalbo citations'],
         groundingChunks: [
           { web: { title: 'Google Scholar', uri: 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ' } },
-          { web: { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57221928564' } }
+          { web: { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57212309186' } }
         ]
       }
     }]
@@ -143,7 +143,7 @@ test('extractGeminiResponse includes grounded web sources', () => {
   assert.deepEqual(response.searchQueries, ['Francis Montalbo citations']);
   assert.deepEqual(JSON.parse(JSON.stringify(response.sources)), [
     { title: 'Google Scholar', uri: 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ' },
-    { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57221928564' }
+    { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57212309186' }
   ]);
 });
 
@@ -154,14 +154,14 @@ test('formatGeminiReply appends sources without duplicating URLs', () => {
     text: 'Use the official Google Scholar profile: https://scholar.google.com/citations?user=PV8dJDkAAAAJ',
     sources: [
       { title: 'Google Scholar', uri: 'https://scholar.google.com/citations?user=PV8dJDkAAAAJ' },
-      { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57221928564' }
+      { title: 'Scopus', uri: 'https://www.scopus.com/authid/detail.uri?authorId=57212309186' }
     ],
     searchQueries: []
   });
 
   assert.equal(text.includes('Sources:'), true);
   assert.equal((text.match(/https:\/\/scholar\.google\.com/g) || []).length, 1);
-  assert.equal(text.includes('Scopus: https://www.scopus.com/authid/detail.uri?authorId=57221928564'), true);
+  assert.equal(text.includes('Scopus: https://www.scopus.com/authid/detail.uri?authorId=57212309186'), true);
 });
 
 test('formatGeminiReply removes awkward bold markdown from model replies', () => {
@@ -179,19 +179,19 @@ test('parseAssistantSegments converts safe URLs, emails, and markdown links into
   const internals = loadChatbot();
 
   const segments = internals.parseAssistantSegments(
-    'Email francismontalbo@ieee.org or visit [Scholar](https://scholar.google.com/citations?user=PV8dJDkAAAAJ). Also see https://www.scopus.com/authid/detail.uri?authorId=57221928564.'
+    'Email francismontalbo@ieee.org or visit [Scholar](https://scholar.google.com/citations?user=PV8dJDkAAAAJ). Also see https://www.scopus.com/authid/detail.uri?authorId=57212309186.'
   );
   const links = segments.filter((segment) => segment.type === 'link');
 
   assert.deepEqual(JSON.parse(JSON.stringify(links.map((link) => link.text))), [
     'francismontalbo@ieee.org',
     'Scholar',
-    'https://www.scopus.com/authid/detail.uri?authorId=57221928564'
+    'https://www.scopus.com/authid/detail.uri?authorId=57212309186'
   ]);
   assert.deepEqual(JSON.parse(JSON.stringify(links.map((link) => link.href))), [
     'mailto:francismontalbo@ieee.org',
     'https://scholar.google.com/citations?user=PV8dJDkAAAAJ',
-    'https://www.scopus.com/authid/detail.uri?authorId=57221928564'
+    'https://www.scopus.com/authid/detail.uri?authorId=57212309186'
   ]);
 });
 

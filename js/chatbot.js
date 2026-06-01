@@ -843,10 +843,10 @@ function initializeChatbot() {
   function buildLocalFallback(question, retrieved) {
     const q = (question || '').toLowerCase();
     if (q.includes('contact') || q.includes('email') || q.includes('reach')) {
-      return 'You can contact Dr. Francis Jesmar P. Montalbo at francismontalbo@ieee.org or francisjesmar.montalbo@g.batstate-u.edu.ph.\n\nProfiles:\n- Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n- Scopus: https://www.scopus.com/authid/detail.uri?authorId=57221928564\n- ORCID: https://orcid.org/0000-0002-1493-5080\n- LinkedIn: https://www.linkedin.com/in/sirjmmontalbo/\n- ResearchGate: https://www.researchgate.net/profile/Francis_Jesmar_Montalbo';
+      return 'You can contact Dr. Francis Jesmar P. Montalbo at francismontalbo@ieee.org or francisjesmar.montalbo@g.batstate-u.edu.ph.\n\nProfiles:\n- Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n- Scopus: https://www.scopus.com/authid/detail.uri?authorId=57212309186\n- ORCID: https://orcid.org/0000-0002-1493-5080\n- LinkedIn: https://www.linkedin.com/in/sirjmmontalbo/\n- ResearchGate: https://www.researchgate.net/profile/Francis_Jesmar_Montalbo';
     }
     if (q.includes('h-index') || q.includes('h index') || q.includes('citation') || q.includes('scopus') || q.includes('scholar')) {
-      return 'For the latest metrics, please check the official profiles directly:\n- Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n- Scopus: https://www.scopus.com/authid/detail.uri?authorId=57221928564';
+      return 'For the latest metrics, please check the official profiles directly:\n- Google Scholar: https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en\n- Scopus: https://www.scopus.com/authid/detail.uri?authorId=57212309186';
     }
     if (retrieved && retrieved.length) {
       return `Based on available on-page data, the most relevant information is:\n- ${retrieved.slice(0, 4).join('\n- ')}`;

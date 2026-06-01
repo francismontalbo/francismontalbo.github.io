@@ -466,11 +466,13 @@ const profileContext = `
 Name: Dr. Francis Jesmar P. Montalbo
 Roles: Associate Professor, Research Scientist, AI & Deep Learning Specialist, Software Engineer
 Affiliation: Batangas State University
+About: Dr. Francis Jesmar P. Montalbo is a Filipino AI research scientist, associate professor, and software engineer at Batangas State University whose work centers on computer vision, deep learning, machine learning, medical imaging AI, biomedical signal processing, health informatics, and smart agriculture systems.
 Research: medical imaging AI, deep learning, biomedical signal processing, computer vision
 Education: Doctorate in Information Technology (Technological Institute of the Philippines-Manila)
 Selected Achievements: OneNews Stanford scientists feature; ICBSP 2023 best presenter
 Contact Emails: francismontalbo@ieee.org; francisjesmar.montalbo@g.batstate-u.edu.ph
-Profiles: Scopus https://www.scopus.com/authid/detail.uri?authorId=57221928564 | Google Scholar https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en | ORCID https://orcid.org/0000-0002-1493-5080 | LinkedIn https://www.linkedin.com/in/sirjmmontalbo/ | ResearchGate https://www.researchgate.net/profile/Francis_Jesmar_Montalbo
+Profiles: Scopus https://www.scopus.com/authid/detail.uri?authorId=57212309186 | Google Scholar https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en | ORCID https://orcid.org/0000-0002-1493-5080 | LinkedIn https://www.linkedin.com/in/sirjmmontalbo/ | ResearchGate https://www.researchgate.net/profile/Francis_Jesmar_Montalbo
+Search Topics: #AIResearchScientist #DeepLearning #MedicalImagingAI #BiomedicalSignalProcessing #ComputerVision #HealthInformatics #SmartAgricultureAI #ResearchPublications #ResearchCollaboration
 When asked for contact, give exact email addresses and links above.
 `;
 

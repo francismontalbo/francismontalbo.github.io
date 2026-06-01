@@ -719,7 +719,7 @@ function initializeNews() {
     url: canonicalUrl,
     sameAs: [
       "https://scholar.google.com/citations?user=PV8dJDkAAAAJ&hl=en",
-      "https://www.scopus.com/authid/detail.uri?authorId=57221928564",
+      "https://www.scopus.com/authid/detail.uri?authorId=57212309186",
       "https://orcid.org/0000-0002-1493-5080",
       "https://www.linkedin.com/in/sirjmmontalbo/",
       "https://www.github.com/francismontalbo",

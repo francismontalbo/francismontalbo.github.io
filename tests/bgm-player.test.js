@@ -87,6 +87,22 @@ function createElement(id = '') {
   return element;
 }
 
+function extractRuleBlock(css, selectorPattern, start = 0, end = css.length) {
+  const block = css.slice(start, end);
+  const match = block.match(new RegExp(`${selectorPattern}\\s*\\{([^}]*)\\}`));
+  return match ? match[1] : '';
+}
+
+function getDeclarationValue(ruleBlock, property) {
+  const match = ruleBlock.match(new RegExp(`${property}\\s*:\\s*([^;]+)`));
+  return match ? match[1].trim() : '';
+}
+
+function parseRem(value) {
+  const match = String(value).match(/^([0-9.]+)rem$/);
+  return match ? Number.parseFloat(match[1]) : Number.NaN;
+}
+
 function loadMainWithBgm() {
   const documentListeners = {};
   const elements = {};
@@ -238,4 +254,47 @@ test('compact mobile background music widget keeps the equalizer visible', () =>
   assert.ok(compactMobileBlock, 'Expected compact mobile BGM media query to exist');
   assert.doesNotMatch(compactMobileBlock, /\.bgm-meter\s*\{\s*display\s*:\s*none/i);
   assert.match(compactMobileBlock, /\.bgm-meter\s*\{[\s\S]*display\s*:\s*inline-flex/i);
+});
+
+test('floating controls stay above page sections and avoid mobile bottom-right overlap', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'css', 'styles.css'), 'utf8');
+
+  assert.match(css, /--z-floating-base:2140;/);
+  assert.match(css, /--z-floating-active:2150;/);
+  assert.match(css, /--z-floating-top:2160;/);
+  assert.match(css, /\.bgm-control\{[\s\S]*z-index:var\(--z-floating-base\)/);
+  assert.match(css, /\.bgm-control:focus-within,\s*\.bgm-control\[data-expanded="true"\]\{[\s\S]*z-index:var\(--z-floating-active\)/);
+  assert.match(css, /#backToTop\{[\s\S]*z-index:var\(--z-floating-top\) !important/);
+  assert.match(css, /#chatbot-fab\{[\s\S]*z-index:var\(--z-floating-base\) !important/);
+  assert.match(css, /#chatbot-widget\.chatbot-widget\{[\s\S]*z-index:var\(--z-floating-active\) !important/);
+
+  const mobileStart = css.indexOf('@media (max-width: 767.98px)');
+  const mobileEnd = css.indexOf('@media (max-width: 419.98px)', mobileStart);
+  const collapsedRule = extractRuleBlock(css, '\\.bgm-control', mobileStart, mobileEnd);
+  const expandedRule = extractRuleBlock(css, '\\.bgm-control:focus-within,\\s*\\.bgm-control\\[data-expanded="true"\\]', mobileStart, mobileEnd);
+
+  assert.ok(collapsedRule, 'Expected mobile BGM control rule to exist');
+  assert.ok(expandedRule, 'Expected mobile expanded BGM control rule to exist');
+  assert.ok(parseRem(getDeclarationValue(collapsedRule, 'bottom')) >= 5);
+  assert.ok(parseRem(getDeclarationValue(expandedRule, 'bottom')) >= 6);
+});
+
+test('mobile chatbot opens as a contained panel instead of covering the whole page', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'css', 'styles.css'), 'utf8');
+  const mobileStart = css.indexOf('@media (max-width:767.98px)');
+  const compactStart = css.indexOf('@media (max-width:419.98px)', mobileStart);
+  const motionStart = css.indexOf('@media (prefers-reduced-motion: reduce)', compactStart);
+  const mobileRule = extractRuleBlock(css, '#chatbot-widget\\.chatbot-widget,\\s*#chatbot-widget\\.chatbot-expanded', mobileStart, compactStart);
+  const compactRule = extractRuleBlock(css, '#chatbot-widget\\.chatbot-widget,\\s*#chatbot-widget\\.chatbot-expanded', compactStart, motionStart);
+
+  assert.ok(mobileRule, 'Expected mobile chatbot widget rule to exist');
+  assert.ok(compactRule, 'Expected compact mobile chatbot widget rule to exist');
+  assert.match(mobileRule, /inset\s*:\s*auto \.75rem calc\(\.75rem \+ env\(safe-area-inset-bottom\)\) \.75rem !important/);
+  assert.match(mobileRule, /width\s*:\s*auto !important/);
+  assert.match(mobileRule, /height\s*:\s*min\(70svh,560px\)/);
+  assert.match(mobileRule, /max-height\s*:\s*calc\(100svh - 7rem\)/);
+  assert.match(compactRule, /height\s*:\s*min\(72svh,540px\)/);
+  assert.match(compactRule, /max-height\s*:\s*calc\(100svh - 5\.75rem\)/);
+  assert.doesNotMatch(mobileRule, /width\s*:\s*100vw|height\s*:\s*100svh|max-height\s*:\s*100svh|88svh/);
+  assert.doesNotMatch(compactRule, /height\s*:\s*100svh|max-height\s*:\s*100svh|border-radius\s*:\s*0/);
 });
